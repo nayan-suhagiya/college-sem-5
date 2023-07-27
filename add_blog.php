@@ -19,8 +19,9 @@
       $title = $_POST["title"];
       $content = $_POST["content"];
       $tags = $_POST["tags"];
+      $category = $_POST['category'];
 
-      $query = "INSERT INTO Blog_Posts (user_id,title,content,tags) VALUES($user_id,'$title','$content','$tags')";
+      $query = "INSERT INTO Blog_Posts (user_id,title,content,tag,category) VALUES($user_id,'$title','$content','$tags','$category')";
       $runquery = mysqli_query($conn,$query);
 
       if($runquery){
@@ -50,8 +51,42 @@
                 rows="4"></textarea>
             </div>
             <div class="form-floating my-2">
-              <input type="text" name="tags" class="form-control" id="floatingInput1" placeholder="Tags" required>
-              <label for="floatingInput1">Enter Tag</label>
+              <!-- <input type="text" name="tags" class="form-control" id="floatingTag" placeholder="Tags" required> -->
+              <select name="tags" id="floatingTag" class="form-select">
+                <option value=""></option>
+                <?php
+                  $query = "SELECT * FROM Tags";
+                  $runquery = mysqli_query($conn,$query);
+
+                  while($row = mysqli_fetch_assoc($runquery)){
+                    $tagname = $row["NAME"];
+                    
+                    echo "
+                      <option value='$tagname'>$tagname</option>
+                    ";
+                  }
+                ?>
+              </select>
+              <label for="floatingTag">Select Tag</label>
+            </div>
+            <div class="form-floating my-2">
+              <!-- <input type="text" name="tags" class="form-control" id="floatingTag" placeholder="Tags" required> -->
+              <select name="category" id="floatingCategory" class="form-select">
+                <option value=""></option>
+                <?php
+                  $query = "SELECT * FROM Categories";
+                  $runquery = mysqli_query($conn,$query);
+
+                  while($row = mysqli_fetch_assoc($runquery)){
+                    $category = $row["NAME"];
+                    
+                    echo "
+                      <option value='$category'>$category</option>
+                    ";
+                  }
+                ?>
+              </select>
+              <label for="floatingCategory">Select Category</label>
             </div>
             <div class="form-group">
               <button class="btn btn-custom py-2 my-3" name="submit" type="submit">Post Blog</button>
