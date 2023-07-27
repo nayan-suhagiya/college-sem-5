@@ -36,6 +36,7 @@ if ($row['user_type'] == "client") {
     <meta content="" name="keywords">
     <link href="../lib/css/style.css" rel="stylesheet">
     <link href="../lib/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../lib/css/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
 </head>
 
 <body>
@@ -65,7 +66,7 @@ if ($row['user_type'] == "client") {
 
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                         <li class="dropdown-header">
-                            <h6>Kevin Anderson</h6>
+                            <h6><?= $name ?></h6>
                             <span>Web Designer</span>
                         </li>
                         <li>
@@ -127,17 +128,18 @@ if ($row['user_type'] == "client") {
                 </a>
             </li><!-- End Dashboard Nav -->
             <li class="nav-item">
-                <a class="nav-link " href="dashboard.php">
+                <a class="nav-link " href="userInfo.php">
                     <i class="bi bi-grid"></i>
-                    <span>Post</span>
+                    <span>User</span>
                 </a>
             </li><!-- End Dashboard Nav -->
             <li class="nav-item">
                 <a class="nav-link " href="dashboard.php">
                     <i class="bi bi-grid"></i>
-                    <span>User</span>
+                    <span>Post</span>
                 </a>
             </li><!-- End Dashboard Nav -->
+
 
 
 
