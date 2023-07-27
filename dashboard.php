@@ -18,22 +18,11 @@
     }
 
     $user_id = $_SESSION["user_id"];
+    $username = $_SESSION["username"];
 
-    $query = "SELECT * FROM Users WHERE user_id='$user_id'";
-    $runquery = mysqli_query($conn,$query);
-
-    // print_r($runquery);
-
-    $row = mysqli_fetch_assoc($runquery);
-
-    $name = $row["name"];
-
-    // print_r($row);
-    // $result=mysqli_fetch_assoc($runquery);
-    
     echo "
     <div class='container my-4'>
-      <h4>Welcome <span class='text-custom text-decoration-underline'>$name</span> Explore the blog posts!!</h4>    
+      <h4  class='text-center'>Welcome <span class='text-custom text-decoration-underline'>$username</span> Explore the blog posts!!</h4>    
     </div>  
     ";
   ?>
@@ -49,8 +38,8 @@
       // print_r($row);
       $title = $row["title"];
       $content = $row["content"];
-      $tags = $row["tags"];
-    
+      $tag = $row["tag"];
+      $category = $row["category"];
 
      echo " 
       <div class='card mb-3 border-0'>
@@ -64,7 +53,12 @@
               <p class='card-text'>$content</p>
               <p class='card-text'>
                 <small class='text-body-secondary'>
-                  <i class='las la-tags fs-5'></i> $tags
+                  <i class='las la-tags fs-5'></i> $tag
+                </small>
+              </p>
+               <p class='card-text'>
+                <small class='text-body-secondary'>
+                  <i class='las la-th-list fs-5'></i> $category
                 </small>
               </p>
               <p class='card-text'><small class='text-body-secondary'>Last updated 3 mins ago</small></p>

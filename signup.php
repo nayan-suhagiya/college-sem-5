@@ -33,7 +33,7 @@
     include_once "./navbar_root.php";
   ?>
 
-  <div class="container">
+  <div class="container" style="margin-top:17vh;">
     <div class="row">
       <div class="col-sm-4 m-auto">
         <div class="form-signin w-100 m-auto">
@@ -42,14 +42,13 @@
             <!-- <h1 class="h3 mb-3 fw-bold">Please fill up this form</h1> -->
 
             <div class="form-floating my-2">
-              <input type="text" name="name" class="form-control" id="floatingInput" placeholder="name@example.com"
-                required>
-              <label for="floatingInput">Enter Name</label>
+              <input type="text" name="name" class="form-control" id="floatingName" placeholder="name surname" required>
+              <label for="floatingName">Enter Name</label>
             </div>
             <div class="form-floating my-2">
-              <input type="email" name="email" class="form-control" id="floatingInput" placeholder="name@example.com"
+              <input type="email" name="email" class="form-control" id="floatingEmail" placeholder="name@example.com"
                 required>
-              <label for="floatingInput">Enter Email</label>
+              <label for="floatingEmail">Enter Email</label>
             </div>
             <div class="form-floating my-2">
               <input type="password" name="passwd" class="form-control" id="floatingPassword" placeholder="Password"
@@ -57,6 +56,9 @@
               <label for="floatingPassword">Enter Password</label>
             </div>
             <button class="btn btn-custom w-100 py-2 my-3" name="submit" type="submit">Sign up</button>
+            <div>
+              <small class="text-center">Already have an account? &nbsp;<a href="./index.php">Log In</a></small>
+            </div>
           </form>
         </div>
       </div>

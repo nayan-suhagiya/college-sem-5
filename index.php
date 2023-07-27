@@ -18,6 +18,7 @@
 
       // print_r($row);
       $_SESSION["user_id"] = $row["user_id"];
+      $_SESSION["username"] = $row["name"];
     
       header("location:./dashboard.php");
     }else{
@@ -44,7 +45,7 @@
     include_once "./navbar_root.php";
   ?>
 
-  <div class="container">
+  <div class="container" style="margin-top:20vh;">
     <div class="row">
       <div class="col-sm-4 m-auto">
         <div class="form-signin w-100 m-auto">
@@ -63,6 +64,9 @@
               <label for="floatingPassword">Enter Password</label>
             </div>
             <button class="btn btn-custom w-100 py-2 my-3" name="submit" type="submit">Log in</button>
+            <div>
+              <small class="text-center">Don't have an account? &nbsp;<a href="./signup.php">Sign Up</a></small>
+            </div>
           </form>
         </div>
       </div>

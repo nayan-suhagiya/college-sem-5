@@ -31,7 +31,7 @@
           <li><a href="./dashboard.php" class="nav-link px-2 ">Home</a></li>
           <li><a href="./add_blog.php" class="nav-link px-2 ">Add Blog</a></li>
           <li><a href="#" class="nav-link px-2 ">Wishlist</a></li>
-          <li><a href="#" class="nav-link px-2 ">Profile</a></li>
+          <li><a href="./profile.php" class="nav-link px-2 ">Profile</a></li>
         </ul>
 
         <div class="text-end">

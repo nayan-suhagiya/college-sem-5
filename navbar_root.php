@@ -15,36 +15,6 @@
 </head>
 
 <body>
-  <header class="p-3 header_nav">
-    <div class="container-fluid">
-      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-          <img src="./assets/site_logo.png" alt="logo" height="60">
-        </a>
-
-        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0 ms-3">
-          <!-- <li><a href="#" class="nav-link px-2 ">Home</a></li>
-          <li><a href="#" class="nav-link px-2 ">Features</a></li>
-          <li><a href="#" class="nav-link px-2 ">Pricing</a></li>
-          <li><a href="#" class="nav-link px-2 ">FAQs</a></li>
-          <li><a href="#" class="nav-link px-2 ">About</a></li> -->
-        </ul>
-
-
-        <div class="text-end">
-          <a href="./index.php">
-            <button type="button" class="btn btn-custom me-2">
-              Login
-            </button>
-          </a>
-          <a href="./signup.php">
-            <button type="button" class="btn btn-custom">Sign up</button>
-          </a>
-        </div>
-      </div>
-    </div>
-  </header>
-
 
 </body>
 
