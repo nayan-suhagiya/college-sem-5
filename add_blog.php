@@ -21,7 +21,7 @@
       $tags = $_POST["tags"];
       $category = $_POST['category'];
 
-      $query = "INSERT INTO Blog_Posts (user_id,title,content,tag,category) VALUES($user_id,'$title','$content','$tags','$category')";
+      $query = "INSERT INTO Blog_Posts (user_id,title,content,tag,category,created_at,updated_at) VALUES($user_id,'$title','$content','$tags','$category',NOW(),NOW())";
       $runquery = mysqli_query($conn,$query);
 
       if($runquery){
@@ -51,40 +51,40 @@
                 rows="4"></textarea>
             </div>
             <div class="form-floating my-2">
-              <!-- <input type="text" name="tags" class="form-control" id="floatingTag" placeholder="Tags" required> -->
-              <select name="tags" id="floatingTag" class="form-select">
-                <option value=""></option>
-                <?php
-                  $query = "SELECT * FROM Tags";
-                  $runquery = mysqli_query($conn,$query);
+              <input type="text" name="tags" class="form-control" id="floatingTag" placeholder="Tags" required>
+              <!-- <select name="tags" id="floatingTag" class="form-select">
+                <option value=""></option> -->
+              <?php
+                  // $query = "SELECT * FROM Tags";
+                  // $runquery = mysqli_query($conn,$query);
 
-                  while($row = mysqli_fetch_assoc($runquery)){
-                    $tagname = $row["NAME"];
+                  // while($row = mysqli_fetch_assoc($runquery)){
+                  //   $tagname = $row["NAME"];
                     
-                    echo "
-                      <option value='$tagname'>$tagname</option>
-                    ";
-                  }
+                  //   echo "
+                  //     <option value='$tagname'>$tagname</option>
+                  //   ";
+                  // }
                 ?>
-              </select>
-              <label for="floatingTag">Select Tag</label>
+              <!-- </select> -->
+              <label for="floatingTag">Enter Tag</label>
             </div>
             <div class="form-floating my-2">
               <!-- <input type="text" name="tags" class="form-control" id="floatingTag" placeholder="Tags" required> -->
               <select name="category" id="floatingCategory" class="form-select">
-                <option value=""></option>
                 <?php
                   $query = "SELECT * FROM Categories";
                   $runquery = mysqli_query($conn,$query);
-
+                  
                   while($row = mysqli_fetch_assoc($runquery)){
-                    $category = $row["NAME"];
+                    $category = $row["name"];
                     
                     echo "
-                      <option value='$category'>$category</option>
+                    <option value='$category'>$category</option>
                     ";
                   }
-                ?>
+                  ?>
+                <option value="Other">Other</option>
               </select>
               <label for="floatingCategory">Select Category</label>
             </div>

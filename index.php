@@ -18,6 +18,7 @@ if (isset($_POST["submit"])) {
 
     // print_r($row);
     $_SESSION["user_id"] = $row["user_id"];
+    $_SESSION["username"] = $row["name"];
     if ($row['user_type'] == "admin") {
       header("location:admin/dashboard.php");
     } else {
@@ -56,11 +57,13 @@ if (isset($_POST["submit"])) {
             <!-- <h1 class="h3 mb-3 fw-bold">Please Log in</h1> -->
 
             <div class="form-floating my-2">
-              <input type="email" name="email" class="form-control" id="floatingInput" placeholder="name@example.com" required>
+              <input type="email" name="email" class="form-control" id="floatingInput" placeholder="name@example.com"
+                required>
               <label for="floatingInput">Enter Email</label>
             </div>
             <div class="form-floating my-2">
-              <input type="password" name="passwd" class="form-control" id="floatingPassword" placeholder="Password" required>
+              <input type="password" name="passwd" class="form-control" id="floatingPassword" placeholder="Password"
+                required>
               <label for="floatingPassword">Enter Password</label>
             </div>
             <button class="btn btn-custom w-100 py-2 my-3" name="submit" type="submit">Log in</button>
