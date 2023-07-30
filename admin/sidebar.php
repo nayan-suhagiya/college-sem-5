@@ -16,6 +16,7 @@ $runquery = mysqli_query($conn, $query);
 $row = mysqli_fetch_assoc($runquery);
 
 $name = $row["name"];
+$image = $row["image"];
 
 if ($row['user_type'] == "client") {
     header("location:../dashboard.php");
@@ -60,7 +61,7 @@ if ($row['user_type'] == "client") {
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="../assets/profile.png" alt="Profile" class="rounded-circle">
+            <img src="<?= ".".$image ?>" alt="Profile" class="rounded-circle">
             <span class="d-none d-md-block dropdown-toggle ps-2"><?= $name ?></span>
           </a><!-- End Profile Iamge Icon -->
 
@@ -129,19 +130,19 @@ if ($row['user_type'] == "client") {
       </li><!-- End Dashboard Nav -->
       <li class="nav-item">
         <a class="nav-link " href="userInfo.php">
-          <i class="bi bi-grid"></i>
+          <i class="bi bi-person"></i>
           <span>User</span>
         </a>
       </li><!-- End Dashboard Nav -->
       <li class="nav-item">
         <a class="nav-link " href="dashboard.php">
-          <i class="bi bi-grid"></i>
+          <i class="bi bi-postcard-fill"></i>
           <span>Post</span>
         </a>
       </li><!-- End Dashboard Nav -->
       <li class="nav-item">
         <a class="nav-link " href="category.php">
-          <i class="bi bi-grid"></i>
+          <i class="bi bi-collection"></i>
           <span>Categories</span>
         </a>
       </li>
