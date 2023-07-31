@@ -61,7 +61,7 @@ $image = $row["image"];
             <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
               <img src="<?= $image ?>" alt="Profile" class="rounded-circle" height="30">
               <span class="d-none d-md-block dropdown-toggle ps-2"><?= $name ?></span>
-            </a><!-- End Profile Iamge Icon -->
+            </a><!-- End Profile image Icon -->
 
             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
               <li class="dropdown-header">
