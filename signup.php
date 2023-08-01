@@ -6,10 +6,15 @@
     $name = $_POST["name"];
     $email = $_POST["email"];
     $passwd= $_POST["passwd"];
+    $image = $_FILES["profile"]["name"];
+    $tempname = $_FILES['profile']['tmp_name'];
 
-    echo $userid.$name.$email.$passwd;
+    $path = "upload/".$image;
+		copy($tempname, $path);
 
-    $query = "INSERT INTO Users(name,email,password) VALUES('$name','$email','$passwd')";
+    // echo $userid.$name.$email.$passwd;
+
+    $query = "INSERT INTO Users(name,email,password,image) VALUES('$name','$email','$passwd','$image')";
     $runquery = mysqli_query($conn,$query);
 
     if($runquery){
@@ -37,7 +42,7 @@
     <div class="row">
       <div class="col-sm-4 m-auto">
         <div class="form-signin w-100 m-auto">
-          <form method="POST" class="text-center">
+          <form method="POST" class="text-center" enctype="multipart/form-data">
             <img class="mt-4 mb-2" src="./assets/site_logo.png" alt="" width="100">
             <!-- <h1 class="h3 mb-3 fw-bold">Please fill up this form</h1> -->
 
@@ -54,6 +59,10 @@
               <input type="password" name="passwd" class="form-control" id="floatingPassword" placeholder="Password"
                 required>
               <label for="floatingPassword">Enter Password</label>
+            </div>
+            <div class="form-group my-2">
+              <label for="profile text-left">Upload Profile Picture</label>
+              <input type="file" name="profile" class="form-control" id="profile" required>
             </div>
             <button class="btn btn-custom w-100 py-2 my-3" name="submit" type="submit">Sign up</button>
             <div>
