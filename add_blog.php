@@ -51,22 +51,22 @@
                 rows="4"></textarea>
             </div>
             <div class="form-floating my-2">
-              <input type="text" name="tags" class="form-control" id="floatingTag" placeholder="Tags" required>
-              <!-- <select name="tags" id="floatingTag" class="form-select">
-                <option value=""></option> -->
+              <!-- <input type="text" name="tags" class="form-control" id="floatingTag" placeholder="Tags" required> -->
+              <select name="tags" id="floatingTag" class="form-select">
               <?php
-                  // $query = "SELECT * FROM Tags";
-                  // $runquery = mysqli_query($conn,$query);
+                  $query = "SELECT * FROM Tags";
+                  $runquery = mysqli_query($conn,$query);
 
-                  // while($row = mysqli_fetch_assoc($runquery)){
-                  //   $tagname = $row["NAME"];
+                  while($row = mysqli_fetch_assoc($runquery)){
+                    $tagname = $row["name"];
+                    $tagname_id = $row["tag_id"];
                     
-                  //   echo "
-                  //     <option value='$tagname'>$tagname</option>
-                  //   ";
-                  // }
+                    echo "
+                      <option value='$tagname_id'>$tagname</option>
+                    ";
+                  }
                 ?>
-              <!-- </select> -->
+              </select>
               <label for="floatingTag">Enter Tag</label>
             </div>
             <div class="form-floating my-2">
@@ -78,13 +78,13 @@
                   
                   while($row = mysqli_fetch_assoc($runquery)){
                     $category = $row["name"];
+                    $category_id = $row["category_id"];
                     
                     echo "
-                    <option value='$category'>$category</option>
+                    <option value='$category_id'>$category</option>
                     ";
                   }
                   ?>
-                <option value="Other">Other</option>
               </select>
               <label for="floatingCategory">Select Category</label>
             </div>

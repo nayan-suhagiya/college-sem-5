@@ -135,7 +135,7 @@ if ($row['user_type'] == "client") {
         </a>
       </li><!-- End Dashboard Nav -->
       <li class="nav-item">
-        <a class="nav-link " href="dashboard.php">
+        <a class="nav-link " href="blog_post.php">
           <i class="bi bi-postcard-fill"></i>
           <span>Post</span>
         </a>
