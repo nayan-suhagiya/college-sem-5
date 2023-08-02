@@ -3,30 +3,29 @@ include_once "../connection.php";
 
 if (isset($_POST["submit"])) {
     if (isset($_POST["name"]) && isset($_POST["user_id"]) && isset($_POST["email"]) && isset($_POST["user_type"])) {
+
         $user_id = $_POST["user_id"];
         $name = $_POST["name"];
         $email = $_POST["email"];
         $user_type = $_POST["user_type"];
 
-        $filename = $_FILES["iamge"]["name"];
-        $tempname = $_FILES["iamge"]["tmp_name"];
-        $folder = "./upload/images/" . $filename;
+        $filename = $_FILES["image"]["name"];
+        $tempname = $_FILES["image"]["tmp_name"];
+        $folder = "./upload/images/" . time() . $filename;
         $allowed_image_extension = array(
             "png",
             "jpg",
             "jpeg"
         );
-        $file_extension = pathinfo($_FILES["iamge"]["name"], PATHINFO_EXTENSION);
-        $query = "select * from  where user_id = '$user_id' ";
+        $file_extension = pathinfo($_FILES["image"]["name"], PATHINFO_EXTENSION);
+        $query = "select * from  Users where user_id = '$user_id' ";
         $result = mysqli_query($conn, $query);
         $row = mysqli_fetch_assoc($result);
-        if ($row['iamge']) {
-            $filename = "." . $row['iamge'];
-            if (file_exists($filename)) {
-                $status  = unlink($filename) ? 'The file ' . $filename . ' has been deleted' : 'Error deleting ' . $filename;
+        if ($row['image']) {
+            $filenameRm = "." . $row['image'];
+            if (file_exists($filenameRm)) {
+                $status  = unlink($filenameRm) ? 'The file ' . $filenameRm . ' has been deleted' : 'Error deleting ' . $filenameRm;
                 echo $status;
-            } else {
-                echo 'The file ' . $filename . ' doesnot exist';
             }
         }
         if (!in_array($file_extension, $allowed_image_extension)) {
@@ -64,7 +63,16 @@ if (isset($_POST["submit"])) {
 }
 if (isset($_POST["delete"]) && isset($_POST["user_id"])) {
     $user_id = $_POST["user_id"];
-    echo ("delete from Users  where user_id = '$user_id'");
+    $query = "select * from  Users where user_id = '$user_id' ";
+    $result = mysqli_query($conn, $query);
+    $row = mysqli_fetch_assoc($result);
+    if ($row['image']) {
+        $filenameRm = "." . $row['image'];
+        if (file_exists($filenameRm)) {
+            $status  = unlink($filenameRm) ? 'The file ' . $filenameRm . ' has been deleted' : 'Error deleting ' . $filenameRm;
+            // echo $status;
+        }
+    }
     $query = "delete from Users  where user_id = '$user_id'";
     $runquery = mysqli_query($conn, $query);
     if ($runquery) {
@@ -127,7 +135,7 @@ include_once "./sidebar.php";
                                     <div class='modal-dialog modal-dialog-centered'>
                                         <div class='modal-content'>
                                             <div class='modal-header'>
-                                                <h5 class='modal-title'>Update User()</h5>
+                                                <h5 class='modal-title'>Update User(<?= $row["name"] ?>)</h5>
                                                 <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
                                             </div>
                                             <form method="post" id='edit-form' enctype="multipart/form-data">
@@ -156,11 +164,22 @@ include_once "./sidebar.php";
                                                         </div>
                                                     </div>
                                                     <div class='form-group row m-0 mt-2'>
-                                                        <label class="col-4 my-2" for='iamge'>Profile iamge</label>
+                                                        <label class="col-4 my-2" for='image'>Profile image</label>
                                                         <div class="col-8">
-
-                                                            <input type="file" id="iamge" class="form-control" required name="iamge">
+                                                            <input type="file" accept="image/*" onchange="loadFile(event)" id="image" class="form-control" required name="image">
                                                         </div>
+                                                    </div>
+                                                    <div class="text-center mt-3 ">
+                                                        <img class="rounded-5" id="output<?= $row["user_id"] ?>" height="120px" width="120px" src="<?= "." . $row["image"] ?>" alt="">
+                                                        <script>
+                                                            var loadFile = function(event) {
+                                                                var output = document.getElementById('output<?= $row["user_id"] ?>');
+                                                                output.src = URL.createObjectURL(event.target.files[0]);
+                                                                output.onload = function() {
+                                                                    URL.revokeObjectURL(output.src) // free memory
+                                                                }
+                                                            };
+                                                        </script>
                                                     </div>
                                                 </div>
                                                 <div class='modal-footer'>

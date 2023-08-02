@@ -1,14 +1,37 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Jul 28, 2023 at 08:03 AM
--- Server version: 10.1.38-MariaDB
--- PHP Version: 5.6.40
+-- Host: 127.0.0.1
+-- Generation Time: Aug 01, 2023 at 06:45 PM
+-- Server version: 10.4.24-MariaDB
+-- PHP Version: 7.4.29
+
+-- Drop Wishlist table
+DROP TABLE IF EXISTS Wishlist;
+
+-- Drop Post_Tag table
+DROP TABLE IF EXISTS Post_Tag;
+
+-- Drop Post_Category table
+DROP TABLE IF EXISTS Post_Category;
+
+-- Drop Comments table
+DROP TABLE IF EXISTS Comments;
+
+-- Drop Blog_Posts table
+DROP TABLE IF EXISTS Blog_Posts;
+
+-- Drop Tags table
+DROP TABLE IF EXISTS Tags;
+
+-- Drop Categories table
+DROP TABLE IF EXISTS Categories;
+
+-- Drop Users table
+DROP TABLE IF EXISTS Users;
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -25,57 +48,57 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Blog_Posts`
+-- Table structure for table `blog_posts`
 --
 
-CREATE TABLE `Blog_Posts` (
+CREATE TABLE `blog_posts` (
   `post_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `title` varchar(200) NOT NULL,
   `content` text NOT NULL,
-  `tag` varchar(200) DEFAULT NULL,
-  `category` varchar(200) DEFAULT NULL,
+  `tag` int(11) DEFAULT NULL,
+  `category` int(11) DEFAULT NULL,
   `featured_image` varchar(100) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `Blog_Posts`
+-- Dumping data for table `blog_posts`
 --
 
-INSERT INTO `Blog_Posts` (`post_id`, `user_id`, `title`, `content`, `tag`, `category`, `featured_image`, `created_at`, `updated_at`) VALUES
-(1, 2, 'What is the son of Football Coach John Gruden, Deuce Gruden doing Now?', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio placeat exercitationem magni voluptates dolore. Tenetur fugiat voluptates quas, nobis error deserunt aliquam temporibus sapiente, laudantium dolorum itaque libero eos deleniti?', 'game,football', 'Other', NULL, '2023-07-28 11:06:53', '2023-07-28 11:06:53'),
-(2, 2, '11 Work From Home Part-Time Jobs You Can Do Now', 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vero temporibus repudiandae, inventore pariatur numquam cumque possimus exercitationem? Nihil tempore odit ab minus eveniet praesentium, similique blanditiis molestiae ut saepe perspiciatis officia nemo, eos quae cumque. Accusamus fugiat architecto rerum animi atque eveniet, quo, praesentium dignissimos', 'home,work', 'LifeStyle', NULL, '2023-07-28 11:12:11', '2023-07-28 11:12:11');
+INSERT INTO `blog_posts` (`post_id`, `user_id`, `title`, `content`, `tag`, `category`, `featured_image`, `created_at`, `updated_at`) VALUES
+(1, 2, 'What is the son of Football Coach John Gruden, Deuce Gruden doing Now?', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio placeat exercitationem magni voluptates dolore. Tenetur fugiat voluptates quas, nobis error deserunt aliquam temporibus sapiente, laudantium dolorum itaque libero eos deleniti?', 1, 1, NULL, '2023-07-28 11:06:53', '2023-07-28 11:06:53'),
+(2, 2, '11 Work From Home Part-Time Jobs You Can Do Now', 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vero temporibus repudiandae, inventore pariatur numquam cumque possimus exercitationem? Nihil tempore odit ab minus eveniet praesentium, similique blanditiis molestiae ut saepe perspiciatis officia nemo, eos quae cumque. Accusamus fugiat architecto rerum animi atque eveniet, quo, praesentium dignissimos', 1, 1, NULL, '2023-07-28 11:12:11', '2023-07-28 11:12:11'),
+(3, 3, 'demo', 'qweqw qr', 1, 1, NULL, '2023-07-28 22:52:29', '2023-07-28 22:52:29');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Categories`
+-- Table structure for table `categories`
 --
 
-CREATE TABLE `Categories` (
+CREATE TABLE `categories` (
   `category_id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `Categories`
+-- Dumping data for table `categories`
 --
 
-INSERT INTO `Categories` (`category_id`, `name`) VALUES
+INSERT INTO `categories` (`category_id`, `name`) VALUES
 (1, 'Food'),
 (2, 'Health'),
-(3, 'Travel'),
 (4, 'LifeStyle');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Comments`
+-- Table structure for table `comments`
 --
 
-CREATE TABLE `Comments` (
+CREATE TABLE `comments` (
   `comment_id` int(11) NOT NULL,
   `post_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
@@ -86,21 +109,25 @@ CREATE TABLE `Comments` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Tags`
+-- Table structure for table `tags`
 --
 
-CREATE TABLE `Tags` (
+CREATE TABLE `tags` (
   `tag_id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+INSERT INTO `tags` (`tag_id`, `name`) VALUES
+(1, 'Blogging Basics'),
+(2, 'Blogging Tips'),
+(3, 'Monetization');
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Users`
+-- Table structure for table `users`
 --
 
-CREATE TABLE `Users` (
+CREATE TABLE `users` (
   `user_id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
@@ -112,20 +139,22 @@ CREATE TABLE `Users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `Users`
+-- Dumping data for table `users`
 --
 
-INSERT INTO `Users` (`user_id`, `name`, `email`, `password`, `user_type`, `image`, `created_at`, `updated_at`) VALUES
-(1, 'Nayan Suhagiya', 'nayan@example.com', 'nayan@123', 'admin', 'profile.jpg', '2023-07-28 09:47:25', '2023-07-28 09:47:25'),
-(2, 'Utsav Parmar', 'utsav@example.com', 'utsav@123', 'client', 'avatar.jpg', '2023-07-28 09:47:25', '2023-07-28 09:47:25');
+INSERT INTO `users` (`user_id`, `name`, `email`, `password`, `user_type`, `image`, `created_at`, `updated_at`) VALUES
+(1, 'Nayan Suhagiya', 'nayan@example.com', 'nayan@123', 'admin', './upload/images/00030.jpg', '2023-07-28 09:47:25', '2023-07-28 09:47:25'),
+(2, 'Utsav Parmar', 'utsav@example.com', 'utsav@123', 'client', './upload/images/169082220600027.jpg', '2023-07-28 09:47:25', '2023-07-28 09:47:25'),
+(3, 'Utsav Parmar', 'Utsavparmar72@gmail.com', '123', 'admin', './upload/images/169082222900029.jpg', NULL, NULL),
+(8, 'Satyam', 'satyamgangani@gmail.com', '123', 'client', './upload/images/169082364800014.png', NULL, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Wishlist`
+-- Table structure for table `wishlist`
 --
 
-CREATE TABLE `Wishlist` (
+CREATE TABLE `wishlist` (
   `wishlist_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `post_id` int(11) NOT NULL,
@@ -139,42 +168,43 @@ CREATE TABLE `Wishlist` (
 --
 
 --
--- Indexes for table `Blog_Posts`
+-- Indexes for table `blog_posts`
 --
-ALTER TABLE `Blog_Posts`
+ALTER TABLE `blog_posts`
   ADD PRIMARY KEY (`post_id`),
   ADD KEY `user_id` (`user_id`);
 
 --
--- Indexes for table `Categories`
+-- Indexes for table `categories`
 --
-ALTER TABLE `Categories`
-  ADD PRIMARY KEY (`category_id`);
+ALTER TABLE `categories`
+  ADD PRIMARY KEY (`category_id`),
+  ADD UNIQUE KEY `name` (`name`);
 
 --
--- Indexes for table `Comments`
+-- Indexes for table `comments`
 --
-ALTER TABLE `Comments`
+ALTER TABLE `comments`
   ADD PRIMARY KEY (`comment_id`),
   ADD KEY `post_id` (`post_id`),
   ADD KEY `user_id` (`user_id`);
 
 --
--- Indexes for table `Tags`
+-- Indexes for table `tags`
 --
-ALTER TABLE `Tags`
+ALTER TABLE `tags`
   ADD PRIMARY KEY (`tag_id`);
 
 --
--- Indexes for table `Users`
+-- Indexes for table `users`
 --
-ALTER TABLE `Users`
+ALTER TABLE `users`
   ADD PRIMARY KEY (`user_id`);
 
 --
--- Indexes for table `Wishlist`
+-- Indexes for table `wishlist`
 --
-ALTER TABLE `Wishlist`
+ALTER TABLE `wishlist`
   ADD PRIMARY KEY (`wishlist_id`),
   ADD KEY `user_id` (`user_id`),
   ADD KEY `post_id` (`post_id`);
@@ -184,39 +214,39 @@ ALTER TABLE `Wishlist`
 --
 
 --
--- AUTO_INCREMENT for table `Blog_Posts`
+-- AUTO_INCREMENT for table `blog_posts`
 --
-ALTER TABLE `Blog_Posts`
-  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+ALTER TABLE `blog_posts`
+  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `Categories`
+-- AUTO_INCREMENT for table `categories`
 --
-ALTER TABLE `Categories`
-  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+ALTER TABLE `categories`
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- AUTO_INCREMENT for table `Comments`
+-- AUTO_INCREMENT for table `comments`
 --
-ALTER TABLE `Comments`
+ALTER TABLE `comments`
   MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `Tags`
+-- AUTO_INCREMENT for table `tags`
 --
-ALTER TABLE `Tags`
+ALTER TABLE `tags`
   MODIFY `tag_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `Users`
+-- AUTO_INCREMENT for table `users`
 --
-ALTER TABLE `Users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+ALTER TABLE `users`
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT for table `Wishlist`
+-- AUTO_INCREMENT for table `wishlist`
 --
-ALTER TABLE `Wishlist`
+ALTER TABLE `wishlist`
   MODIFY `wishlist_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -224,24 +254,26 @@ ALTER TABLE `Wishlist`
 --
 
 --
--- Constraints for table `Blog_Posts`
+-- Constraints for table `blog_posts`
 --
 ALTER TABLE `Blog_Posts`
-  ADD CONSTRAINT `blog_posts_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `Users` (`user_id`);
+  ADD CONSTRAINT `blog_posts_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `Users` (`user_id`),
+  ADD CONSTRAINT `blog_posts_ibfk_2` FOREIGN KEY (`category`) REFERENCES `categories` (`category_id`),
+  ADD CONSTRAINT `blog_posts_ibfk_3` FOREIGN KEY (`tag`) REFERENCES `tags` (`tag_id`);
 
 --
--- Constraints for table `Comments`
+-- Constraints for table `comments`
 --
-ALTER TABLE `Comments`
-  ADD CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `Blog_Posts` (`post_id`),
-  ADD CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `Users` (`user_id`);
+ALTER TABLE `comments`
+  ADD CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `blog_posts` (`post_id`),
+  ADD CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
 
 --
--- Constraints for table `Wishlist`
+-- Constraints for table `wishlist`
 --
-ALTER TABLE `Wishlist`
-  ADD CONSTRAINT `wishlist_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `Users` (`user_id`),
-  ADD CONSTRAINT `wishlist_ibfk_2` FOREIGN KEY (`post_id`) REFERENCES `Blog_Posts` (`post_id`);
+ALTER TABLE `wishlist`
+  ADD CONSTRAINT `wishlist_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`),
+  ADD CONSTRAINT `wishlist_ibfk_2` FOREIGN KEY (`post_id`) REFERENCES `blog_posts` (`post_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -50,8 +50,8 @@ include_once "./sidebar.php";
     <div class="row">
       <div class="card">
         <div class="card-body">
-          <h5 class="card-title">Blog Category Information</h5>
-          <div class="btn btn-primary" data-bs-toggle='modal' data-bs-target='#edit-category-modal'>Add category</div>
+          <h5 class="card-title float-start">Blog Category Information</h5>
+          <div class="btn btn-primary float-end" data-bs-toggle='modal' data-bs-target='#edit-category-modal'>Add category</div>
           <!-- Table with stripped rows -->
           <table class="table table-striped text-center">
             <thead>
@@ -82,15 +82,19 @@ include_once "./sidebar.php";
                   <div class='modal-dialog modal-dialog-centered'>
                     <div class='modal-content'>
                       <div class='modal-header'>
-                        <h5 class='modal-title'>Update Category()</h5>
+                        <h5 class='modal-title'>Update Category(<?= $row["name"] ?>)</h5>
                         <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
                       </div>
                       <form method="post" id='edit-form'>
                         <div class='modal-body'>
                           <input class='form-control' value="<?= $row["category_id"] ?>" type='hidden' name='category_id'>
-                          <div class='form-group'>
-                            <label for='full_name'>Category Name</label>
-                            <input class='form-control' value="<?= $row["name"] ?>" type='text' name='name'>
+                          <div class='form-group row '>
+                            <div class="col-4">
+                              <label  for='full_name'>Category Name</label>
+                            </div>
+                            <div class="col-8">
+                              <input class='form-control' value="<?= $row["name"] ?>" type='text' name='name'>
+                            </div>
                           </div>
                         </div>
                         <div class='modal-footer'>
@@ -116,15 +120,19 @@ include_once "./sidebar.php";
       <div class='modal-dialog modal-dialog-centered'>
         <div class='modal-content'>
           <div class='modal-header'>
-            <h5 class='modal-title'>Update Category()</h5>
+            <h5 class='modal-title'>Add Category</h5>
             <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
           </div>
           <form method="post" id='edit-form'>
             <div class='modal-body'>
               <!-- <input class='form-control' type='hidden' name='category_id'> -->
-              <div class='form-group'>
-                <label for='full_name'>Category Name</label>
-                <input class='form-control' type='text' name='name'>
+              <div class='form-group row'>
+                <div class="col-4">
+                  <label for='full_name'>Category Name</label>
+                </div>
+                <div class="col-8">
+                  <input class='form-control' type='text' name='name'>
+                </div>
               </div>
             </div>
             <div class='modal-footer'>
