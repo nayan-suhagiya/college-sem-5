@@ -1,27 +1,53 @@
 <?php
-  include_once "connection.php";
+include "connection.php";
 
-  if(isset($_POST["submit"])){
-    // echo "form submitted!";
-    $name = $_POST["name"];
-    $email = $_POST["email"];
-    $passwd= $_POST["passwd"];
-    $image = $_FILES["profile"]["name"];
-    $tempname = $_FILES['profile']['tmp_name'];
+if (isset($_POST["submit"])) {
+  // echo "form submitted!";
+  $name = $_POST["name"];
+  $email = $_POST["email"];
+  $passwd = $_POST["passwd"];
+  $image = $_FILES["profile"]["name"];
+  $tempname = $_FILES['profile']['tmp_name'];
 
-    $path = "upload/".$image;
-		copy($tempname, $path);
+  $path = "upload/profile/" . $image;
 
-    // echo $userid.$name.$email.$passwd;
+  $allowed_image_extension = array(
+    "png",
+    "jpg",
+    "jpeg"
+  );
+  $file_extension = pathinfo($_FILES["profile"]["name"], PATHINFO_EXTENSION);
+  // copy($tempname, $path);
 
+  if (!in_array($file_extension, $allowed_image_extension)) {
+    echo "
+            <script>
+              alert('Upload valid images. Only PNG,JPG and JPEG are allowed.');
+            </script>
+            ";
+  } else if (copy($tempname, $path)) {
     $query = "INSERT INTO Users(name,email,password,image) VALUES('$name','$email','$passwd','$image')";
-    $runquery = mysqli_query($conn,$query);
+    $runquery = mysqli_query($conn, $query);
+    if ($runquery) {
 
-    if($runquery){
+      echo "
+                <script>
+                  alert('Registred successfully!');
+                </script>
+                ";
       header("location:./index.php");
     }
-    
+  } else {
+    echo "
+            <script>
+              alert(' Failed to upload image!');
+            </script>
+            ";
   }
+
+  // echo $userid.$name.$email.$passwd;
+
+}
 ?>
 
 <!DOCTYPE html>
@@ -35,7 +61,7 @@
 
 <body>
   <?php
-    include_once "./navbar_root.php";
+  include "./navbar_root.php";
   ?>
 
   <div class="container" style="margin-top:17vh;">

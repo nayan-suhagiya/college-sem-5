@@ -9,41 +9,40 @@
 
 <body>
   <?php
-    include_once "./navbar_dash.php";
+  include "./navbar_dash.php";
   ?>
 
   <?php
-    if(!isset($_SESSION["user_id"])){
+  if (!isset($_SESSION["user_id"])) {
     header("location:./index.php");
-    }
+  }
 
-    $user_id = $_SESSION["user_id"];
-    $username = $_SESSION["username"];
+  $user_id = $_SESSION["user_id"];
+  $username = $_SESSION["username"];
 
-    // echo "
-    // <div class='container my-4'>
-    //   <h4  class='text-center'>Welcome <span class='text-custom text-decoration-underline'>$username</span> Explore the blog posts!!</h4>    
-    // </div>  
-    // ";
+  // echo "
+  // <div class='container my-4'>
+  //   <h4  class='text-center'>Welcome <span class='text-custom text-decoration-underline'>$username</span> Explore the blog posts!!</h4>    
+  // </div>  
+  // ";
   ?>
 
 
   <div class="container my-5">
     <div class="row">
       <?php
-     $query = "SELECT * FROM Blog_Posts";
-    $runquery = mysqli_query($conn,$query);
+      $query = "SELECT * FROM blog_posts";
+      $runquery = mysqli_query($conn, $query);
 
-    while ($row = mysqli_fetch_assoc($runquery)) {
-      // print_r($row);
-      $title = $row["title"];
-      $content = $row["content"];
-      $tag = $row["tag"];
-      $category = $row["category"];
-      $created_at = $row["created_at"];
-    
-  ?>
-      <!-- <div class='container my-3'>
+      while ($row = mysqli_fetch_assoc($runquery)) {
+        // print_r($row);
+        $title = $row["title"];
+        $content = $row["content"];
+        $category = $row["category"];
+        $created_at = $row["created_at"];
+
+        ?>
+        <!-- <div class='container my-3'>
     <div class='row'>
       <div class='card mb-3 border-0'>
         <div class='row g-0'>
@@ -72,36 +71,43 @@
     </div>
   </div> -->
 
-      <div class="col-sm-6">
-        <div class="card">
-          <img class="card-img" src='./assets/blog_default.png' alt="Post_Card">
-          <div class="card-img-overlay">
-            <a href="#" class="btn btn-light btn-sm"><?= $category ?></a>
-          </div>
-          <div class="card-body">
-            <h4 class="card-title"><?= $title ?></h4>
-            <small class="text-muted cat">
-              <i class="far fa-clock text-info"></i><?= $tag?>
-              <!-- <i class="fas fa-users text-info"></i> 4 portions -->
-            </small>
-            <p class="card-text"><?= $content ?></p>
-            <a href="#" class="btn btn-info">Add to wishlist</a>
-          </div>
-          <div class="card-footer text-muted d-flex justify-content-between bg-transparent border-top-0">
-            <div class="views"><?= $created_at?>
+        <div class="col-sm-6">
+          <div class="card">
+            <img class="card-img" src='./assets/blog_default.png' alt="Post_Card">
+            <div class="card-img-overlay">
+              <a href="#" class="btn btn-light btn-sm">
+                <?= $category ?>
+              </a>
             </div>
-            <div class="stats">
-              <i class="bi bi-eye"></i> 1347
-              <i class="bi bi-chat-dots"></i> 12
+            <div class="card-body">
+              <h4 class="card-title">
+                <?= $title ?>
+              </h4>
+              <small class="text-muted cat">
+                <!-- <i class="far fa-clock text-info"></i><?= $tag ?> -->
+                <!-- <i class="fas fa-users text-info"></i> 4 portions -->
+              </small>
+              <p class="card-text">
+                <?= $content ?>
+              </p>
+              <!-- <a href="#" class="btn btn-info">Add to wishlist</a> -->
             </div>
+            <div class="card-footer text-muted d-flex justify-content-between bg-transparent border-top-0">
+              <div class="views">
+                <?= $created_at ?>
+              </div>
+              <div class="stats">
+                <i class="bi bi-heart-fill"></i> 1347
+                <i class="bi bi-chat-square-dots"></i> 12
+              </div>
 
+            </div>
           </div>
         </div>
-      </div>
 
-      <?php
-    }
-  ?>
+        <?php
+      }
+      ?>
     </div>
   </div>
 

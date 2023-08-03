@@ -1,5 +1,5 @@
 <?php
-include_once "connection.php";
+include "connection.php";
 session_start();
 
 if (isset($_SESSION["user_id"])) {
@@ -19,6 +19,7 @@ if (isset($_POST["submit"])) {
     // print_r($row);
     $_SESSION["user_id"] = $row["user_id"];
     $_SESSION["username"] = $row["name"];
+
     if ($row['user_type'] == "admin") {
       header("location:admin/dashboard.php");
     } else {
@@ -45,7 +46,7 @@ if (isset($_POST["submit"])) {
 
 <body>
   <?php
-  include_once "./navbar_root.php";
+  include "./navbar_root.php";
   ?>
 
   <div class="container" style="margin-top:20vh;">

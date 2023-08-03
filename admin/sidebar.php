@@ -1,8 +1,8 @@
 <?php
-include_once "../connection.php";
+include "../connection.php";
 session_start();
 if (!isset($_SESSION["user_id"])) {
-    header("location:../index.php");
+  header("location:../index.php");
 }
 
 echo ($_SESSION["user_id"]);
@@ -19,7 +19,7 @@ $name = $row["name"];
 $image = $row["image"];
 
 if ($row['user_type'] == "client") {
-    header("location:../dashboard.php");
+  header("location:../dashboard.php");
 }
 
 
@@ -61,13 +61,17 @@ if ($row['user_type'] == "client") {
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="<?= ".".$image ?>" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block dropdown-toggle ps-2"><?= $name ?></span>
+            <img src="<?= "." . $image ?>" alt="Profile" class="rounded-circle">
+            <span class="d-none d-md-block dropdown-toggle ps-2">
+              <?= $name ?>
+            </span>
           </a><!-- End Profile image Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6><?= $name ?></h6>
+              <h6>
+                <?= $name ?>
+              </h6>
               <span>Web Designer</span>
             </li>
             <li>

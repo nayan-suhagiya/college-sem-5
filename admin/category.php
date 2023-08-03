@@ -1,5 +1,5 @@
 <?php
-include_once "../connection.php";
+include "../connection.php";
 
 if (isset($_POST["submit"]) && isset($_POST["name"]) && isset($_POST["category_id"])) {
 
@@ -42,7 +42,7 @@ if (isset($_POST["delete"]) && isset($_POST["category_id"])) {
   }
 }
 
-include_once "./sidebar.php";
+include "./sidebar.php";
 
 ?>
 <main id="main" class="main">
@@ -51,7 +51,8 @@ include_once "./sidebar.php";
       <div class="card">
         <div class="card-body">
           <h5 class="card-title float-start">Blog Category Information</h5>
-          <div class="btn btn-primary float-end" data-bs-toggle='modal' data-bs-target='#edit-category-modal'>Add category</div>
+          <div class="btn btn-primary float-end" data-bs-toggle='modal' data-bs-target='#edit-category-modal'>Add
+            category</div>
           <!-- Table with stripped rows -->
           <table class="table table-striped text-center">
             <thead>
@@ -67,22 +68,31 @@ include_once "./sidebar.php";
               $result = mysqli_query($conn, $query);
               $i = 1;
               while ($row = mysqli_fetch_assoc($result)) {
-              ?><tr>
-                  <th scope='row'><?= $i ?></th>
-                  <td><?= $row["name"] ?></td>
+                ?>
+                <tr>
+                  <th scope='row'>
+                    <?= $i ?>
+                  </th>
+                  <td>
+                    <?= $row["name"] ?>
+                  </td>
                   <td>
                     <form method="post" id='edit-form' class="m-0">
                       <input class='form-control' type='hidden' value="<?= $row["category_id"] ?>" name='category_id'>
-                      <button class='btn btn-primary' type="button" data-bs-toggle='modal' data-bs-target='#edit-category-modal<?= $i ?>'><i class='bi bi-pencil'></i></button>
+                      <button class='btn btn-primary' type="button" data-bs-toggle='modal'
+                        data-bs-target='#edit-category-modal<?= $i ?>'><i class='bi bi-pencil'></i></button>
                       <button class='btn btn-danger' type="submit" name="delete"><i class='bi bi-trash'></i></button>
                     </form>
                   </td>
                 </tr>
-                <div class='modal fade' id='edit-category-modal<?= $i ?>' tabindex='-1' style='display: none;' aria-hidden='true'>
+                <div class='modal fade' id='edit-category-modal<?= $i ?>' tabindex='-1' style='display: none;'
+                  aria-hidden='true'>
                   <div class='modal-dialog modal-dialog-centered'>
                     <div class='modal-content'>
                       <div class='modal-header'>
-                        <h5 class='modal-title'>Update Category(<?= $row["name"] ?>)</h5>
+                        <h5 class='modal-title'>Update Category(
+                          <?= $row["name"] ?>)
+                        </h5>
                         <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
                       </div>
                       <form method="post" id='edit-form'>
@@ -90,7 +100,7 @@ include_once "./sidebar.php";
                           <input class='form-control' value="<?= $row["category_id"] ?>" type='hidden' name='category_id'>
                           <div class='form-group row '>
                             <div class="col-4">
-                              <label  for='full_name'>Category Name</label>
+                              <label for='full_name'>Category Name</label>
                             </div>
                             <div class="col-8">
                               <input class='form-control' value="<?= $row["name"] ?>" type='text' name='name'>
@@ -105,7 +115,7 @@ include_once "./sidebar.php";
                     </div>
                   </div>
                 </div>
-              <?php
+                <?php
                 $i++;
               }
               ?>

@@ -9,29 +9,29 @@
 
 <body>
   <?php
-    include_once "./navbar_dash.php";
+  include "./navbar_dash.php";
 
-    $user_id = $_SESSION["user_id"];
-    
-    if(isset($_POST["submit"])){
-      // echo "form submitted";
+  $user_id = $_SESSION["user_id"];
 
-      $title = $_POST["title"];
-      $content = $_POST["content"];
-      $tags = $_POST["tags"];
-      $category = $_POST['category'];
+  if (isset($_POST["submit"])) {
+    // echo "form submitted";
+  
+    $title = $_POST["title"];
+    $content = $_POST["content"];
+    $tags = $_POST["tags"];
+    $category = $_POST['category'];
 
-      $query = "INSERT INTO Blog_Posts (user_id,title,content,tag,category,created_at,updated_at) VALUES($user_id,'$title','$content','$tags','$category',NOW(),NOW())";
-      $runquery = mysqli_query($conn,$query);
+    $query = "INSERT INTO Blog_Posts (user_id,title,content,tag,category,created_at,updated_at) VALUES($user_id,'$title','$content','$tags','$category',NOW(),NOW())";
+    $runquery = mysqli_query($conn, $query);
 
-      if($runquery){
-        echo "
+    if ($runquery) {
+      echo "
         <script>
           alert('Post added successfully!');
         </script>
         ";
-      }
     }
+  }
   ?>
 
   <div class="container">
@@ -53,18 +53,18 @@
             <div class="form-floating my-2">
               <!-- <input type="text" name="tags" class="form-control" id="floatingTag" placeholder="Tags" required> -->
               <select name="tags" id="floatingTag" class="form-select">
-              <?php
-                  $query = "SELECT * FROM Tags";
-                  $runquery = mysqli_query($conn,$query);
+                <?php
+                $query = "SELECT * FROM Tags";
+                $runquery = mysqli_query($conn, $query);
 
-                  while($row = mysqli_fetch_assoc($runquery)){
-                    $tagname = $row["name"];
-                    $tagname_id = $row["tag_id"];
-                    
-                    echo "
+                while ($row = mysqli_fetch_assoc($runquery)) {
+                  $tagname = $row["name"];
+                  $tagname_id = $row["tag_id"];
+
+                  echo "
                       <option value='$tagname_id'>$tagname</option>
                     ";
-                  }
+                }
                 ?>
               </select>
               <label for="floatingTag">Enter Tag</label>
@@ -73,18 +73,18 @@
               <!-- <input type="text" name="tags" class="form-control" id="floatingTag" placeholder="Tags" required> -->
               <select name="category" id="floatingCategory" class="form-select">
                 <?php
-                  $query = "SELECT * FROM Categories";
-                  $runquery = mysqli_query($conn,$query);
-                  
-                  while($row = mysqli_fetch_assoc($runquery)){
-                    $category = $row["name"];
-                    $category_id = $row["category_id"];
-                    
-                    echo "
+                $query = "SELECT * FROM Categories";
+                $runquery = mysqli_query($conn, $query);
+
+                while ($row = mysqli_fetch_assoc($runquery)) {
+                  $category = $row["name"];
+                  $category_id = $row["category_id"];
+
+                  echo "
                     <option value='$category_id'>$category</option>
                     ";
-                  }
-                  ?>
+                }
+                ?>
               </select>
               <label for="floatingCategory">Select Category</label>
             </div>

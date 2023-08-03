@@ -1,5 +1,5 @@
 <?php
-include_once "connection.php";
+include "connection.php";
 session_start();
 if (!isset($_SESSION["user_id"])) {
   header("location:./index.php");
@@ -59,13 +59,17 @@ $image = $row["image"];
           <li class="nav-item dropdown pe-3">
 
             <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-              <img src="upload/<?= $image ?>" alt="Profile" class="rounded-circle" height="30">
-              <span class="d-none d-md-block dropdown-toggle ps-2"><?= $name ?></span>
+              <img src="upload/profile/<?= $image ?>" alt="Profile" class="rounded-circle" height="30">
+              <span class="d-none d-md-block dropdown-toggle ps-2">
+                <?= $name ?>
+              </span>
             </a><!-- End Profile image Icon -->
 
             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
               <li class="dropdown-header">
-                <h6 class="fw-bolder"><?= $name ?></h6>
+                <h6 class="fw-bolder">
+                  <?= $name ?>
+                </h6>
                 <span>Web Designer</span>
               </li>
               <li>
@@ -136,10 +140,10 @@ $image = $row["image"];
 <script src="./lib/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
   integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous">
-</script>
+  </script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
   integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">
-</script>
+  </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"
   integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous">
-</script>
+  </script>
