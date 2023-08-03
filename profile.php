@@ -13,12 +13,12 @@
     include "./navbar_dash.php";
 
     $user_id = $_SESSION["user_id"];
-    $username = $_SESSION["username"];
 
     $query = "select * from users where user_id='$user_id'";
     $runquery = mysqli_query($conn, $query);
     $row = mysqli_fetch_assoc($runquery);
 
+    $username = $row["name"];
     $email = $row["email"];
     $password = $row["password"];
 

@@ -18,7 +18,6 @@
   }
 
   $user_id = $_SESSION["user_id"];
-  $username = $_SESSION["username"];
 
   // echo "
   // <div class='container my-4'>

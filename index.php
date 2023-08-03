@@ -18,7 +18,6 @@ if (isset($_POST["submit"])) {
 
     // print_r($row);
     $_SESSION["user_id"] = $row["user_id"];
-    $_SESSION["username"] = $row["name"];
 
     if ($row['user_type'] == "admin") {
       header("location:admin/dashboard.php");
