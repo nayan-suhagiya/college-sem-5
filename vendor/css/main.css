@@ -668,11 +668,6 @@ section {
   }
 }
 
-.img-bg .img-bg-inner h2,
-.img-bg .img-bg-inner p {
-  color: var(--color-white);
-}
-
 @media (max-width: 500px) {
   .img-bg .img-bg-inner p {
     display: none;

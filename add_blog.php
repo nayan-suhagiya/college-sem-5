@@ -18,19 +18,54 @@
   
     $title = $_POST["title"];
     $content = $_POST["content"];
-    $tags = $_POST["tags"];
     $category = $_POST['category'];
 
-    $query = "INSERT INTO Blog_Posts (user_id,title,content,tag,category,created_at,updated_at) VALUES($user_id,'$title','$content','$tags','$category',NOW(),NOW())";
-    $runquery = mysqli_query($conn, $query);
+    $findCategory = mysqli_query($conn, "SELECT * FROM categories WHERE name='$category'");
+    // print_r(mysqli_fetch_assoc($findCategory)["category_id"]);
+  
+    $category_id = mysqli_fetch_assoc($findCategory)["category_id"];
 
-    if ($runquery) {
+    $blog_image = $_FILES["blog_image"]["name"];
+
+    echo $blog_image;
+    $tmpname = $_FILES["blog_image"]["tmp_name"];
+    $path = "./upload/blog/" . time() . $blog_image;
+
+    $allowed_image_extension = array(
+      "png",
+      "jpg",
+      "jpeg"
+    );
+    $file_extension = pathinfo($_FILES["blog_image"]["name"], PATHINFO_EXTENSION);
+
+    if (!in_array($file_extension, $allowed_image_extension)) {
       echo "
+            <script>
+              alert('Upload valid images. Only PNG,JPG and JPEG are allowed.');
+            </script>
+            ";
+    } else if (move_uploaded_file($tempname, $path)) {
+      $query = "INSERT INTO blog_posts (user_id,title,content,category,image,category_id,created_at) VALUES($user_id,'$title','$content','$category','$path',$category_id,NOW())";
+
+
+      $runquery = mysqli_query($conn, $query);
+
+      if ($runquery) {
+        echo "
         <script>
           alert('Post added successfully!');
         </script>
         ";
+      }
+    } else {
+      echo "
+            <script>
+              alert(' Failed to upload image!');
+            </script>
+            ";
     }
+
+
   }
   ?>
 
@@ -52,25 +87,6 @@
             </div>
             <div class="form-floating my-2">
               <!-- <input type="text" name="tags" class="form-control" id="floatingTag" placeholder="Tags" required> -->
-              <select name="tags" id="floatingTag" class="form-select">
-                <?php
-                $query = "SELECT * FROM Tags";
-                $runquery = mysqli_query($conn, $query);
-
-                while ($row = mysqli_fetch_assoc($runquery)) {
-                  $tagname = $row["name"];
-                  $tagname_id = $row["tag_id"];
-
-                  echo "
-                      <option value='$tagname_id'>$tagname</option>
-                    ";
-                }
-                ?>
-              </select>
-              <label for="floatingTag">Enter Tag</label>
-            </div>
-            <div class="form-floating my-2">
-              <!-- <input type="text" name="tags" class="form-control" id="floatingTag" placeholder="Tags" required> -->
               <select name="category" id="floatingCategory" class="form-select">
                 <?php
                 $query = "SELECT * FROM Categories";
@@ -78,15 +94,19 @@
 
                 while ($row = mysqli_fetch_assoc($runquery)) {
                   $category = $row["name"];
-                  $category_id = $row["category_id"];
 
                   echo "
-                    <option value='$category_id'>$category</option>
+                    <option value='$category'>$category</option>
                     ";
                 }
                 ?>
               </select>
               <label for="floatingCategory">Select Category</label>
+            </div>
+            <div class="form-floating my-2">
+              <input type="file" name="blog_image" class="form-control" id="floatingBlogImage" placeholder="Title"
+                required>
+              <label for="floatingBlogImage">Upload blog image</label>
             </div>
             <div class="form-group">
               <button class="btn btn-custom py-2 my-3" name="submit" type="submit">Post Blog</button>

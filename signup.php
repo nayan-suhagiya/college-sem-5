@@ -86,9 +86,9 @@ if (isset($_POST["submit"])) {
                 required>
               <label for="floatingPassword">Enter Password</label>
             </div>
-            <div class="form-group my-2">
-              <label for="profile text-left">Upload Profile Picture</label>
-              <input type="file" name="profile" class="form-control" id="profile" required>
+            <div class="form-floating my-2">
+              <input type="file" name="profile" class="form-control" id="floatingFile" required>
+              <label for="floatingFile">Upload Profile Picture</label>
             </div>
             <button class="btn btn-custom w-100 py-2 my-3" name="submit" type="submit">Sign up</button>
             <div>
