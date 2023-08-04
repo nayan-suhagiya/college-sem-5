@@ -9,7 +9,7 @@ if (isset($_POST["submit"])) {
   $image = $_FILES["profile"]["name"];
   $tempname = $_FILES['profile']['tmp_name'];
 
-  $path = "upload/profile/" . $image;
+  $path = "./upload/profile/" . time() . $image;
 
   $allowed_image_extension = array(
     "png",
@@ -25,8 +25,8 @@ if (isset($_POST["submit"])) {
               alert('Upload valid images. Only PNG,JPG and JPEG are allowed.');
             </script>
             ";
-  } else if (copy($tempname, $path)) {
-    $query = "INSERT INTO Users(name,email,password,image) VALUES('$name','$email','$passwd','$image')";
+  } else if (move_uploaded_file($tempname, $path)) {
+    $query = "INSERT INTO Users(name,email,password,image) VALUES('$name','$email','$passwd','$path')";
     $runquery = mysqli_query($conn, $query);
     if ($runquery) {
 

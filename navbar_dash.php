@@ -19,7 +19,7 @@ if ($row['user_type'] == "admin") {
   header("location:admin/dashboard.php");
 }
 $name = $row["name"];
-$image = $row["image"];
+
 
 ?>
 
@@ -32,14 +32,15 @@ $image = $row["image"];
   <title>Blog System</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./vendor/css/style.css">
   <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/line-awesome/1.3.0/line-awesome/css/line-awesome.min.css"
     integrity="sha512-vebUliqxrVkBy3gucMhClmyQP9On/HAWQdKDXRaAlb/FKuTbxkjPKUyqVOxAcGwFDka79eTF+YXwfke1h3/wfg=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <!-- <link href="../lib/css/style.css" rel="stylesheet"> -->
-  <!-- <link href="../lib/css/bootstrap.min.css" rel="stylesheet"> -->
-
+  <link rel="stylesheet" href="./vendor/css/main.css">
+  <link rel="stylesheet" href="./vendor/css/varibale.css">
+  <link rel="stylesheet" href="./vendor/swiper/swiper-bundle.min.css">
+  <script src="./vendor/js/main.js"></script>
   <link href="./lib/css/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
 </head>
 
@@ -47,7 +48,7 @@ $image = $row["image"];
   <header class="p-1 header_nav">
     <div class="container-fluid">
       <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+        <a href="./dashboard.php" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
           <img src="./assets/site_logo.png" alt="logo" height="60">
         </a>
 
@@ -59,7 +60,7 @@ $image = $row["image"];
           <li class="nav-item dropdown pe-3">
 
             <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-              <img src="upload/profile/<?= $image ?>" alt="Profile" class="rounded-circle" height="30">
+              <img src="<?= $row["image"] ?>" alt="Profile" class="rounded-circle" height="30">
               <span class="d-none d-md-block dropdown-toggle ps-2">
                 <?= $name ?>
               </span>
@@ -132,6 +133,7 @@ $image = $row["image"];
     </div>
   </header>
 
+  <script src="./vendor/swiper/swiper-bundle.min.js"></script>
 
 </body>
 

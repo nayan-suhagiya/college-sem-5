@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Blog System</title>
+
 </head>
 
 <body>
@@ -26,122 +27,160 @@
   // ";
   ?>
 
+  <!-- Hero slider -->
+  <section id="hero-slider" class="hero-slider">
+    <div class="container-md" data-aos="fade-in">
+      <div class="row">
+        <div class="col-12">
+          <div class="swiper sliderFeaturedPosts">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide">
+                <a class="img-bg d-flex align-items-end" style="background-image: url('./assets/post-slide-1.jpeg');">
+                  <div class="img-bg-inner">
+                    <h2>The Best Homemade Masks for Face (keep the Pimples Away)</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem neque est mollitia! Beatae
+                      minima assumenda repellat harum vero, officiis ipsam magnam obcaecati cumque maxime inventore
+                      repudiandae quidem necessitatibus rem atque.</p>
+                  </div>
+                </a>
+              </div>
 
-  <div class="container my-5">
-    <div class="row">
-      <?php
-      $query = "SELECT * FROM blog_posts";
-      $runquery = mysqli_query($conn, $query);
+              <div class="swiper-slide">
+                <a class="img-bg d-flex align-items-end" style="background-image: url('./assets/post-slide-2.jpeg');">
+                  <div class="img-bg-inner">
+                    <h2>17 Pictures of Medium Length Hair in Layers That Will Inspire Your New Haircut</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem neque est mollitia! Beatae
+                      minima assumenda repellat harum vero, officiis ipsam magnam obcaecati cumque maxime inventore
+                      repudiandae quidem necessitatibus rem atque.</p>
+                  </div>
+                </a>
+              </div>
 
-      while ($row = mysqli_fetch_assoc($runquery)) {
-        // print_r($row);
-        $title = $row["title"];
-        $content = $row["content"];
-        $category = $row["category"];
-        $created_at = $row["created_at"];
+              <div class="swiper-slide">
+                <a class="img-bg d-flex align-items-end" style="background-image: url('./assets/post-slide-3.jpeg');">
+                  <div class="img-bg-inner">
+                    <h2>13 Amazing Poems from Shel Silverstein with Valuable Life Lessons</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem neque est mollitia! Beatae
+                      minima assumenda repellat harum vero, officiis ipsam magnam obcaecati cumque maxime inventore
+                      repudiandae quidem necessitatibus rem atque.</p>
+                  </div>
+                </a>
+              </div>
 
-        ?>
-        <!-- <div class='container my-3'>
-    <div class='row'>
-      <div class='card mb-3 border-0'>
-        <div class='row g-0'>
-          <div class='col-md-4'>
-            <img class='img-fluid rounded-start' style='height:100%;width:100%;'>
-          </div>
-          <div class='col-md-8 border'>
-            <div class='card-body'>
-              <h5 class='card-title'></h5>
-              <p class='card-text'></p>
-              <p class='card-text'>
-                <small class='text-body-secondary'>
-                  <i class='las la-tags fs-5'></i>
-                </small>
-              </p>
-              <p class='card-text'>
-                <small class='text-body-secondary'>
-                  <i class='las la-th-list fs-5'></i>
-                </small>
-              </p>
-              <p class='card-text'><small class='text-body-secondary'>></small></p>
+              <div class="swiper-slide">
+                <a class="img-bg d-flex align-items-end" style="background-image: url('./assets/post-slide-4.jpeg');">
+                  <div class="img-bg-inner">
+                    <h2>9 Half-up/half-down Hairstyles for Long and Medium Hair</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem neque est mollitia! Beatae
+                      minima assumenda repellat harum vero, officiis ipsam magnam obcaecati cumque maxime inventore
+                      repudiandae quidem necessitatibus rem atque.</p>
+                  </div>
+                </a>
+              </div>
             </div>
+            <div class="custom-swiper-button-next">
+              <span class="bi-chevron-right"></span>
+            </div>
+            <div class="custom-swiper-button-prev">
+              <span class="bi-chevron-left"></span>
+            </div>
+
+            <div class="swiper-pagination"></div>
           </div>
         </div>
       </div>
     </div>
-  </div> -->
+  </section>
 
-        <div class="col-sm-6">
-          <div class="card">
-            <img class="card-img" src='./assets/blog_default.png' alt="Post_Card">
-            <div class="card-img-overlay">
-              <a href="#" class="btn btn-light btn-sm">
-                <?= $category ?>
-              </a>
+
+
+
+  <section class="single-post-content">
+    <div class="container-fluid">
+      <div class="row">
+        <?php
+        $query = "SELECT * FROM blog_posts";
+        $runquery = mysqli_query($conn, $query);
+
+        while ($row = mysqli_fetch_assoc($runquery)) {
+          // print_r($row);
+          $title = $row["title"];
+          $content = $row["content"];
+          $category = $row["category"];
+          $created_at = $row["created_at"];
+
+          ?>
+
+          <!-- <div class="col-sm-6">
+            <div class="card">
+              <img class="card-img" src='./assets/blog_default.png' alt="Post_Card">
+              <div class="card-img-overlay">
+                <a href="#" class="btn btn-light btn-sm">
+                  <?= $category ?>
+                </a>
+              </div>
+              <div class="card-body">
+                <h4 class="card-title">
+                  <?= $title ?>
+                </h4>
+                <small class="text-muted cat">
+                  <?= $tag ?>
+
+                </small>
+                <p class="card-text">
+                  <?= $content ?>
+                </p>
+
+              </div>
+              <div class="card-footer text-muted d-flex justify-content-between bg-transparent border-top-0">
+                <div class="views">
+                  <?= $created_at ?>
+                </div>
+                <div class="stats">
+                  <i class="bi bi-heart-fill"></i> 1347
+                  <i class="bi bi-chat-square-dots"></i> 12
+                </div>
+
+              </div>
             </div>
-            <div class="card-body">
-              <h4 class="card-title">
+          </div> -->
+
+
+          <div class="col-md-12 post-content" data-aos="fade-up">
+
+            <!-- ======= Single Post Content ======= -->
+            <div class="single-post" style="text-align:justify;">
+              <div class="post-meta"><span class="date">
+                  <?= $category ?>
+                </span> <span class="mx-1">&bullet;</span> <span>
+                  <?= $created_at ?>
+                </span></div>
+              <h1 class="mb-4">
                 <?= $title ?>
-              </h4>
-              <small class="text-muted cat">
-                <!-- <i class="far fa-clock text-info"></i><?= $tag ?> -->
-                <!-- <i class="fas fa-users text-info"></i> 4 portions -->
-              </small>
-              <p class="card-text">
+              </h1>
+
+              <figure class="my-4">
+                <img src='./assets/blog_default.png' alt="" style="height:auto;width:auto;" class="img-fluid">
+                <!-- <figcaption>Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo, odit? </figcaption> -->
+              </figure>
+              <p>
                 <?= $content ?>
               </p>
-              <!-- <a href="#" class="btn btn-info">Add to wishlist</a> -->
-            </div>
-            <div class="card-footer text-muted d-flex justify-content-between bg-transparent border-top-0">
-              <div class="views">
-                <?= $created_at ?>
-              </div>
-              <div class="stats">
-                <i class="bi bi-heart-fill"></i> 1347
-                <i class="bi bi-chat-square-dots"></i> 12
-              </div>
 
-            </div>
+
+
+            </div><!-- End Single Post Content -->
           </div>
-        </div>
-
-        <?php
-      }
-      ?>
-    </div>
-  </div>
 
 
-  <!-- <div class="container">
-    <div class="row">
-      <div class="col-12 col-sm-8 col-md-6 col-lg-4">
-        <div class="card">
-          <img class="card-img"
-            src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/pasta.jpg" alt="Bologna">
-          <div class="card-img-overlay">
-            <a href="#" class="btn btn-light btn-sm">Cooking</a>
-          </div>
-          <div class="card-body">
-            <h4 class="card-title">Pasta with Prosciutto</h4>
-            <small class="text-muted cat">
-              <i class="far fa-clock text-info"></i> 30 minutes
-              <i class="fas fa-users text-info"></i> 4 portions
-            </small>
-            <p class="card-text">I love quick, simple pasta dishes, and this is one of my favorite.</p>
-            <a href="#" class="btn btn-info">Read Recipe</a>
-          </div>
-          <div class="card-footer text-muted d-flex justify-content-between bg-transparent border-top-0">
-            <div class="views">Oct 20, 12:45PM
-            </div>
-            <div class="stats">
-              <i class="far fa-eye"></i> 1347
-              <i class="far fa-comment"></i> 12
-            </div>
-
-          </div>
-        </div>
+          <?php
+        }
+        ?>
       </div>
     </div>
-  </div> -->
+  </section>
+
+
 </body>
 
 </html>

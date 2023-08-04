@@ -5,63 +5,99 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog System</title>
-    <link rel="stylesheet" href="css/profile.css">
+    <link rel="stylesheet" href="./vendor/css/profile.css">
 </head>
 
 <body>
     <?php
-    include "./navbar_dash.php";
+    ob_start();
+    require "./navbar_dash.php";
 
     $user_id = $_SESSION["user_id"];
 
-    $query = "select * from users where user_id='$user_id'";
-    $runquery = mysqli_query($conn, $query);
-    $row = mysqli_fetch_assoc($runquery);
-
-    $username = $row["name"];
-    $email = $row["email"];
-    $password = $row["password"];
-
-    echo "
-    <div class='container my-4'>
-      <h4 class='text-center'>Welcome <span class='text-custom text-decoration-underline'>$username</span>!</h4>    
-    </div>  
-    ";
-
+    // $query = "select * from users where user_id='$user_id'";
+    // $runquery = mysqli_query($conn, $query);
+    // $row = mysqli_fetch_assoc($runquery);
+    
+    // $username = $row["name"];
+    // $email = $row["email"];
+    // $password = $row["password"];
+    
     if (isset($_POST["submit"])) {
         $username = $_POST["username"];
         $email = $_POST["email"];
         $password = $_POST["password"];
         $img_name = $_FILES['profile']['name'];
 
-        if ($img_name == "") {
-            $img_name = $image;
-        } else {
-            $path = "upload/profile/" . $img_name;
-            copy($_FILES['profile']['tmp_name'], $path);
+
+        $path = "./upload/profile/" . time() . $img_name;
+
+        $allowed_image_extension = array(
+            "png",
+            "jpg",
+            "jpeg"
+        );
+        $file_extension = pathinfo($_FILES["profile"]["name"], PATHINFO_EXTENSION);
+
+        // echo $row["image"];
+    
+        if ($row["image"]) {
+            $removeFileName = $row["image"];
+            // echo $removeFileName;
+    
+            $status = unlink($removeFileName) ? "The file " . $removeFileName . " deleted " : "Error while deleteting file " . $removeFileName;
+            // echo $status;
         }
 
-        if (isset($_SESSION["user_id"])) {
-            $query = "update users set name='$username',email='$email',image='$img_name',password='$password' where user_id=$user_id";
+        if (!in_array($file_extension, $allowed_image_extension)) {
+            echo "
+            <script>
+              alert('Upload valid images. Only PNG,JPG and JPEG are allowed.');
+            </script>
+            ";
+        } else if (move_uploaded_file($_FILES['profile']['tmp_name'], $path)) {
+            // $query = "INSERT INTO Users(name,email,password,image) VALUES('$name','$email','$passwd','$path')";
+            // $runquery = mysqli_query($conn, $query);
+            // if ($runquery) {
+    
+            //     echo "
+            // <script>
+            //   alert('Registred successfully!');
+            // </script>
+            // ";
+            //     header("location:./index.php");
+            // }
+    
+            $query = "update users set name='$username',email='$email',image='$path',password='$password' where user_id=$user_id";
             $runquery = mysqli_query($conn, $query);
 
+            $query = "select * from users where user_id='$user_id'";
+            $runquery = mysqli_query($conn, $query);
+            $row = mysqli_fetch_assoc($runquery);
+
             if ($runquery) {
-                echo "
-                    <script>
-                        alert('Profile Updated!');
-                    </script>
-                ";
+                // echo "
+                // <script>
+                //     alert('Profile Updated!');
+                //     </script>
+                //     ";
+                header("location:./profile.php");
             } else {
                 echo "
                     <script>
-                        alert('Unable to update profile!');
+                    alert('Unable to update profile!');
                     </script>
-                ";
+                    ";
             }
+        } else {
+            echo "
+                <script>
+                alert(' Failed to upload image!');
+                </script>
+                ";
         }
-
     }
-
+    ob_end_flush();
     ?>
 
     <!-- <div class="container">
@@ -82,7 +118,7 @@
                         <div class="col-sm-4 bg-c-lite-green user-profile">
                             <div class="card-block text-center ">
                                 <div class="m-b-25">
-                                    <img src="upload/profile/<?= $image ?>" height="100" class="img-radius"
+                                    <img src="<?= $row["image"] ?>" height="100" class="img-radius"
                                         alt="User-Profile-Image">
                                 </div>
                                 <!-- <h6 class="f-w-600">Hembo Tingor</h6>
@@ -96,13 +132,13 @@
                                     <div class="col-sm-6">
                                         <p class="m-b-10 f-w-600">Name</p>
                                         <h6 class="text-muted f-w-400">
-                                            <?= $username ?>
+                                            <?= $row["name"] ?>
                                         </h6>
                                     </div>
                                     <div class="col-sm-6">
                                         <p class="m-b-10 f-w-600">Email</p>
                                         <h6 class="text-muted f-w-400">
-                                            <?= $email ?>
+                                            <?= $row["email"] ?>
                                         </h6>
                                     </div>
                                 </div>
@@ -111,7 +147,7 @@
                                     <div class="col-sm-6">
                                         <p class="m-b-10 f-w-600">Password</p>
                                         <h6 class="text-muted f-w-400">
-                                            <?= $password ?>
+                                            <?= $row["password"] ?>
                                         </h6>
 
                                     </div>
@@ -159,27 +195,28 @@
                             <label class="col-4 my-2" for='full_name'>Name</label>
                             <div class="col-8">
 
-                                <input class=' form-control' value="<?= $username ?>" type='text' required
+                                <input class=' form-control' value="<?= $row["name"] ?>" type='text' required
                                     name='username'>
                             </div>
                         </div>
                         <div class='form-group row m-0'>
                             <label class="col-4 my-2" for='email'>Email</label>
                             <div class="col-8">
-                                <input class=' form-control' value="<?= $email ?>" type='text' required name='email'>
+                                <input class=' form-control' value="<?= $row["email"] ?>" type='text' required
+                                    name='email'>
                             </div>
                         </div>
                         <div class='form-group row m-0'>
                             <label class="col-4 my-2" for='email'>Password</label>
                             <div class="col-8">
-                                <input class=' form-control' value="<?= $password ?>" type='text' required
+                                <input class=' form-control' value="<?= $row["password"] ?>" type='text' required
                                     name='password'>
                             </div>
                         </div>
                         <div class='form-group row m-0 mt-2'>
                             <label class="col-4 my-2" for='image'>Profile image</label>
                             <div class="col-8">
-                                <input type="file" id="image" class="form-control" name="profile">
+                                <input type="file" id="image" class="form-control" name="profile" required>
                             </div>
                         </div>
                     </div>

@@ -91,7 +91,7 @@
             <div class="form-group">
               <button class="btn btn-custom py-2 my-3" name="submit" type="submit">Post Blog</button>
               <a href="add_to_wishlist.php">
-                <button class="btn btn-custom py-2 my-3" name="submit" type="submit">Add To Wishlist</button>
+                <!-- <button class="btn btn-custom py-2 my-3" name="submit" type="submit">Add To Wishlist</button> -->
               </a>
             </div>
           </form>
