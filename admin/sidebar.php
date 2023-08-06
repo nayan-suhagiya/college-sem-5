@@ -1,3 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Dashboard - NiceAdmin Bootstrap Template</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+  <link href="../lib/css/style.css" rel="stylesheet">
+  <link href="../lib/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../lib/css/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+</head>
 <?php
 include "../connection.php";
 session_start();
@@ -5,7 +19,6 @@ if (!isset($_SESSION["user_id"])) {
   header("location:../index.php");
 }
 
-echo ($_SESSION["user_id"]);
 
 $user_id = $_SESSION["user_id"];
 
@@ -22,23 +35,20 @@ if ($row['user_type'] == "client") {
   header("location:../dashboard.php");
 }
 
+if (isset($message)) {
+  foreach ($message as $message) {
+    echo '
+    <div class="message">
+    <span>' . $message . '</span>
+    <i class="bi bi-x" onclick="this.parentElement.remove();"></i>
+    </div>
+    ';
+  }
+}
 
 
 ?>
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
-  <title>Dashboard - NiceAdmin Bootstrap Template</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
-  <link href="../lib/css/style.css" rel="stylesheet">
-  <link href="../lib/css/bootstrap.min.css" rel="stylesheet">
-  <link href="../lib/css/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-</head>
 
 <body>
 
@@ -148,6 +158,12 @@ if ($row['user_type'] == "client") {
         <a class="nav-link " href="category.php">
           <i class="bi bi-collection"></i>
           <span>Categories</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="promotion_package.php">
+          <i class="bi bi-collection"></i>
+          <span>Promotion Package</span>
         </a>
       </li>
 

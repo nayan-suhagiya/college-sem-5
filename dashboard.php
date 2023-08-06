@@ -84,7 +84,6 @@
             <div class="custom-swiper-button-prev">
               <span class="bi-chevron-left text-white"></span>
             </div>
-
             <div class="swiper-pagination"></div>
           </div>
         </div>
@@ -106,10 +105,13 @@
     // print_r($row);
     $title = $row["title"];
     $content = $row["content"];
-    $category = $row["category"];
+    $category = "SELECT * FROM categories where category_id =  $row[category_id]";
+    $categoryData = mysqli_query($conn, $category);
+    $categoryName = mysqli_fetch_assoc($categoryData);
+    $category = $categoryName["name"];
     $created_at = $row["created_at"];
 
-    ?>
+  ?>
 
     <!-- <div class="col-sm-6">
             <div class="card">
@@ -173,7 +175,7 @@
           </div> -->
 
 
-    <?php
+  <?php
   }
   ?>
   <!-- </div>
@@ -192,15 +194,21 @@
           $user_id = $row["user_id"];
           $title = $row["title"];
           $content = $row["content"];
-          $category = $row["category"];
+          $category = $row["category_id"];
+
+          $category = "SELECT * FROM categories where category_id =  $row[category_id]";
+          $categoryData = mysqli_query($conn, $category);
+          $categoryName = mysqli_fetch_assoc($categoryData);
+          $category = $categoryName["name"];
           $created_at = $row["created_at"];
+          $image = $row["image"];
 
           $query1 = "select * from users where user_id='$user_id'";
           $runquery1 = mysqli_query($conn, $query1);
 
           $user = mysqli_fetch_assoc($runquery1);
 
-          ?>
+        ?>
 
           <div class="col-lg-6">
             <div class="post-entry-1 lg">
@@ -214,7 +222,7 @@
                   <?= $title ?>
                 </a>
               </h2>
-              <a href="single-post.html"><img src="./assets/blog_default.png" alt="" class="img-fluid"></a>
+              <a href="single-post.html"><img src=" <?= $image ?>" alt="" class="img-fluid"></a>
               <p class="mb-4 d-block">
                 <?= $content ?>
               </p>
@@ -230,9 +238,10 @@
             </div>
 
           </div>
-          <?php
+        <?php
         }
         ?>
+
 
         <!-- <div class="col-lg-4">
           <div class="row">
