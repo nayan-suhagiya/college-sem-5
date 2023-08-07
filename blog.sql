@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Aug 03, 2023 at 12:20 PM
--- Server version: 10.1.38-MariaDB
--- PHP Version: 5.6.40
+-- Host: 127.0.0.1
+-- Generation Time: Aug 06, 2023 at 02:38 PM
+-- Server version: 10.4.24-MariaDB
+-- PHP Version: 7.4.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -23,7 +22,13 @@ SET time_zone = "+00:00";
 --
 
 -- --------------------------------------------------------
-
+DROP TABLE IF EXISTS saved_posts;
+DROP TABLE IF EXISTS Comments;
+DROP TABLE IF EXISTS likes;
+DROP TABLE IF EXISTS blog_Posts;
+DROP TABLE IF EXISTS Categories;
+DROP TABLE IF EXISTS Users;
+DROP TABLE IF EXISTS promotion_package;
 --
 -- Table structure for table `blog_posts`
 --
@@ -35,18 +40,18 @@ CREATE TABLE `blog_posts` (
   `content` text NOT NULL,
   `like_count` int(11) DEFAULT NULL,
   `comment_count` int(11) DEFAULT NULL,
-  `category` text NOT NULL,
-  `image` text,
+  `image` text DEFAULT NULL,
   `category_id` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `blog_posts`
 --
 
-INSERT INTO `blog_posts` (`post_id`, `user_id`, `title`, `content`, `like_count`, `comment_count`, `category`, `image`, `category_id`, `created_at`) VALUES
-(1, 2, 'This is a test title', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio placeat exercitationem magni voluptates dolore. Tenetur fugiat voluptates quas, nobis error deserunt aliquam temporibus sapiente, laudantium dolorum itaque libero eos deleniti?', NULL, NULL, 'Food', NULL, 1, '2023-08-02 19:08:03');
+INSERT INTO `blog_posts` (`post_id`, `user_id`, `title`, `content`, `like_count`, `comment_count`, `image`, `category_id`, `created_at`) VALUES
+(1, 2, 'This is a test title', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio placeat exercitationem magni voluptates dolore. Tenetur fugiat voluptates quas, nobis error deserunt aliquam temporibus sapiente, laudantium dolorum itaque libero eos deleniti?', NULL, NULL, './upload/post/169123368200044.png', 1, '2023-08-02 19:08:03'),
+(2, 3, 'Demo Post', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque molestiae hic necessitatibus illo odit porro ipsa praesentium atque accusamus incidunt excepturi minima, modi voluptatibus neque exercitationem assumenda iure consectetur. Itaque!', NULL, NULL, './upload/post/169123377800013.png', 9, '2023-08-04 21:56:00');
 
 -- --------------------------------------------------------
 
@@ -65,8 +70,7 @@ CREATE TABLE `categories` (
 
 INSERT INTO `categories` (`category_id`, `name`) VALUES
 (1, 'Food'),
-(2, 'Health'),
-(4, 'LifeStyle');
+(9, 'Fsdfs');
 
 -- --------------------------------------------------------
 
@@ -93,6 +97,28 @@ CREATE TABLE `likes` (
   `post_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `promotion_package`
+--
+
+CREATE TABLE `promotion_package` (
+  `package_id` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `price` varchar(10) NOT NULL,
+  `description` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `promotion_package`
+--
+
+INSERT INTO `promotion_package` (`package_id`, `name`, `price`, `description`) VALUES
+(13, 'BASIC', '200$', 'Eleifend cursus volutpat risus convallis nam sed quam sollicitudin eget leo at erat cursus justo'),
+(14, 'SUPER', '300$', 'Eleifend cursus volutpat risus convallis nam sed quam sollicitudin eget leo at erat cursus justo'),
+(15, 'ENTERPRISE', '400$', 'Eleifend cursus volutpat risus convallis nam sed quam sollicitudin eget leo at erat cursus justo');
 
 -- --------------------------------------------------------
 
@@ -126,11 +152,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `name`, `email`, `password`, `user_type`, `image`) VALUES
-(1, 'Nayan Suhagiya', 'nayan@example.com', 'nayan@123', 'admin', './upload/profile/16909839763.jpeg'),
-(2, 'Utsav Parmar', 'utsav@example.com', 'utsav@123', 'client', './upload/profile/16909839911.png'),
-(3, 'Utsav Parmar', 'Utsavparmar72@gmail.com', '123', 'admin', './upload/profile/16909840014.jpeg'),
-(11, 'demo', 'demo@gmail.com', 'demo', 'client', '4.jpeg'),
-(12, 'test', 'test@gmail.com', 'test@123', 'client', '5.jpeg');
+(1, 'Nayan Suhagiya', 'nayan@example.com', 'nayan@123', 'admin', './upload/profile/169131863000036.png'),
+(2, 'Utsav Parmar', 'utsav@example.com', 'utsav@123', 'client', './upload/profile/169131872800037.png'),
+(3, 'Tom', 'Utsavparmar72@gmail.com', '123', 'admin', './upload/profile/169131950200048.jpg'),
+(11, 'demo', 'demo@gmail.com', 'demo', 'client', './upload/profile/169131874900044.jpg');
 
 --
 -- Indexes for dumped tables
@@ -168,6 +193,13 @@ ALTER TABLE `likes`
   ADD KEY `user_id` (`user_id`);
 
 --
+-- Indexes for table `promotion_package`
+--
+ALTER TABLE `promotion_package`
+  ADD PRIMARY KEY (`package_id`),
+  ADD UNIQUE KEY `name` (`name`);
+
+--
 -- Indexes for table `saved_posts`
 --
 ALTER TABLE `saved_posts`
@@ -189,13 +221,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `blog_posts`
 --
 ALTER TABLE `blog_posts`
-  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `comments`
@@ -208,6 +240,12 @@ ALTER TABLE `comments`
 --
 ALTER TABLE `likes`
   MODIFY `like_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `promotion_package`
+--
+ALTER TABLE `promotion_package`
+  MODIFY `package_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `saved_posts`
@@ -229,8 +267,8 @@ ALTER TABLE `users`
 -- Constraints for table `blog_posts`
 --
 ALTER TABLE `blog_posts`
-  ADD CONSTRAINT `blog_posts_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`category_id`),
-  ADD CONSTRAINT `blog_posts_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
+  ADD CONSTRAINT `blog_posts_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`),
+  ADD CONSTRAINT `blog_posts_ibfk_2` FOREIGN KEY (`category_id`) REFERENCES `categories` (`category_id`);
 
 --
 -- Constraints for table `comments`
@@ -243,14 +281,14 @@ ALTER TABLE `comments`
 -- Constraints for table `likes`
 --
 ALTER TABLE `likes`
-  ADD CONSTRAINT `likes_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `Blog_Posts` (`post_id`),
+  ADD CONSTRAINT `likes_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `blog_posts` (`post_id`),
   ADD CONSTRAINT `likes_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
 
 --
 -- Constraints for table `saved_posts`
 --
 ALTER TABLE `saved_posts`
-  ADD CONSTRAINT `saved_posts_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `Blog_Posts` (`post_id`),
+  ADD CONSTRAINT `saved_posts_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `blog_posts` (`post_id`),
   ADD CONSTRAINT `saved_posts_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
 COMMIT;
 
