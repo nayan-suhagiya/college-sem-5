@@ -1,6 +1,6 @@
 <?php
 require_once("../connection.php");
-
+include "./sidebar.php";
 if (isset($_POST["submit"]) && isset($_POST["title"])  && isset($_POST["post_id"]) && isset($_POST["content"])  && isset($_POST["category"])) {
 
   $post_id = $_POST["post_id"];
@@ -16,7 +16,8 @@ if (isset($_POST["submit"]) && isset($_POST["title"])  && isset($_POST["post_id"
     if ($_FILES["image"]["name"]) {
       $filename = $_FILES["image"]["name"];
       $tempname = $_FILES["image"]["tmp_name"];
-      $folder = "./upload/post/" . time() . $filename;
+      $file_extension = pathinfo($_FILES["image"]["name"], PATHINFO_EXTENSION);
+      $folder = "./upload/post/" . time() . "." . $file_extension;
       $allowed_image_extension = array(
         "png",
         "jpg",
@@ -26,31 +27,49 @@ if (isset($_POST["submit"]) && isset($_POST["title"])  && isset($_POST["post_id"
       $query = "select * from  blog_posts where post_id = '$post_id' ";
       $result = mysqli_query($conn, $query);
       $row = mysqli_fetch_assoc($result);
-      if ($row['image']) {
-        $filenameRm = "." . $row['image'];
-        if (file_exists($filenameRm)) {
-          $status = unlink($filenameRm) ? 'The file ' . $filenameRm . ' has been deleted' : 'Error deleting ' . $filenameRm;
-          // echo $status;
-        }
-      }
       if (!in_array($file_extension, $allowed_image_extension)) {
-        $message[] = 'Upload valid images. Only PNG and JPEG are allowed.';
+        $message[] = array(
+          'icon' => 'error',
+          'type' => 'Error',
+          'message' => 'Upload valid images. Only PNG and JPEG are allowed.'
+        );
       } else if (move_uploaded_file($tempname, "." . $folder)) {
-        $query = "update  blog_posts set  title = '$title' ,content = '$content' ,category_id = '$category' , image = '$folder'    where post_id = '$post_id'";
+        $content = str_replace("'", "", $content);
+        $query = "update  blog_posts set  title = '" . $title . "' ,content = '" . $content . "' ,category_id = '$category' , image = '$folder'    where post_id = '$post_id'";
         $runquery = mysqli_query($conn, $query);
         if ($runquery) {
-          $message[] = 'Blog Post Update successfully!';
+          $message[] = array(
+            'type' => 'Update',
+            'message' => 'Blog Post Update successfully!',
+            'icon' => 'success'
+          );
+          if ($row['image']) {
+            $filenameRm = "." . $row['image'];
+            if (file_exists($filenameRm)) {
+              $status = unlink($filenameRm) ? 'The file ' . $filenameRm . ' has been deleted' : 'Error deleting ' . $filenameRm;
+              // echo $status;
+            }
+          }
         }
       }
     } else {
+      $content = str_replace("'", "", $content);
       $query = "update  blog_posts set  title = '$title' ,content = '$content' ,category_id = '$category'     where post_id = '$post_id'";
       $runquery = mysqli_query($conn, $query);
       if ($runquery) {
-        $message[] = 'Blog Post Update successfully!';
+        $message[] = array(
+          'type' => 'Update',
+          'message' => 'Blog Post Update successfully!',
+          'icon' => 'success'
+        );
       }
     }
   } else {
-    $message[] = 'Enter  valid  Form Information';
+    $message[] = array(
+      'icon' => 'error',
+      'type' => 'Error',
+      'message' => 'Enter  valid  Form Information'
+    );
   }
 }
 if (isset($_POST["insert"]) && isset($_POST["title"])  &&  isset($_POST["content"])  && isset($_POST["category"])) {
@@ -66,32 +85,65 @@ if (isset($_POST["insert"]) && isset($_POST["title"])  &&  isset($_POST["content
   ) {
     $filename = $_FILES["image"]["name"];
     $tempname = $_FILES["image"]["tmp_name"];
-    $folder = "./upload/post/" . time() . $filename;
+    $file_extension = pathinfo($_FILES["image"]["name"], PATHINFO_EXTENSION);
+    $folder = "./upload/post/" . time() . "." . $file_extension;
     $allowed_image_extension = array(
       "png",
       "jpg",
       "jpeg"
     );
-    $file_extension = pathinfo($_FILES["image"]["name"], PATHINFO_EXTENSION);
     if (!in_array($file_extension, $allowed_image_extension)) {
-      $message[] = 'Upload valid images. Only PNG and JPEG are allowed.';
+      $message[] = array(
+        'icon' => 'error',
+        'type' => 'Error',
+        'message' => 'Upload valid images. Only PNG and JPEG are allowed.'
+      );
     } else if (move_uploaded_file($tempname, "." . $folder)) {
+      $user_id = $_SESSION["user_id"];
       $query = "insert into  blog_posts ( user_id, title , content ,category_id,image) values  ( '$user_id','$title' , '$content','$category','$folder')";
       $runquery = mysqli_query($conn, $query);
       if ($runquery) {
-        $message[] = 'Blog Post Update successfully!';
+        $message[] = array(
+          'type' => 'Add Blog Post',
+          'message' => 'Blog Post Insert successfully!',
+          'icon' => 'success'
+        );
       }
     }
   } else {
-    $message[] = 'Enter  valid  Form Information';
+    $message[] = array(
+      'icon' => 'error',
+      'type' => 'Error',
+      'message' => 'Enter  valid  Form Information'
+    );
   }
 }
-
+if (isset($_POST["delete"]) && isset($_POST["post_id"])) {
+  $post_id = $_POST["post_id"];
+  $query = "select * from  blog_posts where post_id = '$post_id' ";
+  $result = mysqli_query($conn, $query);
+  $row = mysqli_fetch_assoc($result);
+  if ($row['image']) {
+    $filenameRm = "." . $row['image'];
+    if (file_exists($filenameRm)) {
+      $status = unlink($filenameRm) ? 'The file ' . $filenameRm . ' has been deleted' : 'Error deleting ' . $filenameRm;
+      // echo $status;
+    }
+  }
+  $query = "delete from blog_posts  where post_id = '$post_id'";
+  $runquery = mysqli_query($conn, $query);
+  if ($runquery) {
+    $message[] = array(
+      'type' => 'Blog Post Delete',
+      'message' => 'Blog Post delete successfully!',
+      'icon' => 'success'
+    );
+  }
+}
+include "../alert_message.php";
 
 ?>
-<?php
-include "./sidebar.php";
-?>
+
 <main id="main" class="main">
   <section class="section dashboard">
     <div class="row">
@@ -135,7 +187,7 @@ include "./sidebar.php";
                   <td>
 
                     <form method="post" id='edit-form' class="m-0">
-                      <input class='form-control' type='hidden' value="<?= $row["category_id"] ?>" name='category_id'>
+                      <input class='form-control' type='hidden' value="<?= $row["post_id"] ?>" name='post_id'>
                       <button class='btn btn-primary' type="button" data-bs-toggle='modal' data-bs-target='#edit-category-modal<?= $i ?>'><i class='bi bi-pencil'></i></button>
                       <button class='btn btn-danger' type="submit" name="delete"><i class='bi bi-trash'></i></button>
                     </form>
