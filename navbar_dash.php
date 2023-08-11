@@ -38,7 +38,7 @@ $name = $row["name"];
     integrity="sha512-vebUliqxrVkBy3gucMhClmyQP9On/HAWQdKDXRaAlb/FKuTbxkjPKUyqVOxAcGwFDka79eTF+YXwfke1h3/wfg=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="./vendor/css/main.css">
-  <link rel="stylesheet" href="./vendor/css/varibale.css">
+  <!-- <link rel="stylesheet" href="./vendor/css/variables.css"> -->
   <link rel="stylesheet" href="./vendor/swiper/swiper-bundle.min.css">
   <script src="./vendor/js/main.js"></script>
   <link href="./lib/css/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">

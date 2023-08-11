@@ -1,7 +1,7 @@
 <?php
 require_once("../connection.php");
 
-if (isset($_POST["submit"]) && isset($_POST["title"])  && isset($_POST["post_id"]) && isset($_POST["content"])  && isset($_POST["category"])) {
+if (isset($_POST["submit"]) && isset($_POST["title"]) && isset($_POST["post_id"]) && isset($_POST["content"]) && isset($_POST["category"])) {
 
   $post_id = $_POST["post_id"];
   $title = $_POST["title"];
@@ -53,7 +53,7 @@ if (isset($_POST["submit"]) && isset($_POST["title"])  && isset($_POST["post_id"
     $message[] = 'Enter  valid  Form Information';
   }
 }
-if (isset($_POST["insert"]) && isset($_POST["title"])  &&  isset($_POST["content"])  && isset($_POST["category"])) {
+if (isset($_POST["insert"]) && isset($_POST["title"]) && isset($_POST["content"]) && isset($_POST["category"])) {
 
   $title = $_POST["title"];
   $category = $_POST["category"];
@@ -98,7 +98,8 @@ include "./sidebar.php";
       <div class="card">
         <div class="card-body">
           <h3 class="my-3 float-start">Post Information</h3>
-          <div class="btn btn-primary float-end" data-bs-toggle='modal' data-bs-target='#edit-category-modal'>Add Post</div>
+          <div class="btn btn-primary float-end" data-bs-toggle='modal' data-bs-target='#edit-category-modal'>Add Post
+          </div>
           <!-- Table with stripped rows -->
           <table class="table table-striped text-center">
             <thead>
@@ -119,33 +120,48 @@ include "./sidebar.php";
               $result = mysqli_query($conn, $query);
               $i = 1;
               while ($row = mysqli_fetch_assoc($result)) {
-              ?><tr>
-                  <th scope='row'><?= $i ?></th>
-                  <td><?= $row["title"] ?></td>
-                  <td><?= $row["content"] ?></td>
-                  <td><?= $row["like_count"] ?></td>
-                  <td><?php
-                      $category = "SELECT * FROM categories where category_id =  $row[category_id]";
-                      $categoryData = mysqli_query($conn, $category);
-                      $categoryName = mysqli_fetch_assoc($categoryData);
-                      echo ($categoryName["name"]);
-                      ?></td>
+                ?>
+                <tr>
+                  <th scope='row'>
+                    <?= $i ?>
+                  </th>
+                  <td>
+                    <?= $row["title"] ?>
+                  </td>
+                  <td>
+                    <?= $row["content"] ?>
+                  </td>
+                  <td>
+                    <?= $row["like_count"] ?>
+                  </td>
+                  <td>
+                    <?php
+                    $category = "SELECT * FROM categories where category_id =  $row[category_id]";
+                    $categoryData = mysqli_query($conn, $category);
+                    $categoryName = mysqli_fetch_assoc($categoryData);
+                    echo ($categoryName["name"]);
+                    ?>
+                  </td>
                   <td><img class="rounded-5" height="70px" width="70px" src="<?= "." . $row["image"] ?>" alt=""></td>
 
                   <td>
 
                     <form method="post" id='edit-form' class="m-0">
                       <input class='form-control' type='hidden' value="<?= $row["category_id"] ?>" name='category_id'>
-                      <button class='btn btn-primary' type="button" data-bs-toggle='modal' data-bs-target='#edit-category-modal<?= $i ?>'><i class='bi bi-pencil'></i></button>
+                      <button class='btn btn-primary' type="button" data-bs-toggle='modal'
+                        data-bs-target='#edit-category-modal<?= $i ?>'><i class='bi bi-pencil'></i></button>
                       <button class='btn btn-danger' type="submit" name="delete"><i class='bi bi-trash'></i></button>
                     </form>
                   </td>
                 </tr>
-                <div class='modal  fade' id='edit-category-modal<?= $i ?>' tabindex='-1' style='display: none;' aria-hidden='true'>
+                <div class='modal  fade' id='edit-category-modal<?= $i ?>' tabindex='-1' style='display: none;'
+                  aria-hidden='true'>
                   <div class='modal-dialog  modal-lg modal-dialog-centered'>
                     <div class='modal-content'>
                       <div class='modal-header'>
-                        <h5 class='modal-title'>Update Post(<?= $i ?>)</h5>
+                        <h5 class='modal-title'>Update Post(
+                          <?= $i ?>)
+                        </h5>
                         <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
                       </div>
                       <form method="post" id='edit-form' enctype="multipart/form-data">
@@ -164,7 +180,8 @@ include "./sidebar.php";
                               <label for='full_name'>Post Content</label>
                             </div>
                             <div class="col-8">
-                              <textarea class='form-control' name="content" id="" cols="30" rows="5"><?= $row["content"] ?></textarea>
+                              <textarea class='form-control' name="content" id="" cols="30"
+                                rows="5"><?= $row["content"] ?></textarea>
                               <!-- <input class='form-control' value="<?= $row["content"] ?>" type='text' name='content'> -->
                             </div>
                           </div>
@@ -181,7 +198,7 @@ include "./sidebar.php";
                                 while ($row1 = mysqli_fetch_assoc($runquery)) {
                                   $category = $row1["name"];
                                   $category_id = $row1["category_id"];
-                                  $selected =  $row["category_id"] == $category_id ? 'selected' : '';
+                                  $selected = $row["category_id"] == $category_id ? 'selected' : '';
                                   echo "
                                      <option value='$category_id'  $selected >$category</option>
                                   ";
@@ -194,16 +211,18 @@ include "./sidebar.php";
                           <div class='form-group row m-0 mt-2'>
                             <label class="col-4 my-2" for='image'>Profile image</label>
                             <div class="col-8">
-                              <input type="file" accept="image/*" onchange="loadFile<?= $i ?>(event)" id="image" class="form-control" name="image">
+                              <input type="file" accept="image/*" onchange="loadFile<?= $i ?>(event)" id="image"
+                                class="form-control" name="image">
                             </div>
                           </div>
                           <div class="text-center mt-3 ">
-                            <img class="rounded-5" id="output<?= $i ?>" height="120px" width="120px" src="<?= "." . $row["image"] ?>" alt="">
+                            <img class="rounded-5" id="output<?= $i ?>" height="120px" width="120px"
+                              src="<?= "." . $row["image"] ?>" alt="">
                             <script>
-                              var loadFile<?= $i ?> = function(event) {
+                              var loadFile<?= $i ?> = function (event) {
                                 var output = document.getElementById('output<?= $i ?>');
                                 output.src = URL.createObjectURL(event.target.files[0]);
-                                output.onload = function() {
+                                output.onload = function () {
                                   URL.revokeObjectURL(output.src) // free memory
                                 }
                               };
@@ -218,7 +237,7 @@ include "./sidebar.php";
                     </div>
                   </div>
                 </div>
-              <?php
+                <?php
                 $i++;
               }
               ?>
@@ -269,7 +288,7 @@ include "./sidebar.php";
                     while ($row1 = mysqli_fetch_assoc($runquery)) {
                       $category = $row1["name"];
                       $category_id = $row1["category_id"];
-                      $selected =  $row["category"] == $category_id ? 'selected' : '';
+                      $selected = $row["category"] == $category_id ? 'selected' : '';
                       echo "
                                      <option value='$category_id'  $selected >$category</option>
                                   ";
@@ -281,16 +300,17 @@ include "./sidebar.php";
               <div class='form-group row m-0 mt-2'>
                 <label class="col-4 my-2" for='image'>Profile image</label>
                 <div class="col-8">
-                  <input type="file" accept="image/*" onchange="loadFile(event)" id="image" class="form-control" required name="image">
+                  <input type="file" accept="image/*" onchange="loadFile(event)" id="image" class="form-control"
+                    required name="image">
                 </div>
               </div>
               <div class="text-center mt-3 ">
                 <img class="rounded-5" id="output-save" height="120px" width="120px" alt="">
                 <script>
-                  var loadFile = function(event) {
+                  var loadFile = function (event) {
                     var output = document.getElementById('output-save');
                     output.src = URL.createObjectURL(event.target.files[0]);
-                    output.onload = function() {
+                    output.onload = function () {
                       URL.revokeObjectURL(output.src) // free memory
                     }
                   };
