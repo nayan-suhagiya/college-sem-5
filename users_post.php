@@ -11,11 +11,10 @@
 <body>
   <?php
   require "./navbar_dash.php";
+  ?>
+  <?php
 
   $user_id = $_SESSION["user_id"];
-
-
-
 
   if (isset($_POST["submit"]) && isset($_POST["title"]) && isset($_POST["post_id"]) && isset($_POST["content"]) && isset($_POST["category"])) {
 
@@ -50,49 +49,27 @@
           }
         }
         if (!in_array($file_extension, $allowed_image_extension)) {
-          echo "
-          <div class='col-sm-4 m-auto my-3'>
-          <div class='alert alert-danger alert-dismissible fade show' role='alert'>
-          Upload valid images. Only PNG and JPEG are allowed.
-          <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
-          </div>
-          </div>
-          ";
+          $message = "Upload valid images. Only PNG and JPEG are allowed.";
+          $isSuccess = false;
         } else if (move_uploaded_file($tempname, $folder)) {
           $query = "update  blog_posts set  title = '$title' ,content = '$content' ,category_id = '$category' , image = '$folder'    where post_id = '$post_id'";
           $runquery = mysqli_query($conn, $query);
           if ($runquery) {
-            echo "
-          <div class='col-sm-4 m-auto my-3'>
-          <div class='alert alert-success alert-dismissible fade show' role='alert'>
-          Blog Post update successfully!
-          <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
-          </div>
-          </div>
-          ";
+            $message = "Blog Post update successfully!";
+            $isSuccess = true;
           }
         }
       } else {
         $query = "update  blog_posts set  title = '$title' ,content = '$content' ,category_id = '$category'     where post_id = '$post_id'";
         $runquery = mysqli_query($conn, $query);
         if ($runquery) {
-          echo "
-          <div class='col-sm-4 m-auto my-3'>
-          <div class='alert alert-success alert-dismissible fade show' role='alert'>
-          Blog Post update successfully!
-          <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
-          </div>
-          </div> ";
+          $message = "Blog Post update successfully!";
+          $isSuccess = true;
         }
       }
     } else {
-      echo "
-          <div class='col-sm-4 m-auto my-3'>
-          <div class='alert alert-danger alert-dismissible fade show' role='alert'>
-          Unable to update!
-          <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
-          </div>
-          </div>";
+      $message = "Unable to update!";
+      $isSuccess = false;
     }
   }
 
@@ -121,23 +98,11 @@
             $rq = mysqli_query($conn, $q);
 
             if ($rq) {
-              echo "
-              <div class='col-sm-4 m-auto my-3'>
-              <div class='alert alert-success alert-dismissible fade show' role='alert'>
-              Blog Post deleted successfully!
-              <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
-              </div>
-              </div>
-            ";
+              $message = "Blog Post deleted successfully!";
+              $isSuccess = true;
             } else {
-              echo "
-             <div class='col-sm-4 m-auto my-3'>
-              <div class='alert alert-danger alert-dismissible fade show' role='alert'>
-              Unable to delete blog post!
-              <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
-              </div>
-              </div>
-            ";
+              $message = "Unable to delete blog post!";
+              $isSuccess = false;
             }
           }
         } else {
@@ -145,9 +110,11 @@
           $rq = mysqli_query($conn, $q);
 
           if ($rq) {
-            header("location:users_post.php?deleted=true");
+            $message = "Blog Post deleted successfully!";
+            $isSuccess = true;
           } else {
-            header("location:users_post.php?delete=false");
+            $message = "Unable to delete blog post!";
+            $isSuccess = false;
           }
         }
       }

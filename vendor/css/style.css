@@ -1,3 +1,6 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,500");
+@import url("https://fonts.googleapis.com/css?family=Khula:800");
+
 .header_nav {
   background-color: #fff;
   /* color: #3c463d;
@@ -34,8 +37,9 @@
   align-items: center;
 }
 
-@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,500");
-@import url("https://fonts.googleapis.com/css?family=Khula:800");
+.lc_icons {
+  font-size: 20px;
+}
 
 #main-container {
   color: white;
