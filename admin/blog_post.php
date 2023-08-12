@@ -130,16 +130,21 @@ if (isset($_POST["delete"]) && isset($_POST["post_id"])) {
       // echo $status;
     }
   }
-  $query = "delete from blog_posts  where post_id = '$post_id'";
+  $query = "delete from likes  where post_id = '$post_id'";
   $runquery = mysqli_query($conn, $query);
   if ($runquery) {
-    $message[] = array(
-      'type' => 'Blog Post Delete',
-      'message' => 'Blog Post delete successfully!',
-      'icon' => 'success'
-    );
+    $query = "delete from blog_posts  where post_id = '$post_id'";
+    $runquery = mysqli_query($conn, $query);
+    if ($runquery) {
+      $message[] = array(
+        'icon' => 'success',
+        'type' => 'Blog Post Delete',
+        'message' => 'Blog Post delete successfully!',
+      );
+    }
   }
 }
+
 include "../alert_message.php";
 
 ?>
@@ -172,7 +177,7 @@ include "../alert_message.php";
               $result = mysqli_query($conn, $query);
               $i = 1;
               while ($row = mysqli_fetch_assoc($result)) {
-                ?>
+              ?>
                 <tr>
                   <th scope='row'>
                     <?= $i ?>
@@ -205,8 +210,7 @@ include "../alert_message.php";
                     </form>
                   </td>
                 </tr>
-                <div class='modal  fade' id='edit-category-modal<?= $i ?>' tabindex='-1' style='display: none;'
-                  aria-hidden='true'>
+                <div class='modal  fade' id='edit-category-modal<?= $i ?>' tabindex='-1' style='display: none;' aria-hidden='true'>
                   <div class='modal-dialog  modal-lg modal-dialog-centered'>
                     <div class='modal-content'>
                       <div class='modal-header'>
@@ -231,8 +235,7 @@ include "../alert_message.php";
                               <label for='full_name'>Post Content</label>
                             </div>
                             <div class="col-8">
-                              <textarea class='form-control' name="content" id="" cols="30"
-                                rows="5"><?= $row["content"] ?></textarea>
+                              <textarea class='form-control' name="content" id="" cols="30" rows="5"><?= $row["content"] ?></textarea>
                               <!-- <input class='form-control' value="<?= $row["content"] ?>" type='text' name='content'> -->
                             </div>
                           </div>
@@ -262,18 +265,16 @@ include "../alert_message.php";
                           <div class='form-group row m-0 mt-2'>
                             <label class="col-4 my-2" for='image'>Profile image</label>
                             <div class="col-8">
-                              <input type="file" accept="image/*" onchange="loadFile<?= $i ?>(event)" id="image"
-                                class="form-control" name="image">
+                              <input type="file" accept="image/*" onchange="loadFile<?= $i ?>(event)" id="image" class="form-control" name="image">
                             </div>
                           </div>
                           <div class="text-center mt-3 ">
-                            <img class="rounded-5" id="output<?= $i ?>" height="120px" width="120px"
-                              src="<?= "." . $row["image"] ?>" alt="">
+                            <img class="rounded-5" id="output<?= $i ?>" height="120px" width="120px" src="<?= "." . $row["image"] ?>" alt="">
                             <script>
-                              var loadFile<?= $i ?> = function (event) {
+                              var loadFile<?= $i ?> = function(event) {
                                 var output = document.getElementById('output<?= $i ?>');
                                 output.src = URL.createObjectURL(event.target.files[0]);
-                                output.onload = function () {
+                                output.onload = function() {
                                   URL.revokeObjectURL(output.src) // free memory
                                 }
                               };
@@ -288,7 +289,7 @@ include "../alert_message.php";
                     </div>
                   </div>
                 </div>
-                <?php
+              <?php
                 $i++;
               }
               ?>
@@ -351,17 +352,16 @@ include "../alert_message.php";
               <div class='form-group row m-0 mt-2'>
                 <label class="col-4 my-2" for='image'>Profile image</label>
                 <div class="col-8">
-                  <input type="file" accept="image/*" onchange="loadFile(event)" id="image" class="form-control"
-                    required name="image">
+                  <input type="file" accept="image/*" onchange="loadFile(event)" id="image" class="form-control" required name="image">
                 </div>
               </div>
               <div class="text-center mt-3 ">
                 <img class="rounded-5" id="output-save" height="120px" width="120px" alt="">
                 <script>
-                  var loadFile = function (event) {
+                  var loadFile = function(event) {
                     var output = document.getElementById('output-save');
                     output.src = URL.createObjectURL(event.target.files[0]);
-                    output.onload = function () {
+                    output.onload = function() {
                       URL.revokeObjectURL(output.src) // free memory
                     }
                   };

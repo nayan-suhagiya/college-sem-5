@@ -26,14 +26,22 @@
         $user_data = mysqli_fetch_assoc($rq);
 
         // if ($password == "" && $new_password == "" && $renew_password == "") {
-    
+
         // }
-    
+
         if ($password !== $user_data["password"]) {
-            $message = "Current password is wrong!";
+            $message[] = array(
+                'icon' => 'error',
+                'type' => 'Update Profile',
+                'message' => 'Current password is wrong!'
+            );
             $isSuccess = false;
         } elseif ($new_password !== $renew_password) {
-            $message = "Password does not match!";
+            $message[] = array(
+                'icon' => 'error',
+                'type' => 'Update Profile',
+                'message' => 'Password does not match!'
+            );
             $isSuccess = false;
         } else {
             if ($_FILES["profile"]["name"]) {
@@ -48,17 +56,21 @@
                 $file_extension = pathinfo($_FILES["profile"]["name"], PATHINFO_EXTENSION);
 
                 // echo $user_data["image"];
-    
+
                 if ($user_data["image"]) {
                     $removeFileName = $user_data["image"];
                     // echo $removeFileName;
-    
+
                     $status = unlink($removeFileName) ? "The file " . $removeFileName . " deleted " : "Error while deleteting file " . $removeFileName;
                     // echo $status;
                 }
 
                 if (!in_array($file_extension, $allowed_image_extension)) {
-                    $message = "Upload valid images. Only PNG,JPG and JPEG are allowed.";
+                    $message[] = array(
+                        'icon' => 'error',
+                        'type' => 'Error',
+                        'message' => 'Upload valid images. Only PNG and JPEG are allowed.'
+                    );
                     $isSuccess = false;
                 } else if (move_uploaded_file($_FILES['profile']['tmp_name'], $path)) {
                     $query = "update users set name='$username',email='$email',image='$path',password='$new_password' where user_id=$user_id";
@@ -69,10 +81,18 @@
                     $row = mysqli_fetch_assoc($runquery);
 
                     if ($runquery) {
-                        $message = "Profile updated successfully!";
+                        $message[] = array(
+                            'icon' => 'success',
+                            'type' => 'Update Profile',
+                            'message' => 'Profile updated successfully!'
+                        );
                         $isSuccess = true;
                     } else {
-                        $message = "Unable to update!";
+                        $message[] = array(
+                            'icon' => 'error',
+                            'type' => 'Update Profile',
+                            'message' => 'Unable to update!'
+                        );
                         $isSuccess = false;
                     }
                 }
@@ -85,15 +105,24 @@
                 $row = mysqli_fetch_assoc($runquery);
 
                 if ($runquery) {
-                    $message = "Profile updated successfully!";
+                    $message[] = array(
+                        'icon' => 'success',
+                        'type' => 'Update Profile',
+                        'message' => 'Profile updated successfully!'
+                    );
                     $isSuccess = true;
                 } else {
-                    $message = "Unable to update!";
+                    $message[] = array(
+                        'icon' => 'error',
+                        'type' => 'Update Profile',
+                        'message' => 'Unable to update!'
+                    );
                     $isSuccess = false;
                 }
             }
         }
     }
+    include "./alert_message.php";
     ?>
 
     <?php
@@ -110,8 +139,7 @@
                         <div class="col-sm-4 bg-c-lite-green user-profile">
                             <div class="card-block text-center ">
                                 <div class="m-b-25">
-                                    <img src="<?= $row["image"] ?>" height="100" class="img-radius"
-                                        alt="User-Profile-Image">
+                                    <img src="<?= $row["image"] ?>" height="100" class="img-radius" alt="User-Profile-Image">
                                 </div>
                                 <!-- <h6 class="f-w-600">Hembo Tingor</h6>
                                 <p>Web Designer</p> -->
@@ -164,15 +192,13 @@
                             <label class="col-4 my-2" for='full_name'>Name</label>
                             <div class="col-8">
 
-                                <input class=' form-control' value="<?= $row["name"] ?>" type='text' required
-                                    name='username'>
+                                <input class=' form-control' value="<?= $row["name"] ?>" type='text' required name='username'>
                             </div>
                         </div>
                         <div class='form-group row m-0'>
                             <label class="col-4 my-2" for='email'>Email</label>
                             <div class="col-8">
-                                <input class=' form-control' value="<?= $row["email"] ?>" type='text' required
-                                    name='email'>
+                                <input class=' form-control' value="<?= $row["email"] ?>" type='text' required name='email'>
                             </div>
                         </div>
                         <div class='form-group row m-0'>
@@ -196,9 +222,7 @@
                         <div class='form-group row m-0 mt-2'>
                             <label class="col-4 my-2" for='image'>Profile image</label>
                             <div class="col-8">
-                                <input type="file" id="image" class="form-control" value="<?= $row['image'] ?>"
-                                    name="profile"
-                                    onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])">
+                                <input type="file" id="image" class="form-control" value="<?= $row['image'] ?>" name="profile" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])">
                             </div>
                         </div>
                         <div class="text-center mt-3 ">

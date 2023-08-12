@@ -22,46 +22,46 @@
 
   // if (isset($_POST["like"]) && isset($_POST["post_id"])) {
   //   $post_id = $_POST["post_id"];
-  
+
   //   $q = "INSERT INTO likes(post_id,user_id) VALUES($post_id,$user_id)";
   //   $rq = mysqli_query($conn, $q);
-  
+
   //   if ($rq) {
   //     $q = "SELECT like_count FROM blog_posts WHERE post_id=$post_id";
   //     $rq = mysqli_query($conn, $q);
-  
+
   //     if (mysqli_num_rows($rq) == 1) {
   //       $row = mysqli_fetch_assoc($rq);
-  
+
   //       // print_r($row);
   //       $like_count = $row["like_count"];
-  
+
   //       if ($like_count == null) {
   //         $like_count = 1;
   //       } else {
   //         $like_count += 1;
   //       }
-  
+
   //       $q = "UPDATE blog_posts SET like_count=$like_count WHERE post_id=$post_id";
   //       $rq = mysqli_query($conn, $q);
-  
+
   //       if ($rq) {
-  
+
   //       } else {
-  
+
   //       }
   //     }
   //   }
   // }
-  
+
   ?>
 
   <!-- Hero slider -->
   <section id="hero-slider" class="hero-slider">
     <div class="container-md" data-aos="fade-in">
       <div class="row">
-        <div class="col-12">
-          <div class="swiper sliderFeaturedPosts">
+        <div class="col-12 parent">
+          <div class="swiper sliderFeaturedPosts card card-1 ">
             <div class="swiper-wrapper">
               <div class="swiper-slide">
                 <a class="img-bg d-flex align-items-end" style="background-image: url('./assets/post-slide-1.jpeg');">
@@ -158,42 +158,44 @@
 
           $user = mysqli_fetch_assoc($runquery1);
 
-          ?>
+        ?>
+          <div class="parent col-lg-4">
+            <div class="card card-1 ">
+              <div class="logo">
+                <span class="circle circle1"></span>
+                <span class="circle circle2"></span>
+                <span class="circle circle3"></span>
+                <span class="circle circle4"></span>
+                <span class="circle circle5">
 
-          <div class="col-lg-6">
-            <div class="post-entry-1 lg">
-              <div class="post-meta"><span class="date">
-                  <?= $category ?>
-                </span> <span class="mx-1">&bullet;</span> <span>
-                  <?= $created_at ?>
                 </span>
-              </div>
-              <h2><a href="single-post.html">
-                  <?= $title ?>
-                </a>
-              </h2>
-              <a href="single-post.html"><img src=" <?= $image ?>" alt="" class="img-fluid"></a>
-              <p class="mb-4 d-block">
-                <?= $content ?>
-              </p>
 
-              <div class="d-flex align-items-center author">
-                <div class="photo"><img src="<?= $user["image"] ?>" alt="" class="img-fluid"></div>
-                <div class="name">
-                  <h3 class="m-0 p-0">
-                    <?= $user["name"] ?>
-                  </h3>
-                </div>
-                <div class="ms-auto lc_icons">
-                  <a href="like.php?post_id=<?= $post_id ?>" class="me-3" target="_self">
-                    <i class="las la-thumbs-up fs-3"></i>&nbsp;
-                    <?= $like_count ?>
-                  </a>
-                  <a href="">
-                    <i class="lar la-comments fs-3"></i>&nbsp;
-                    <?= $comment_count ?>
-                  </a>
-                  <!-- <form method="POST">
+              </div>
+              <div class="glass"><img src=" <?= $image ?>" alt="" class="img-fluid glass-image" style="
+
+  "></div>
+              <div class="content">
+                <span class="title"> <?= $title ?></span>
+
+              </div>
+              <div class="bottom">
+                <div class="d-flex align-items-center author w-100">
+                  <div class="photo"><img src="<?= $user["image"] ?>" alt="" class="img-fluid"></div>
+                  <div class="name">
+                    <h3 class="m-0 p-0">
+                      <?= $user["name"] ?>
+                    </h3>
+                  </div>
+                  <div class="ms-auto lc_icons">
+                    <a href="like.php?post_id=<?= $post_id ?>" class="me-3" target="_self">
+                      <i class="las la-thumbs-up fs-3"></i>&nbsp;
+                      <?= $like_count ?>
+                    </a>
+                    <a href="">
+                      <i class="lar la-comments fs-3"></i>&nbsp;
+                      <?= $comment_count ?>
+                    </a>
+                    <!-- <form method="POST">
                     <input type="hidden" name="post_id" value="<?= $post_id ?>">
                     <button type="submit" class="btn btn-danger" name="like">
                       <i class="las la-thumbs-up fs-3"></i>&nbsp;
@@ -205,11 +207,24 @@
                     </button>
                   </form> -->
 
+                  </div>
                 </div>
+                <!-- <div class="view-more">
+                  <button class="view-more-button">View more</button>
+                  <svg class="svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m6 9 6 6 6-6"></path>
+                  </svg>
+                </div> -->
               </div>
+
             </div>
           </div>
-          <?php
+
+
+
+
+
+        <?php
         }
         ?>
 
@@ -221,3 +236,48 @@
 </body>
 
 </html>
+
+
+
+<!-- <div class="col-lg-6">
+  <div class="post-entry-1 lg">
+    <div class="post-meta"><span class="date">
+        <?= $category ?>
+      </span> <span class="mx-1">&bullet;</span> <span>
+        <?= $created_at ?>
+      </span>
+    </div>
+    <h2><a href="single-post.html">
+        <?= $title ?>
+      </a>
+    </h2>
+    <a href="single-post.html"><img src=" <?= $image ?>" alt="" class="img-fluid"></a>
+    <p class="mb-4 d-block">
+      <?= $content ?>
+    </p>
+
+    <div class="d-flex align-items-center author">
+      <div class="photo"><img src="<?= $user["image"] ?>" alt="" class="img-fluid"></div>
+      <div class="name">
+        <h3 class="m-0 p-0">
+          <?= $user["name"] ?>
+        </h3>
+      </div>
+      <div class="ms-auto lc_icons">
+        <a href="like.php?post_id=<?= $post_id ?>" class="me-3" target="_self">
+          <i class="las la-thumbs-up fs-3"></i>&nbsp;
+          <?= $like_count ?>
+        </a>
+        <a href="">
+          <i class="lar la-comments fs-3"></i>&nbsp;
+          <?= $comment_count ?>
+        </a>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+
+<div class="bg"></div>
+  <div class="bg bg2"></div>
+  <div class="bg bg3"></div>
