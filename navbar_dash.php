@@ -1,3 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog System</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <link rel="stylesheet" href="./vendor/css/style.css">
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/line-awesome/1.3.0/line-awesome/css/line-awesome.min.css"
+    integrity="sha512-vebUliqxrVkBy3gucMhClmyQP9On/HAWQdKDXRaAlb/FKuTbxkjPKUyqVOxAcGwFDka79eTF+YXwfke1h3/wfg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="./vendor/css/main.css">
+  <!-- <link rel="stylesheet" href="./vendor/css/variables.css"> -->
+  <link rel="stylesheet" href="./vendor/swiper/swiper-bundle.min.css">
+  <script src="./vendor/js/main.js"></script>
+  <link href="./lib/css/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+</head>
+
 <?php
 include "connection.php";
 session_start();
@@ -20,29 +41,8 @@ if ($row['user_type'] == "admin") {
 }
 $name = $row["name"];
 
-
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blog System</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-  <link rel="stylesheet" href="./vendor/css/style.css">
-  <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/line-awesome/1.3.0/line-awesome/css/line-awesome.min.css"
-    integrity="sha512-vebUliqxrVkBy3gucMhClmyQP9On/HAWQdKDXRaAlb/FKuTbxkjPKUyqVOxAcGwFDka79eTF+YXwfke1h3/wfg=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="stylesheet" href="./vendor/css/main.css">
-  <link rel="stylesheet" href="./vendor/css/varibale.css">
-  <link rel="stylesheet" href="./vendor/swiper/swiper-bundle.min.css">
-  <script src="./vendor/js/main.js"></script>
-  <link href="./lib/css/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-</head>
 
 <body>
   <header class="p-1 header_nav">
@@ -134,19 +134,33 @@ $name = $row["name"];
     </div>
   </header>
 
-  <script src="./vendor/swiper/swiper-bundle.min.js"></script>
+  <?php
+  if (isset($message) && isset($isSuccess)) {
+    if ($isSuccess) {
+      echo "
+      <div class='col-sm-4 m-auto my-3'>
+      <div class='alert alert-success alert-dismissible fade show' role='alert'>
+      $message
+      <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+      </div>
+      </div>
+      ";
+    } else {
+      echo "
+      <div class='col-sm-4 m-auto my-3'>
+      <div class='alert alert-danger alert-dismissible fade show' role='alert'>
+      $message
+      <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+      </div>
+      </div>
+      ";
+    }
+  }
+  ?>
 
+  <script src="./vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="./lib/js/main.js"></script>
+  <script src="./lib/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
-<script src="./lib/js/main.js"></script>
-<script src="./lib/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-  integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous">
-  </script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-  integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">
-  </script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"
-  integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous">
-  </script>

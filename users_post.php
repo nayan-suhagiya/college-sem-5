@@ -11,11 +11,10 @@
 <body>
   <?php
   require "./navbar_dash.php";
+  ?>
+  <?php
 
   $user_id = $_SESSION["user_id"];
-
-
-
 
   if (isset($_POST["submit"]) && isset($_POST["title"]) && isset($_POST["post_id"]) && isset($_POST["content"]) && isset($_POST["category"])) {
 
@@ -50,49 +49,76 @@
           }
         }
         if (!in_array($file_extension, $allowed_image_extension)) {
-          echo "
-          <div class='col-sm-4 m-auto my-3'>
-          <div class='alert alert-danger alert-dismissible fade show' role='alert'>
-          Upload valid images. Only PNG and JPEG are allowed.
-          <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
-          </div>
-          </div>
-          ";
+          $message = "Upload valid images. Only PNG and JPEG are allowed.";
+          $isSuccess = false;
         } else if (move_uploaded_file($tempname, $folder)) {
           $query = "update  blog_posts set  title = '$title' ,content = '$content' ,category_id = '$category' , image = '$folder'    where post_id = '$post_id'";
           $runquery = mysqli_query($conn, $query);
           if ($runquery) {
-            echo "
-          <div class='col-sm-4 m-auto my-3'>
-          <div class='alert alert-success alert-dismissible fade show' role='alert'>
-          Blog Post update successfully!
-          <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
-          </div>
-          </div>
-          ";
+            $message = "Blog Post update successfully!";
+            $isSuccess = true;
           }
         }
       } else {
         $query = "update  blog_posts set  title = '$title' ,content = '$content' ,category_id = '$category'     where post_id = '$post_id'";
         $runquery = mysqli_query($conn, $query);
         if ($runquery) {
-          echo "
-          <div class='col-sm-4 m-auto my-3'>
-          <div class='alert alert-success alert-dismissible fade show' role='alert'>
-          Blog Post update successfully!
-          <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
-          </div>
-          </div> ";
+          $message = "Blog Post update successfully!";
+          $isSuccess = true;
         }
       }
     } else {
-      echo "
-          <div class='col-sm-4 m-auto my-3'>
-          <div class='alert alert-danger alert-dismissible fade show' role='alert'>
-          Unable to update!
-          <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
-          </div>
-          </div>";
+      $message = "Unable to update!";
+      $isSuccess = false;
+    }
+  }
+
+  if (isset($_POST["delete"]) && isset($_POST["post_id"])) {
+    $post_id = $_POST["post_id"];
+    $query = "select * from blog_posts where post_id='$post_id'";
+    $runquery = mysqli_query($conn, $query);
+
+    $record = mysqli_num_rows($runquery);
+
+    // echo $record;
+  
+    if ($record == 1) {
+      $row = mysqli_fetch_assoc($runquery);
+
+      // echo $row["image"];
+  
+      if ($row["image"]) {
+        $removeFilename = $row["image"];
+        if (file_exists($removeFilename)) {
+          $status = unlink($removeFilename) ? 'The file ' . $removeFilename . ' has been deleted' : 'Error deleting ' . $removeFilename;
+          // echo $status;
+  
+          if ($status) {
+            $q = "DELETE FROM blog_posts WHERE post_id='$post_id'";
+            $rq = mysqli_query($conn, $q);
+
+            if ($rq) {
+              $message = "Blog Post deleted successfully!";
+              $isSuccess = true;
+            } else {
+              $message = "Unable to delete blog post!";
+              $isSuccess = false;
+            }
+          }
+        } else {
+          $q = "DELETE FROM blog_posts WHERE post_id='$post_id'";
+          $rq = mysqli_query($conn, $q);
+
+          if ($rq) {
+            $message = "Blog Post deleted successfully!";
+            $isSuccess = true;
+          } else {
+            $message = "Unable to delete blog post!";
+            $isSuccess = false;
+          }
+        }
+      }
+
     }
   }
 
@@ -129,10 +155,16 @@
                       <?= $result["created_at"] ?>
                     </small>
                   </p>
-                  <div>
+                  <div style="display:flex;justify-content:center;">
                     <button class="btn btn-sm btn-warning" type="button" data-bs-toggle='modal'
                       data-bs-target='#edit-category-modal<?= $result["post_id"] ?>'>Edit</button>
-                    <button class="btn btn-sm btn-danger">Delete</button>
+                    <form method="POST" class="ms-3">
+                      <input type="hidden" name="post_id" value="<?= $result["post_id"] ?>">
+                      <!-- <button class="btn btn-sm btn-danger" type="button" name="delete">
+                        <a href="delete_users_post.php?delete_id=<?= $result["post_id"] ?>">Delete</a>
+                      </button> -->
+                      <button class="btn btn-sm btn-danger" type="submit" value="delete" name="delete">Delete</button>
+                    </form>
                   </div>
                 </div>
               </div>
@@ -195,22 +227,16 @@
                   <div class='form-group row m-0 mt-2'>
                     <label class="col-4 my-2" for='image'>Profile image</label>
                     <div class="col-8">
-                      <input type="file" accept="image/*" onchange="loadFile<?= $i ?>(event)" id="image"
-                        class="form-control" name="image">
+                      <input type="file" accept="image/*"
+                        onchange="document.getElementById('output<?= $result['post_id'] ?>').src = window.URL.createObjectURL(this.files[0])"
+                        id="image" class="form-control" name="image">
                     </div>
                   </div>
+
                   <div class="text-center mt-3 ">
-                    <img class="rounded-5" id="output<?= $i ?>" height="120px" width="120px" src="<?= $result["image"] ?>"
-                      alt="">
-                    <script>
-                      var loadFile<?= $i ?> = function (event) {
-                        var output = document.getElementById('output<?= $i ?>');
-                        output.src = URL.createObjectURL(event.target.files[0]);
-                        output.onload = function () {
-                          URL.revokeObjectURL(output.src) // free memory
-                        }
-                      };
-                    </script>
+                    <img class="rounded-5" id="output<?= $result['post_id'] ?>" height="120px" width="120px"
+                      src="<?= $result["image"] ?>" alt="">
+
                   </div>
                 </div>
                 <div class='modal-footer'>

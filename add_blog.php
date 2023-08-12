@@ -106,8 +106,14 @@
               <label for="floatingCategory">Select Category</label>
             </div>
             <div class="form-floating my-2">
-              <input type="file" name="image" class="form-control" id="floatingBlogImage" placeholder="Title" required>
+              <input type="file" name="image" class="form-control" accept="image/*"
+                onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])"
+                id="floatingBlogImage" placeholder="Title" required>
               <label for="floatingBlogImage">Upload blog image</label>
+            </div>
+
+            <div class="text-center mt-3 ">
+              <img class="rounded-5" id="output" height="120px" width="120px" src="" alt="">
             </div>
             <div class="form-group">
               <button class="btn btn-custom py-2 my-3" name="submit" value="insertSubmit" type="submit">Post

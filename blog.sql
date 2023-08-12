@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Aug 06, 2023 at 02:38 PM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 7.4.29
+-- Host: localhost
+-- Generation Time: Aug 12, 2023 at 03:43 PM
+-- Server version: 10.1.38-MariaDB
+-- PHP Version: 5.6.40
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -40,9 +41,9 @@ CREATE TABLE `blog_posts` (
   `content` text NOT NULL,
   `like_count` int(11) DEFAULT NULL,
   `comment_count` int(11) DEFAULT NULL,
-  `image` text DEFAULT NULL,
+  `image` text,
   `category_id` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp()
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -50,8 +51,9 @@ CREATE TABLE `blog_posts` (
 --
 
 INSERT INTO `blog_posts` (`post_id`, `user_id`, `title`, `content`, `like_count`, `comment_count`, `image`, `category_id`, `created_at`) VALUES
-(1, 2, 'This is a test title', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio placeat exercitationem magni voluptates dolore. Tenetur fugiat voluptates quas, nobis error deserunt aliquam temporibus sapiente, laudantium dolorum itaque libero eos deleniti?', NULL, NULL, './upload/post/169123368200044.png', 1, '2023-08-02 19:08:03'),
-(2, 3, 'Demo Post', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque molestiae hic necessitatibus illo odit porro ipsa praesentium atque accusamus incidunt excepturi minima, modi voluptatibus neque exercitationem assumenda iure consectetur. Itaque!', NULL, NULL, './upload/post/169123377800013.png', 9, '2023-08-04 21:56:00');
+(1, 2, 'Reprehenderit aut sed doloribus blanditiis, aspernatur magni? ', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio placeat exercitationem magni voluptates dolore. Tenetur fugiat voluptates quas, nobis error deserunt aliquam temporibus sapiente, laudantium dolorum itaque libero eos deleniti?\r\n\r\nDolorum, incidunt! Adipisci harum itaque maxime dolores doloremque porro eligendi quis, doloribus vel sit rerum sunt obcaecati nam suscipit nulla vitae alias blanditiis aliquam debitis atque illo modi et placeat. Ratione iure eveniet provident. Culpa laboriosam sed ad quia. Corrupti, earum, perferendis dolore cupiditate sint nihil maiores iusto tempora nobis porro itaque est. Ut laborum culpa assumenda pariatur et perferendis?', 1, NULL, './upload/post/16918241649.jpeg', 1, '2023-08-02 19:08:03'),
+(2, 3, 'Demo Post', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque molestiae hic necessitatibus illo odit porro ipsa praesentium atque accusamus incidunt excepturi minima, modi voluptatibus neque exercitationem assumenda iure consectetur. Itaque!', 1, NULL, './upload/post/169123377800013.png', 9, '2023-08-04 21:56:00'),
+(6, 2, 'demo', 'demo', 1, NULL, './upload/post/169184392315.jpeg', 9, '2023-08-12 18:08:43');
 
 -- --------------------------------------------------------
 
@@ -97,6 +99,15 @@ CREATE TABLE `likes` (
   `post_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `likes`
+--
+
+INSERT INTO `likes` (`like_id`, `post_id`, `user_id`) VALUES
+(11, 6, 2),
+(12, 1, 2),
+(13, 2, 2);
 
 -- --------------------------------------------------------
 
@@ -153,7 +164,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`user_id`, `name`, `email`, `password`, `user_type`, `image`) VALUES
 (1, 'Nayan Suhagiya', 'nayan@example.com', 'nayan@123', 'admin', './upload/profile/169131863000036.png'),
-(2, 'Utsav Parmar', 'utsav@example.com', 'utsav@123', 'client', './upload/profile/169131872800037.png'),
+(2, 'Utsav Parmar', 'utsav@gmail.com', '1234', 'client', './upload/profile/16918448108.jpeg'),
 (3, 'Tom', 'Utsavparmar72@gmail.com', '123', 'admin', './upload/profile/169131950200048.jpg'),
 (11, 'demo', 'demo@gmail.com', 'demo', 'client', './upload/profile/169131874900044.jpg');
 
@@ -221,7 +232,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `blog_posts`
 --
 ALTER TABLE `blog_posts`
-  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -239,7 +250,7 @@ ALTER TABLE `comments`
 -- AUTO_INCREMENT for table `likes`
 --
 ALTER TABLE `likes`
-  MODIFY `like_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `like_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `promotion_package`
@@ -257,7 +268,7 @@ ALTER TABLE `saved_posts`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Constraints for dumped tables

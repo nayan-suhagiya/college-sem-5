@@ -20,11 +20,40 @@
 
   $user_id = $_SESSION["user_id"];
 
-  // echo "
-  // <div class='container my-4'>
-  //   <h4  class='text-center'>Welcome <span class='text-custom text-decoration-underline'>$username</span> Explore the blog posts!!</h4>    
-  // </div>  
-  // ";
+  // if (isset($_POST["like"]) && isset($_POST["post_id"])) {
+  //   $post_id = $_POST["post_id"];
+  
+  //   $q = "INSERT INTO likes(post_id,user_id) VALUES($post_id,$user_id)";
+  //   $rq = mysqli_query($conn, $q);
+  
+  //   if ($rq) {
+  //     $q = "SELECT like_count FROM blog_posts WHERE post_id=$post_id";
+  //     $rq = mysqli_query($conn, $q);
+  
+  //     if (mysqli_num_rows($rq) == 1) {
+  //       $row = mysqli_fetch_assoc($rq);
+  
+  //       // print_r($row);
+  //       $like_count = $row["like_count"];
+  
+  //       if ($like_count == null) {
+  //         $like_count = 1;
+  //       } else {
+  //         $like_count += 1;
+  //       }
+  
+  //       $q = "UPDATE blog_posts SET like_count=$like_count WHERE post_id=$post_id";
+  //       $rq = mysqli_query($conn, $q);
+  
+  //       if ($rq) {
+  
+  //       } else {
+  
+  //       }
+  //     }
+  //   }
+  // }
+  
   ?>
 
   <!-- Hero slider -->
@@ -91,97 +120,6 @@
     </div>
   </section>
 
-
-
-
-  <!-- <section class="single-post-content">
-    <div class="container-fluid">
-      <div class="row"> -->
-  <?php
-  $query = "SELECT * FROM blog_posts";
-  $runquery = mysqli_query($conn, $query);
-
-  while ($row = mysqli_fetch_assoc($runquery)) {
-    // print_r($row);
-    $title = $row["title"];
-    $content = $row["content"];
-    $category = "SELECT * FROM categories where category_id =  $row[category_id]";
-    $categoryData = mysqli_query($conn, $category);
-    $categoryName = mysqli_fetch_assoc($categoryData);
-    $category = $categoryName["name"];
-    $created_at = $row["created_at"];
-
-  ?>
-
-    <!-- <div class="col-sm-6">
-            <div class="card">
-              <img class="card-img" src='./assets/blog_default.png' alt="Post_Card">
-              <div class="card-img-overlay">
-                <a href="#" class="btn btn-light btn-sm">
-                  <?= $category ?>
-                </a>
-              </div>
-              <div class="card-body">
-                <h4 class="card-title">
-                  <?= $title ?>
-                </h4>
-                <small class="text-muted cat">
-                  <?= $tag ?>
-
-                </small>
-                <p class="card-text">
-                  <?= $content ?>
-                </p>
-
-              </div>
-              <div class="card-footer text-muted d-flex justify-content-between bg-transparent border-top-0">
-                <div class="views">
-                  <?= $created_at ?>
-                </div>
-                <div class="stats">
-                  <i class="bi bi-heart-fill"></i> 1347
-                  <i class="bi bi-chat-square-dots"></i> 12
-                </div>
-
-              </div>
-            </div>
-          </div> -->
-
-
-    <!-- <div class="col-md-12 post-content" data-aos="fade-up">
-
-
-            <div class="single-post" style="text-align:justify;">
-              <div class="post-meta"><span class="date">
-                  <?= $category ?>
-                </span> <span class="mx-1">&bullet;</span> <span>
-                  <?= $created_at ?>
-                </span></div>
-              <h1 class="mb-4">
-                <?= $title ?>
-              </h1>
-
-              <figure class="my-4">
-                <img src='./assets/blog_default.png' alt="" style="height:auto;width:auto;" class="img-fluid">
-
-              </figure>
-              <p>
-                <?= $content ?>
-              </p>
-
-
-
-            </div>
-          </div> -->
-
-
-  <?php
-  }
-  ?>
-  <!-- </div>
-    </div>
-  </section> -->
-
   <section id="posts" class="posts">
     <div class="container" data-aos="fade-up">
       <div class="row g-5">
@@ -192,6 +130,7 @@
         while ($row = mysqli_fetch_assoc($runquery)) {
           // print_r($row);
           $user_id = $row["user_id"];
+          $post_id = $row["post_id"];
           $title = $row["title"];
           $content = $row["content"];
           $category = $row["category_id"];
@@ -202,13 +141,24 @@
           $category = $categoryName["name"];
           $created_at = $row["created_at"];
           $image = $row["image"];
+          $like_count = $row["like_count"];
+
+          if ($like_count == null) {
+            $like_count = 0;
+          }
+
+          $comment_count = $row["comment_count"];
+
+          if ($comment_count == null) {
+            $comment_count = 0;
+          }
 
           $query1 = "select * from users where user_id='$user_id'";
           $runquery1 = mysqli_query($conn, $query1);
 
           $user = mysqli_fetch_assoc($runquery1);
 
-        ?>
+          ?>
 
           <div class="col-lg-6">
             <div class="post-entry-1 lg">
@@ -234,40 +184,34 @@
                     <?= $user["name"] ?>
                   </h3>
                 </div>
+                <div class="ms-auto lc_icons">
+                  <a href="like.php?post_id=<?= $post_id ?>" class="me-3" target="_self">
+                    <i class="las la-thumbs-up fs-3"></i>&nbsp;
+                    <?= $like_count ?>
+                  </a>
+                  <a href="">
+                    <i class="lar la-comments fs-3"></i>&nbsp;
+                    <?= $comment_count ?>
+                  </a>
+                  <!-- <form method="POST">
+                    <input type="hidden" name="post_id" value="<?= $post_id ?>">
+                    <button type="submit" class="btn btn-danger" name="like">
+                      <i class="las la-thumbs-up fs-3"></i>&nbsp;
+                      <?= $like_count ?>
+                    </button>
+                    <button type="submit" class="btn btn-warning" name="comment">
+                      <i class="lar la-comments fs-3"></i>&nbsp;
+                      <?= $comment_count ?>
+                    </button>
+                  </form> -->
+
+                </div>
               </div>
             </div>
-
           </div>
-        <?php
+          <?php
         }
         ?>
-
-
-        <!-- <div class="col-lg-4">
-          <div class="row">
-            <div class=" border-start custom-border">
-              <div class="post-entry-1">
-                <a href="single-post.html"><img src="assets/img/post-landscape-2.jpg" alt="" class="img-fluid"></a>
-                <div class="post-meta"><span class="date">Sport</span> <span class="mx-1">&bullet;</span> <span>Jul 5th
-                    '22</span></div>
-                <h2><a href="single-post.html">Let’s Get Back to Work, New York</a></h2>
-              </div>
-              <div class="post-entry-1">
-                <a href="single-post.html"><img src="assets/img/post-landscape-5.jpg" alt="" class="img-fluid"></a>
-                <div class="post-meta"><span class="date">Food</span> <span class="mx-1">&bullet;</span> <span>Jul 17th
-                    '22</span></div>
-                <h2><a href="single-post.html">How to Avoid Distraction and Stay Focused During Video Calls?</a></h2>
-              </div>
-              <div class="post-entry-1">
-                <a href="single-post.html"><img src="assets/img/post-landscape-7.jpg" alt="" class="img-fluid"></a>
-                <div class="post-meta"><span class="date">Design</span> <span class="mx-1">&bullet;</span> <span>Mar
-                    15th '22</span></div>
-                <h2><a href="single-post.html">Why Craigslist Tampa Is One of The Most Interesting Places On the
-                    Web?</a></h2>
-              </div>
-            </div>
-          </div>
-        </div> -->
 
       </div> <!-- End .row -->
     </div>
