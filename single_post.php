@@ -62,6 +62,46 @@
       $user = mysqli_fetch_assoc($runquery1);
     }
   }
+
+  if (isset($_POST["save"]) && isset($_POST["post_id"])) {
+    // echo "save submitted";
+    $post_id = $_POST["post_id"];
+    $login_id = $_SESSION["user_id"];
+
+    $q = "SELECT * FROM saved_posts WHERE post_id=$post_id AND user_id=$login_id";
+    // echo $q;
+    $rq = mysqli_query($conn, $q);
+
+    if (mysqli_num_rows($rq) > 0) {
+      $message[] = array(
+        'icon' => 'error',
+        'type' => 'Error',
+        'message' => 'Post already saved!'
+      );
+    } else {
+      $q = "INSERT INTO saved_posts(post_id,user_id) VALUES($post_id,$login_id)";
+      // echo $q;
+      $rq = mysqli_query($conn, $q);
+
+      if ($rq) {
+        $message[] = array(
+          'icon' => 'success',
+          'type' => 'Success',
+          'message' => 'Post saved successfully!'
+        );
+      } else {
+        $message[] = array(
+          'icon' => 'error',
+          'type' => 'Error',
+          'message' => 'Unable to save post!'
+        );
+      }
+    }
+  }
+
+  include "./alert_message.php";
+
+
   ?>
 
   <div class="container">
@@ -103,7 +143,12 @@
                   <?= $comment_count ?>
                 </a>
 
-                <i class="lar la-bookmark fs-3 ms-3"></i>&nbsp;
+                <form action="" method="POST">
+                  <input type="hidden" name="post_id" value="<?= $post_id ?>">
+                  <button class="btn btn-sm btn-custom ms-2" type="submit" name="save">
+                    <i class="lar la-bookmark fs-3 "></i>&nbsp;
+                  </button>
+                </form>
               </div>
 
             </div>
