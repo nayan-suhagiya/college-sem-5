@@ -102,7 +102,7 @@ $name = $row["name"];
                 <a class="dropdown-item d-flex align-items-center" href="pages-faq.html">
                   <!-- <i class="me-4 bi bi-question-circle"></i> -->
                   <i class="me-4 bi bi-star"></i>
-                  <span>Wish List</span>
+                  <span>Saved Post</span>
                 </a>
               </li>
               <li>
@@ -132,30 +132,6 @@ $name = $row["name"];
       </div>
     </div>
   </header>
-
-  <?php
-  if (isset($message) && isset($isSuccess)) {
-    if ($isSuccess) {
-      echo "
-      <div class='col-sm-4 m-auto my-3'>
-      <div class='alert alert-success alert-dismissible fade show' role='alert'>
-      $message
-      <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
-      </div>
-      </div>
-      ";
-    } else {
-      echo "
-      <div class='col-sm-4 m-auto my-3'>
-      <div class='alert alert-danger alert-dismissible fade show' role='alert'>
-      $message
-      <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
-      </div>
-      </div>
-      ";
-    }
-  }
-  ?>
 
   <script src="./vendor/swiper/swiper-bundle.min.js"></script>
   <script src="./lib/js/main.js"></script>
