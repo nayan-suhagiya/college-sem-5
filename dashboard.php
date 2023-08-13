@@ -22,38 +22,38 @@
 
   // if (isset($_POST["like"]) && isset($_POST["post_id"])) {
   //   $post_id = $_POST["post_id"];
-  
+
   //   $q = "INSERT INTO likes(post_id,user_id) VALUES($post_id,$user_id)";
   //   $rq = mysqli_query($conn, $q);
-  
+
   //   if ($rq) {
   //     $q = "SELECT like_count FROM blog_posts WHERE post_id=$post_id";
   //     $rq = mysqli_query($conn, $q);
-  
+
   //     if (mysqli_num_rows($rq) == 1) {
   //       $row = mysqli_fetch_assoc($rq);
-  
+
   //       // print_r($row);
   //       $like_count = $row["like_count"];
-  
+
   //       if ($like_count == null) {
   //         $like_count = 1;
   //       } else {
   //         $like_count += 1;
   //       }
-  
+
   //       $q = "UPDATE blog_posts SET like_count=$like_count WHERE post_id=$post_id";
   //       $rq = mysqli_query($conn, $q);
-  
+
   //       if ($rq) {
-  
+
   //       } else {
-  
+
   //       }
   //     }
   //   }
   // }
-  
+
   ?>
 
   <!-- Hero slider -->
@@ -158,7 +158,7 @@
 
           $user = mysqli_fetch_assoc($runquery1);
 
-          ?>
+        ?>
           <div class="parent col-lg-6">
             <div class="card card-1 ">
               <div class="logo">
@@ -171,7 +171,7 @@
                 </span>
 
               </div>
-              <div class="glass"><img src=" <?= $image ?>" alt="" class="img-fluid glass-image"></div>
+              <div class="glass"><img src=" <?= $image ?>" alt="" onerror="this.src='assets/site_logo.jpg'" class=" img-fluid glass-image"></div>
               <div class="content">
                 <span class="title">
                   <?= $title ?>
@@ -180,18 +180,18 @@
               </div>
               <div class="bottom">
                 <div class="d-flex align-items-center author w-100">
-                  <div class="photo"><img src="<?= $user["image"] ?>" alt="" class="img-fluid"></div>
+                  <div class="photo"><img src="<?= $user["image"] ?>" onerror="this.src='assets/profile.png'" alt="" class="img-fluid"></div>
                   <div class="name">
                     <h3 class="m-0 p-0">
                       <?= $user["name"] ?>
                     </h3>
                   </div>
-                  <div class="ms-auto lc_icons">
+                  <div class="d-flex  align-items-center lc_icons ms-auto">
                     <!-- <a href="like.php?post_id=<?= $post_id ?>" class="me-3" target="_self"> -->
                     <div onclick="likePost(<?= $post_id ?>)">
                       <i class="las la-thumbs-up fs-3"></i>&nbsp;
                     </div>
-                    <div id="likeCount_<?= $post_id ?>">
+                    <div id="likeCount_<?= $post_id ?>" class="me-2">
                       <?= $like_count ?>
                     </div>
                     <!-- </a> -->
@@ -231,7 +231,7 @@
 
 
 
-          <?php
+        <?php
         }
         ?>
 
@@ -242,20 +242,7 @@
 
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-  function likePost(postId) {
-    $.ajax({
-      type: "POST",
-      url: "like.php",
-      data: {
-        post_id: postId
-      },
-      success: function(response) {
-        $("#likeCount_" + postId).text(response);
-      }
-    });
-  }
-</script>
+<script src="vendor/js/ajex-call.js"></script>
 
 </html>
 

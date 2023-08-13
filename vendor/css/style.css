@@ -417,7 +417,7 @@ html {
 
   .title {
     display: block;
-    color: #00c37b;
+    color: #e7fff6;
     font-weight: 900;
     font-size: 20px;
   }
@@ -431,7 +431,7 @@ html {
 }
 
 .bottom {
-  padding: 10px 12px;
+  padding: 4px 12px;
   transform-style: preserve-3d;
   position: absolute;
   bottom: 20px;
@@ -441,7 +441,11 @@ html {
   align-items: center;
   justify-content: space-between;
   transform: translate3d(0, 0, 26px);
-  color: #66f9cf;
+  color: #a3ffdc;
+  background: rgb(35 192 159 / 35%);
+  backdrop-filter: blur(18px);
+  margin: 1px 19px;
+  border-radius: 21px;
 
   .view-more {
     display: flex;
@@ -457,7 +461,7 @@ html {
     .view-more-button {
       background: none;
       border: none;
-      color: #00c37b;
+      color: #a3ffdc;
       font-weight: bolder;
       font-size: 12px;
     }
