@@ -22,38 +22,38 @@
 
   // if (isset($_POST["like"]) && isset($_POST["post_id"])) {
   //   $post_id = $_POST["post_id"];
-
+  
   //   $q = "INSERT INTO likes(post_id,user_id) VALUES($post_id,$user_id)";
   //   $rq = mysqli_query($conn, $q);
-
+  
   //   if ($rq) {
   //     $q = "SELECT like_count FROM blog_posts WHERE post_id=$post_id";
   //     $rq = mysqli_query($conn, $q);
-
+  
   //     if (mysqli_num_rows($rq) == 1) {
   //       $row = mysqli_fetch_assoc($rq);
-
+  
   //       // print_r($row);
   //       $like_count = $row["like_count"];
-
+  
   //       if ($like_count == null) {
   //         $like_count = 1;
   //       } else {
   //         $like_count += 1;
   //       }
-
+  
   //       $q = "UPDATE blog_posts SET like_count=$like_count WHERE post_id=$post_id";
   //       $rq = mysqli_query($conn, $q);
-
+  
   //       if ($rq) {
-
+  
   //       } else {
-
+  
   //       }
   //     }
   //   }
   // }
-
+  
   ?>
 
   <!-- Hero slider -->
@@ -158,8 +158,8 @@
 
           $user = mysqli_fetch_assoc($runquery1);
 
-        ?>
-          <div class="parent col-lg-4">
+          ?>
+          <div class="parent col-lg-6">
             <div class="card card-1 ">
               <div class="logo">
                 <span class="circle circle1"></span>
@@ -171,11 +171,11 @@
                 </span>
 
               </div>
-              <div class="glass"><img src=" <?= $image ?>" alt="" class="img-fluid glass-image" style="
-
-  "></div>
+              <div class="glass"><img src=" <?= $image ?>" alt="" class="img-fluid glass-image"></div>
               <div class="content">
-                <span class="title"> <?= $title ?></span>
+                <span class="title">
+                  <?= $title ?>
+                </span>
 
               </div>
               <div class="bottom">
@@ -213,22 +213,25 @@
 
                   </div>
                 </div>
-                <!-- <div class="view-more">
-                  <button class="view-more-button">View more</button>
-                  <svg class="svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="m6 9 6 6 6-6"></path>
-                  </svg>
-                </div> -->
+                <div class="view-more">
+                  <a href="single_post.php?post_id=<?= $post_id ?>">
+                    <button class="view-more-button">View more <i class="las la-angle-down fw-bold"></i></button>
+                    <!-- <svg class="svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linecap="round"
+                      stroke-linejoin="round">
+                      <path d="m6 9 6 6 6-6"></path>
+                    </svg> -->
+                  </a>
+                </div>
               </div>
 
             </div>
+
           </div>
 
 
 
 
-
-        <?php
+          <?php
         }
         ?>
 
