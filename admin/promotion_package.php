@@ -1,6 +1,6 @@
 <?php
 include "../connection.php";
-
+include "./sidebar.php";
 if (isset($_POST["submit"]) && isset($_POST["name"]) && isset($_POST["package_id"]) && isset($_POST["price"]) && isset($_POST["description"])) {
 
     $package_id = $_POST["package_id"];
@@ -15,10 +15,19 @@ if (isset($_POST["submit"]) && isset($_POST["name"]) && isset($_POST["package_id
         $query = "update  promotion_package set  name = '$name' , 	price = '$price' , description='$description'   where package_id = '$package_id'";
         $runquery = mysqli_query($conn, $query);
         if ($runquery) {
-            $message[] = 'Package Update successfully';
+            $message[] = array(
+                'type' => 'Package Update',
+                'message' => 'Package Update successfully',
+                'icon' => 'success'
+              );
+       
         }
     } else {
-        $message[] = 'Enter  valid  Form Information';
+        $message[] = array(
+            'icon' => 'error',
+            'type' => 'Error',
+            'message' => 'Enter  valid  Form Information'
+          );
     }
 }
 if (isset($_POST["insert"]) && isset($_POST["name"]) && isset($_POST["price"]) && isset($_POST["description"])) {
@@ -34,12 +43,24 @@ if (isset($_POST["insert"]) && isset($_POST["name"]) && isset($_POST["price"]) &
         $query = "insert into  promotion_package  (name , price , description) values('$name' , '$price' , '$description')";
         $runquery = mysqli_query($conn, $query);
         if ($runquery) {
-            $message[] = 'Package Insert successfully';
+            $message[] = array(
+                'type' => 'Add Package',
+                'message' => 'Package Insert successfully',
+                'icon' => 'success'
+              );
         } else {
-            $message[] = 'Enter  valid  Form Information';
+            $message[] = array(
+                'icon' => 'error',
+                'type' => 'Error',
+                'message' => 'Enter  valid  Form Information'
+              );
         }
     } else {
-        $message[] = 'Enter  valid  Form Information';
+        $message[] = array(
+            'icon' => 'error',
+            'type' => 'Error',
+            'message' => 'Enter  valid  Form Information'
+          );
     }
 }
 if (isset($_POST["delete"]) && isset($_POST["package_id"])) {
@@ -47,16 +68,20 @@ if (isset($_POST["delete"]) && isset($_POST["package_id"])) {
     $query = "delete from promotion_package  where package_id = '$package_id'";
     $runquery = mysqli_query($conn, $query);
     if ($runquery) {
+        $message[] = array(
+            'type' => 'Package Delete',
+            'message' => 'Package delete successfully!',
+            'icon' => 'success'
+          );
         $message[] = 'Package delete successfully!';
     }
 }
 
 
+include "../alert_message.php";
 
 ?>
-<?php
-include "./sidebar.php";
-?>
+
 <main id="main" class="main">
     <section class="section dashboard">
         <div class="row">

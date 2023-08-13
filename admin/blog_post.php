@@ -1,7 +1,7 @@
 <?php
 require_once("../connection.php");
-
-if (isset($_POST["submit"]) && isset($_POST["title"]) && isset($_POST["post_id"]) && isset($_POST["content"]) && isset($_POST["category"])) {
+include "./sidebar.php";
+if (isset($_POST["submit"]) && isset($_POST["title"])  && isset($_POST["post_id"]) && isset($_POST["content"])  && isset($_POST["category"])) {
 
   $post_id = $_POST["post_id"];
   $title = $_POST["title"];
@@ -16,7 +16,8 @@ if (isset($_POST["submit"]) && isset($_POST["title"]) && isset($_POST["post_id"]
     if ($_FILES["image"]["name"]) {
       $filename = $_FILES["image"]["name"];
       $tempname = $_FILES["image"]["tmp_name"];
-      $folder = "./upload/post/" . time() . $filename;
+      $file_extension = pathinfo($_FILES["image"]["name"], PATHINFO_EXTENSION);
+      $folder = "./upload/post/" . time() . "." . $file_extension;
       $allowed_image_extension = array(
         "png",
         "jpg",
@@ -26,31 +27,49 @@ if (isset($_POST["submit"]) && isset($_POST["title"]) && isset($_POST["post_id"]
       $query = "select * from  blog_posts where post_id = '$post_id' ";
       $result = mysqli_query($conn, $query);
       $row = mysqli_fetch_assoc($result);
-      if ($row['image']) {
-        $filenameRm = "." . $row['image'];
-        if (file_exists($filenameRm)) {
-          $status = unlink($filenameRm) ? 'The file ' . $filenameRm . ' has been deleted' : 'Error deleting ' . $filenameRm;
-          // echo $status;
-        }
-      }
       if (!in_array($file_extension, $allowed_image_extension)) {
-        $message[] = 'Upload valid images. Only PNG and JPEG are allowed.';
+        $message[] = array(
+          'icon' => 'error',
+          'type' => 'Error',
+          'message' => 'Upload valid images. Only PNG and JPEG are allowed.'
+        );
       } else if (move_uploaded_file($tempname, "." . $folder)) {
-        $query = "update  blog_posts set  title = '$title' ,content = '$content' ,category_id = '$category' , image = '$folder'    where post_id = '$post_id'";
+        $content = str_replace("'", "", $content);
+        $query = "update  blog_posts set  title = '" . $title . "' ,content = '" . $content . "' ,category_id = '$category' , image = '$folder'    where post_id = '$post_id'";
         $runquery = mysqli_query($conn, $query);
         if ($runquery) {
-          $message[] = 'Blog Post Update successfully!';
+          $message[] = array(
+            'type' => 'Update',
+            'message' => 'Blog Post Update successfully!',
+            'icon' => 'success'
+          );
+          if ($row['image']) {
+            $filenameRm = "." . $row['image'];
+            if (file_exists($filenameRm)) {
+              $status = unlink($filenameRm) ? 'The file ' . $filenameRm . ' has been deleted' : 'Error deleting ' . $filenameRm;
+              // echo $status;
+            }
+          }
         }
       }
     } else {
+      $content = str_replace("'", "", $content);
       $query = "update  blog_posts set  title = '$title' ,content = '$content' ,category_id = '$category'     where post_id = '$post_id'";
       $runquery = mysqli_query($conn, $query);
       if ($runquery) {
-        $message[] = 'Blog Post Update successfully!';
+        $message[] = array(
+          'type' => 'Update',
+          'message' => 'Blog Post Update successfully!',
+          'icon' => 'success'
+        );
       }
     }
   } else {
-    $message[] = 'Enter  valid  Form Information';
+    $message[] = array(
+      'icon' => 'error',
+      'type' => 'Error',
+      'message' => 'Enter  valid  Form Information'
+    );
   }
 }
 if (isset($_POST["insert"]) && isset($_POST["title"]) && isset($_POST["content"]) && isset($_POST["category"])) {
@@ -66,32 +85,70 @@ if (isset($_POST["insert"]) && isset($_POST["title"]) && isset($_POST["content"]
   ) {
     $filename = $_FILES["image"]["name"];
     $tempname = $_FILES["image"]["tmp_name"];
-    $folder = "./upload/post/" . time() . $filename;
+    $file_extension = pathinfo($_FILES["image"]["name"], PATHINFO_EXTENSION);
+    $folder = "./upload/post/" . time() . "." . $file_extension;
     $allowed_image_extension = array(
       "png",
       "jpg",
       "jpeg"
     );
-    $file_extension = pathinfo($_FILES["image"]["name"], PATHINFO_EXTENSION);
     if (!in_array($file_extension, $allowed_image_extension)) {
-      $message[] = 'Upload valid images. Only PNG and JPEG are allowed.';
+      $message[] = array(
+        'icon' => 'error',
+        'type' => 'Error',
+        'message' => 'Upload valid images. Only PNG and JPEG are allowed.'
+      );
     } else if (move_uploaded_file($tempname, "." . $folder)) {
+      $user_id = $_SESSION["user_id"];
       $query = "insert into  blog_posts ( user_id, title , content ,category_id,image) values  ( '$user_id','$title' , '$content','$category','$folder')";
       $runquery = mysqli_query($conn, $query);
       if ($runquery) {
-        $message[] = 'Blog Post Update successfully!';
+        $message[] = array(
+          'type' => 'Add Blog Post',
+          'message' => 'Blog Post Insert successfully!',
+          'icon' => 'success'
+        );
       }
     }
   } else {
-    $message[] = 'Enter  valid  Form Information';
+    $message[] = array(
+      'icon' => 'error',
+      'type' => 'Error',
+      'message' => 'Enter  valid  Form Information'
+    );
+  }
+}
+if (isset($_POST["delete"]) && isset($_POST["post_id"])) {
+  $post_id = $_POST["post_id"];
+  $query = "select * from  blog_posts where post_id = '$post_id' ";
+  $result = mysqli_query($conn, $query);
+  $row = mysqli_fetch_assoc($result);
+  if ($row['image']) {
+    $filenameRm = "." . $row['image'];
+    if (file_exists($filenameRm)) {
+      $status = unlink($filenameRm) ? 'The file ' . $filenameRm . ' has been deleted' : 'Error deleting ' . $filenameRm;
+      // echo $status;
+    }
+  }
+  $query = "delete from likes  where post_id = '$post_id'";
+  $runquery = mysqli_query($conn, $query);
+  if ($runquery) {
+    $query = "delete from blog_posts  where post_id = '$post_id'";
+    $runquery = mysqli_query($conn, $query);
+    if ($runquery) {
+      $message[] = array(
+        'icon' => 'success',
+        'type' => 'Blog Post Delete',
+        'message' => 'Blog Post delete successfully!',
+      );
+    }
   }
 }
 
+include "../alert_message.php";
 
 ?>
-<?php
-include "./sidebar.php";
-?>
+
 <main id="main" class="main">
   <section class="section dashboard">
     <div class="row">
@@ -120,7 +177,7 @@ include "./sidebar.php";
               $result = mysqli_query($conn, $query);
               $i = 1;
               while ($row = mysqli_fetch_assoc($result)) {
-                ?>
+              ?>
                 <tr>
                   <th scope='row'>
                     <?= $i ?>
@@ -147,15 +204,13 @@ include "./sidebar.php";
                   <td>
 
                     <form method="post" id='edit-form' class="m-0">
-                      <input class='form-control' type='hidden' value="<?= $row["category_id"] ?>" name='category_id'>
-                      <button class='btn btn-primary' type="button" data-bs-toggle='modal'
-                        data-bs-target='#edit-category-modal<?= $i ?>'><i class='bi bi-pencil'></i></button>
+                      <input class='form-control' type='hidden' value="<?= $row["post_id"] ?>" name='post_id'>
+                      <button class='btn btn-primary' type="button" data-bs-toggle='modal' data-bs-target='#edit-category-modal<?= $i ?>'><i class='bi bi-pencil'></i></button>
                       <button class='btn btn-danger' type="submit" name="delete"><i class='bi bi-trash'></i></button>
                     </form>
                   </td>
                 </tr>
-                <div class='modal  fade' id='edit-category-modal<?= $i ?>' tabindex='-1' style='display: none;'
-                  aria-hidden='true'>
+                <div class='modal  fade' id='edit-category-modal<?= $i ?>' tabindex='-1' style='display: none;' aria-hidden='true'>
                   <div class='modal-dialog  modal-lg modal-dialog-centered'>
                     <div class='modal-content'>
                       <div class='modal-header'>
@@ -180,8 +235,7 @@ include "./sidebar.php";
                               <label for='full_name'>Post Content</label>
                             </div>
                             <div class="col-8">
-                              <textarea class='form-control' name="content" id="" cols="30"
-                                rows="5"><?= $row["content"] ?></textarea>
+                              <textarea class='form-control' name="content" id="" cols="30" rows="5"><?= $row["content"] ?></textarea>
                               <!-- <input class='form-control' value="<?= $row["content"] ?>" type='text' name='content'> -->
                             </div>
                           </div>
@@ -211,18 +265,16 @@ include "./sidebar.php";
                           <div class='form-group row m-0 mt-2'>
                             <label class="col-4 my-2" for='image'>Profile image</label>
                             <div class="col-8">
-                              <input type="file" accept="image/*" onchange="loadFile<?= $i ?>(event)" id="image"
-                                class="form-control" name="image">
+                              <input type="file" accept="image/*" onchange="loadFile<?= $i ?>(event)" id="image" class="form-control" name="image">
                             </div>
                           </div>
                           <div class="text-center mt-3 ">
-                            <img class="rounded-5" id="output<?= $i ?>" height="120px" width="120px"
-                              src="<?= "." . $row["image"] ?>" alt="">
+                            <img class="rounded-5" id="output<?= $i ?>" height="120px" width="120px" src="<?= "." . $row["image"] ?>" alt="">
                             <script>
-                              var loadFile<?= $i ?> = function (event) {
+                              var loadFile<?= $i ?> = function(event) {
                                 var output = document.getElementById('output<?= $i ?>');
                                 output.src = URL.createObjectURL(event.target.files[0]);
-                                output.onload = function () {
+                                output.onload = function() {
                                   URL.revokeObjectURL(output.src) // free memory
                                 }
                               };
@@ -237,7 +289,7 @@ include "./sidebar.php";
                     </div>
                   </div>
                 </div>
-                <?php
+              <?php
                 $i++;
               }
               ?>
@@ -300,17 +352,16 @@ include "./sidebar.php";
               <div class='form-group row m-0 mt-2'>
                 <label class="col-4 my-2" for='image'>Profile image</label>
                 <div class="col-8">
-                  <input type="file" accept="image/*" onchange="loadFile(event)" id="image" class="form-control"
-                    required name="image">
+                  <input type="file" accept="image/*" onchange="loadFile(event)" id="image" class="form-control" required name="image">
                 </div>
               </div>
               <div class="text-center mt-3 ">
                 <img class="rounded-5" id="output-save" height="120px" width="120px" alt="">
                 <script>
-                  var loadFile = function (event) {
+                  var loadFile = function(event) {
                     var output = document.getElementById('output-save');
                     output.src = URL.createObjectURL(event.target.files[0]);
-                    output.onload = function () {
+                    output.onload = function() {
                       URL.revokeObjectURL(output.src) // free memory
                     }
                   };

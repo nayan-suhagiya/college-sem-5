@@ -1,6 +1,6 @@
 <?php
 include "../connection.php";
-
+include "./sidebar.php";
 if (isset($_POST["submit"])) {
     if (isset($_POST["name"]) && isset($_POST["user_id"]) && isset($_POST["email"]) && isset($_POST["user_type"])) {
 
@@ -28,36 +28,61 @@ if (isset($_POST["submit"])) {
                 $query = "select * from  Users where user_id = '$user_id' ";
                 $result = mysqli_query($conn, $query);
                 $row = mysqli_fetch_assoc($result);
-                if ($row['image']) {
-                    $filenameRm = "." . $row['image'];
-                    if (file_exists($filenameRm)) {
-                        $status = unlink($filenameRm) ? 'The file ' . $filenameRm . ' has been deleted' : 'Error deleting ' . $filenameRm;
-                    }
-                }
+
                 if (!in_array($file_extension, $allowed_image_extension)) {
-                    $message[] = 'Upload valid images. Only PNG and JPEG are allowed.';
+                    $message[] = array(
+                        'icon' => 'error',
+                        'type' => 'Error',
+                        'message' => 'Upload valid images. Only PNG and JPEG are allowed.'
+                    );
                 } else if (move_uploaded_file($tempname, "." . $folder)) {
                     $query = "update  Users set  name = '$name' , email = '$email' , user_type = '$user_type', image = '$folder'  where user_id = '$user_id' ";
                     $runquery = mysqli_query($conn, $query);
                     if ($runquery) {
-                        $message[] = 'User Update successfully!';
+                        $message[] = array(
+                            'type' => 'User Update',
+                            'message' => 'User Update successfully!',
+                            'icon' => 'success'
+                        );
+                        if ($row['image']) {
+                            $filenameRm = "." . $row['image'];
+                            if (file_exists($filenameRm)) {
+                                $status = unlink($filenameRm) ? 'The file ' . $filenameRm . ' has been deleted' : 'Error deleting ' . $filenameRm;
+                            }
+                        }
                     }
                 } else {
-                    $message[] = 'Failed to upload image!';
+                    $message[] = array(
+                        'icon' => 'error',
+                        'type' => 'Error',
+                        'message' => 'Failed to upload image!'
+                    );
                 }
             } else {
 
                 $query = "update  Users set  name = '$name' , email = '$email' , user_type = '$user_type'where user_id = '$user_id' ";
                 $runquery = mysqli_query($conn, $query);
                 if ($runquery) {
-                    $message[] = 'User Update successfully!';
+                    $message[] = array(
+                        'type' => 'User Update',
+                        'message' => 'User Update successfully!',
+                        'icon' => 'success'
+                    );
                 }
             }
         } else {
-            $message[] = 'Enter valid user details';
+            $message[] = array(
+                'icon' => 'error',
+                'type' => 'Error',
+                'message' => 'Enter  valid  Form Information'
+            );
         }
     } else {
-        $message[] = 'Enter valid user details';
+        $message[] = array(
+            'icon' => 'error',
+            'type' => 'Error',
+            'message' => 'Enter  valid  Form Information'
+        );
     }
 }
 if (isset($_POST["delete"]) && isset($_POST["user_id"])) {
@@ -75,13 +100,17 @@ if (isset($_POST["delete"]) && isset($_POST["user_id"])) {
     $query = "delete from Users  where user_id = '$user_id'";
     $runquery = mysqli_query($conn, $query);
     if ($runquery) {
-        $message[] = 'User delete successfully!';
+        $message[] = array(
+            'type' => 'User  Delete',
+            'message' => 'User delete successfully!',
+            'icon' => 'success'
+        );
     }
 }
+include "../alert_message.php";
+
 ?>
-<?php
-include "./sidebar.php";
-?>
+
 <main id="main" class="main">
     <section class="section dashboard">
         <div class="row">

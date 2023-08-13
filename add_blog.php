@@ -15,7 +15,7 @@
 
   if (isset($_POST["submit"])) {
     // echo "form submitted";
-  
+
     $title = $_POST["title"];
     $content = $_POST["content"];
     $category_id = $_POST["category_id"];
@@ -33,42 +33,36 @@
     $file_extension = pathinfo($_FILES["image"]["name"], PATHINFO_EXTENSION);
 
     if (!in_array($file_extension, $allowed_image_extension)) {
-      echo "
-            <script>
-              alert('Upload valid images. Only PNG,JPG and JPEG are allowed.');
-            </script>
-            ";
+      $message[] = array(
+        'icon' => 'error',
+        'type' => 'Error',
+        'message' => 'Upload valid images. Only PNG and JPEG are allowed.'
+      );
     } else if (move_uploaded_file($tmpname, $path)) {
       $query = "INSERT INTO blog_posts (user_id,title,content,image,category_id,created_at) VALUES($user_id,'$title','$content','$path',$category_id,NOW())";
 
       // echo $query;
-  
+
 
       $runquery = mysqli_query($conn, $query);
 
       if ($runquery) {
-        echo "
-          <div class='col-sm-4 m-auto my-3'>
-          <div class='alert alert-success alert-dismissible fade show' role='alert'>
-          Post added successfully!
-          <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
-          </div>
-          </div>
-        ";
+        $message[] = array(
+          'icon' => 'success',
+          'type' => 'Blog Post Add',
+          'message' => 'Post added successfully!'
+        );
       }
     } else {
-      echo "
-            <div class='col-sm-4 m-auto my-3'>
-            <div class='alert alert-danger alert-dismissible fade show' role='alert'>
-            Failed to upload image!
-            <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
-            </div>
-            </div>
-            ";
+      $message[] = array(
+        'icon' => 'error',
+        'type' => 'Blog Post',
+        'message' => 'Failed to upload image!'
+      );
     }
-
-
   }
+
+  include "./alert_message.php";
   ?>
 
   <div class="container">
@@ -84,8 +78,7 @@
               <label for="floatingInput">Enter Title</label>
             </div>
             <div class="form-group my-2">
-              <textarea type="content" placeholder="Write content here...." name="content" class="form-control" required
-                rows="4"></textarea>
+              <textarea type="content" placeholder="Write content here...." name="content" class="form-control" required rows="4"></textarea>
             </div>
             <div class="form-floating my-2">
               <select name="category_id" id="floatingCategory" class="form-select">
@@ -106,9 +99,7 @@
               <label for="floatingCategory">Select Category</label>
             </div>
             <div class="form-floating my-2">
-              <input type="file" name="image" class="form-control" accept="image/*"
-                onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])"
-                id="floatingBlogImage" placeholder="Title" required>
+              <input type="file" name="image" class="form-control" accept="image/*" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])" id="floatingBlogImage" placeholder="Title" required>
               <label for="floatingBlogImage">Upload blog image</label>
             </div>
 

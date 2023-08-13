@@ -49,13 +49,21 @@
           }
         }
         if (!in_array($file_extension, $allowed_image_extension)) {
-          $message = "Upload valid images. Only PNG and JPEG are allowed.";
+          $message[] = array(
+            'icon' => 'error',
+            'type' => 'Error',
+            'message' => 'Upload valid images. Only PNG and JPEG are allowed.'
+          );
           $isSuccess = false;
         } else if (move_uploaded_file($tempname, $folder)) {
           $query = "update  blog_posts set  title = '$title' ,content = '$content' ,category_id = '$category' , image = '$folder'    where post_id = '$post_id'";
           $runquery = mysqli_query($conn, $query);
           if ($runquery) {
-            $message = "Blog Post update successfully!";
+            $message[] = array(
+              'icon' => 'success',
+              'type' => 'Blog Post Update',
+              'message' => 'Blog Post update successfully!'
+            );
             $isSuccess = true;
           }
         }
@@ -63,12 +71,20 @@
         $query = "update  blog_posts set  title = '$title' ,content = '$content' ,category_id = '$category'     where post_id = '$post_id'";
         $runquery = mysqli_query($conn, $query);
         if ($runquery) {
-          $message = "Blog Post update successfully!";
+          $message[] = array(
+            'icon' => 'success',
+            'type' => 'Blog Post Update',
+            'message' => 'Blog Post update successfully!'
+          );
           $isSuccess = true;
         }
       }
     } else {
-      $message = "Unable to update!";
+      $message[] = array(
+        'icon' => 'error',
+        'type' => 'Blog Post Update',
+        'message' => 'Unable to update!'
+      );
       $isSuccess = false;
     }
   }
@@ -81,49 +97,69 @@
     $record = mysqli_num_rows($runquery);
 
     // echo $record;
-  
+
     if ($record == 1) {
       $row = mysqli_fetch_assoc($runquery);
 
       // echo $row["image"];
-  
+
       if ($row["image"]) {
         $removeFilename = $row["image"];
         if (file_exists($removeFilename)) {
           $status = unlink($removeFilename) ? 'The file ' . $removeFilename . ' has been deleted' : 'Error deleting ' . $removeFilename;
           // echo $status;
-  
+
           if ($status) {
             $q = "DELETE FROM blog_posts WHERE post_id='$post_id'";
             $rq = mysqli_query($conn, $q);
 
             if ($rq) {
-              $message = "Blog Post deleted successfully!";
+              $message[] = array(
+                'icon' => 'success',
+                'type' => 'Blog Post Delete',
+                'message' => 'Blog Post deleted successfully!'
+              );
               $isSuccess = true;
             } else {
-              $message = "Unable to delete blog post!";
+              $message[] = array(
+                'icon' => 'error',
+                'type' => 'Blog Post Delete',
+                'message' => 'Unable to delete blog post!'
+              );
               $isSuccess = false;
             }
           }
         } else {
-          $q = "DELETE FROM blog_posts WHERE post_id='$post_id'";
+          $q = "DELETE FROM likes WHERE post_id='$post_id'";
           $rq = mysqli_query($conn, $q);
-
           if ($rq) {
-            $message = "Blog Post deleted successfully!";
-            $isSuccess = true;
-          } else {
-            $message = "Unable to delete blog post!";
-            $isSuccess = false;
+            $q = "DELETE FROM blog_posts WHERE post_id='$post_id'";
+            $rq = mysqli_query($conn, $q);
+
+            if ($rq) {
+              $message[] = array(
+                'icon' => 'success',
+                'type' => 'Blog Post Delete',
+                'message' => 'Blog Post deleted successfully!'
+              );
+              $isSuccess = true;
+            } else {
+              $message[] = array(
+                'icon' => 'error',
+                'type' => 'Blog Post Delete',
+                'message' => 'Unable to delete blog post!'
+              );
+              $isSuccess = false;
+            }
           }
         }
       }
-
     }
   }
 
   $fetchQuery = "SELECT * FROM blog_posts WHERE user_id=$user_id";
   $fetchBlogRunQuery = mysqli_query($conn, $fetchQuery);
+  include "./alert_message.php";
 
   ?>
 
@@ -135,7 +171,7 @@
 
       while ($result = mysqli_fetch_assoc($fetchBlogRunQuery)) {
         // print_r($result);
-        ?>
+      ?>
         <div class="col-sm-6">
           <div class="card mb-3">
             <div class="row g-0">
@@ -156,8 +192,7 @@
                     </small>
                   </p>
                   <div style="display:flex;justify-content:center;">
-                    <button class="btn btn-sm btn-warning" type="button" data-bs-toggle='modal'
-                      data-bs-target='#edit-category-modal<?= $result["post_id"] ?>'>Edit</button>
+                    <button class="btn btn-sm btn-warning" type="button" data-bs-toggle='modal' data-bs-target='#edit-category-modal<?= $result["post_id"] ?>'>Edit</button>
                     <form method="POST" class="ms-3">
                       <input type="hidden" name="post_id" value="<?= $result["post_id"] ?>">
                       <!-- <button class="btn btn-sm btn-danger" type="button" name="delete">
@@ -172,8 +207,7 @@
           </div>
         </div>
 
-        <div class='modal  fade' id='edit-category-modal<?= $result["post_id"] ?>' tabindex='-1' style='display: none;'
-          aria-hidden='true'>
+        <div class='modal  fade' id='edit-category-modal<?= $result["post_id"] ?>' tabindex='-1' style='display: none;' aria-hidden='true'>
           <div class='modal-dialog  modal-lg modal-dialog-centered'>
             <div class='modal-content'>
               <div class='modal-header'>
@@ -197,8 +231,7 @@
                       <label for='full_name'>Post Content</label>
                     </div>
                     <div class="col-8">
-                      <textarea class='form-control' name="content" id="" cols="30"
-                        rows="5"><?= $result["content"] ?></textarea>
+                      <textarea class='form-control' name="content" id="" cols="30" rows="5"><?= $result["content"] ?></textarea>
                     </div>
                   </div>
                   <div class='form-group row '>
@@ -227,15 +260,12 @@
                   <div class='form-group row m-0 mt-2'>
                     <label class="col-4 my-2" for='image'>Profile image</label>
                     <div class="col-8">
-                      <input type="file" accept="image/*"
-                        onchange="document.getElementById('output<?= $result['post_id'] ?>').src = window.URL.createObjectURL(this.files[0])"
-                        id="image" class="form-control" name="image">
+                      <input type="file" accept="image/*" onchange="document.getElementById('output<?= $result['post_id'] ?>').src = window.URL.createObjectURL(this.files[0])" id="image" class="form-control" name="image">
                     </div>
                   </div>
 
                   <div class="text-center mt-3 ">
-                    <img class="rounded-5" id="output<?= $result['post_id'] ?>" height="120px" width="120px"
-                      src="<?= $result["image"] ?>" alt="">
+                    <img class="rounded-5" id="output<?= $result['post_id'] ?>" height="120px" width="120px" src="<?= $result["image"] ?>" alt="">
 
                   </div>
                 </div>
@@ -247,7 +277,7 @@
             </div>
           </div>
         </div>
-        <?php
+      <?php
       }
       ?>
     </div>

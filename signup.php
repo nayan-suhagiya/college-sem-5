@@ -20,33 +20,33 @@ if (isset($_POST["submit"])) {
   // copy($tempname, $path);
 
   if (!in_array($file_extension, $allowed_image_extension)) {
-    echo "
-            <script>
-              alert('Upload valid images. Only PNG,JPG and JPEG are allowed.');
-            </script>
-            ";
+    $message[] = array(
+      'icon' => 'error',
+      'type' => 'Error',
+      'message' => 'Upload valid images. Only PNG and JPEG are allowed.'
+    );
   } else if (move_uploaded_file($tempname, $path)) {
     $query = "INSERT INTO Users(name,email,password,image) VALUES('$name','$email','$passwd','$path')";
     $runquery = mysqli_query($conn, $query);
     if ($runquery) {
-
-      echo "
-                <script>
-                  alert('Registred successfully!');
-                </script>
-                ";
+      $message[] = array(
+        'icon' => 'success',
+        'type' => 'Register',
+        'message' => 'Registred successfully!',
+      );
+      include "./alert_message.php";
       header("location:./index.php");
     }
   } else {
-    echo "
-            <script>
-              alert(' Failed to upload image!');
-            </script>
-            ";
+    $message[] = array(
+      'icon' => 'error',
+      'type' => 'Upload Image',
+      'message' => 'Failed to upload image!'
+    );
   }
 
   // echo $userid.$name.$email.$passwd;
-
+  include "./alert_message.php";
 }
 ?>
 
@@ -77,13 +77,11 @@ if (isset($_POST["submit"])) {
               <label for="floatingName">Enter Name</label>
             </div>
             <div class="form-floating my-2">
-              <input type="email" name="email" class="form-control" id="floatingEmail" placeholder="name@example.com"
-                required>
+              <input type="email" name="email" class="form-control" id="floatingEmail" placeholder="name@example.com" required>
               <label for="floatingEmail">Enter Email</label>
             </div>
             <div class="form-floating my-2">
-              <input type="password" name="passwd" class="form-control" id="floatingPassword" placeholder="Password"
-                required>
+              <input type="password" name="passwd" class="form-control" id="floatingPassword" placeholder="Password" required>
               <label for="floatingPassword">Enter Password</label>
             </div>
             <div class="form-floating my-2">

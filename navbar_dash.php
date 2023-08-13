@@ -49,9 +49,8 @@ $name = $row["name"];
     <div class="container-fluid">
       <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
         <a href="./dashboard.php" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-          <img src="./assets/site_logo.png" alt="logo" height="60">
+          <img src="./assets/site_logo.png" alt="logo" height="50">
         </a>
-
         <ul class="nav col-12 col-lg-auto me-2 mb-2 justify-content-center mb-md-0 ms-auto ">
           <li><a href="./dashboard.php" class="nav-link px-2 mt-1 ">Home</a></li>
           <li><a href="./add_blog.php" class="nav-link px-2 mt-1">Add Blog</a></li>

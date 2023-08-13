@@ -11,6 +11,8 @@
   <link href="../lib/css/style.css" rel="stylesheet">
   <link href="../lib/css/bootstrap.min.css" rel="stylesheet">
   <link href="../lib/css/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <script src="../lib/js/sweetalert2.all.js"></script>
+
 </head>
 <?php
 include "../connection.php";
@@ -34,18 +36,6 @@ $image = $row["image"];
 if ($row['user_type'] == "client") {
   header("location:../dashboard.php");
 }
-
-if (isset($message)) {
-  foreach ($message as $message) {
-    echo '
-    <div class="message">
-    <span>' . $message . '</span>
-    <i class="bi bi-x" onclick="this.parentElement.remove();"></i>
-    </div>
-    ';
-  }
-}
-
 
 ?>
 

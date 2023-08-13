@@ -1,6 +1,6 @@
 <?php
 include "../connection.php";
-
+include "./sidebar.php";
 if (isset($_POST["submit"]) && isset($_POST["name"]) && isset($_POST["category_id"])) {
 
   $category_id = $_POST["category_id"];
@@ -9,10 +9,18 @@ if (isset($_POST["submit"]) && isset($_POST["name"]) && isset($_POST["category_i
     $query = "update  categories set  name = '$name'   where category_id = '$category_id'";
     $runquery = mysqli_query($conn, $query);
     if ($runquery) {
-      $message[] = 'Category Update successfully!';
+      $message[] = array(
+        'type' => 'Update',
+        'message' => 'Category Update successfully!',
+        'icon' => 'success'
+      );
     }
   } else {
-    $message[] = 'Enter  valid  Form Information';
+    $message[] = array(
+      'icon' => 'error',
+      'type' => 'Error',
+      'message' => 'Enter  valid  Form Information'
+    );
   }
 }
 if (isset($_POST["insert"]) && isset($_POST["name"])) {
@@ -22,10 +30,18 @@ if (isset($_POST["insert"]) && isset($_POST["name"])) {
     $query = "insert into  categories  (name) values('$name')";
     $runquery = mysqli_query($conn, $query);
     if ($runquery) {
-      $message[] = 'Category Insert successfully!';
+      $message[] = array(
+        'type' => 'Add Category ',
+        'message' => 'Category Insert successfully!',
+        'icon' => 'success'
+      );
     }
   } else {
-    $message[] = 'Enter  valid  Form Information';
+    $message[] = array(
+      'icon' => 'error',
+      'type' => 'Error',
+      'message' => 'Enter  valid  Form Information'
+    );
   }
 }
 if (isset($_POST["delete"]) && isset($_POST["category_id"])) {
@@ -33,16 +49,19 @@ if (isset($_POST["delete"]) && isset($_POST["category_id"])) {
   $query = "delete from categories  where category_id = '$category_id'";
   $runquery = mysqli_query($conn, $query);
   if ($runquery) {
-    $message[] = 'Category delete successfully!';
+    $message[] = array(
+      'type' => 'Delete Category ',
+      'message' => 'Category delete successfully!',
+      'icon' => 'success'
+    );
   }
 }
 
 
+include "../alert_message.php";
 
 ?>
-<?php
-include "./sidebar.php";
-?>
+
 <main id="main" class="main">
   <section class="section dashboard">
     <div class="row">
