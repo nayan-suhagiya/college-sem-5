@@ -89,18 +89,23 @@
               </h5>
             </div>
             <div>
-              <div class="ms-auto lc_icons">
+              <div class="d-flex align-items-center lc_icons ms-auto">
                 <!-- <a href="like.php?post_id=<?= $post_id ?>" class="me-3" target="_self"> -->
-                <i class="las la-thumbs-up fs-3"></i>&nbsp;
-                <?= $like_count ?>
+                <div onclick="likePost(<?= $post_id ?>)">
+                  <i class="las la-thumbs-up fs-3"></i>&nbsp;
+                </div>
+                <div id="likeCount_<?= $post_id ?>" class="me-2">
+                  <?= $like_count ?>
+                </div>
                 <!-- </a> -->
-                <!-- <a href=""> -->
-                <i class="lar la-comments fs-3 ms-3"></i>&nbsp;
-                <?= $comment_count ?>
-                <!-- </a> -->
+                <a href="">
+                  <i class="lar la-comments fs-3"></i>&nbsp;
+                  <?= $comment_count ?>
+                </a>
+
                 <i class="lar la-bookmark fs-3 ms-3"></i>&nbsp;
-                <!-- <?= $comment_count ?> -->
               </div>
+
             </div>
           </div>
         </div>
@@ -112,6 +117,8 @@
 
 
 </body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="vendor/js/ajex-call.js"></script>
 
 </html>
 

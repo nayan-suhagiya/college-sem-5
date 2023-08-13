@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 13, 2023 at 05:50 AM
+-- Generation Time: Aug 13, 2023 at 10:28 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -16,7 +16,6 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
-
 
 DROP TABLE IF EXISTS saved_posts;
 DROP TABLE IF EXISTS Comments;
@@ -52,14 +51,14 @@ CREATE TABLE `blog_posts` (
 --
 
 INSERT INTO `blog_posts` (`post_id`, `user_id`, `title`, `content`, `like_count`, `comment_count`, `image`, `category_id`, `created_at`) VALUES
-(1, 2, 'Reprehenderit aut sed doloribus blanditiis, aspernatur magni? ', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio placeat exercitationem magni voluptates dolore. Tenetur fugiat voluptates quas, nobis error deserunt aliquam temporibus sapiente, laudantium dolorum itaque libero eos deleniti?\r\n\r\nDolorum, incidunt! Adipisci harum itaque maxime dolores doloremque porro eligendi quis, doloribus vel sit rerum sunt obcaecati nam suscipit nulla vitae alias blanditiis aliquam debitis atque illo modi et placeat. Ratione iure eveniet provident. Culpa laboriosam sed ad quia. Corrupti, earum, perferendis dolore cupiditate sint nihil maiores iusto tempora nobis porro itaque est. Ut laborum culpa assumenda pariatur et perferendis?', 6, NULL, './upload/post/16918241649.jpeg', 1, '2023-08-02 19:08:03'),
-(2, 3, 'Demo Post', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque molestiae hic necessitatibus illo odit porro ipsa praesentium atque accusamus incidunt excepturi minima, modi voluptatibus neque exercitationem assumenda iure consectetur. Itaque!', 6, NULL, './upload/post/1691853271.jpg', 9, '2023-08-04 21:56:00'),
-(28, 11, 'Clipping (morphology)', 'According to Hans Marchand, clippings are not coined as words belonging to the core lexicon of a language.[2] They originate as jargon or slang of an in-group, such as schools, army, police, and the medical profession. For example, exam(ination), math(ematics), and lab(oratory) originated in school slang; spec(ulation) and tick(et = credit) in stock-exchange slang; and vet(eran) and cap(tain) in army slang. Clipped forms can pass into common usage when they are widely useful, becoming part of standard English, which most speakers would agree has happened with math/maths, lab, exam, phone (from telephone), fridge (from refrigerator), and various others. When their usefulness is limited to narrower contexts, they remain outside the standard register. Many, such as mani and pedi for manicure and pedicure or mic/mike for microphone, occupy a middle ground in which their appropriate register is a subjective judgment, but succeeding decades tend to see them become more widely used.', 1, NULL, './upload/post/169186245800036.jpg', 1, '2023-08-12 23:17:38'),
-(29, 11, 'Choose the perfect design', 'Create a beautiful blog that fits your style. Choose from a selection of easy-to-use templates – all with flexible layouts and hundreds of background images – or design something new.', NULL, NULL, './upload/post/169187011300043.jpg', 1, '2023-08-13 01:25:13'),
-(30, 11, 'Earn money', 'Get paid for your hard work. Google AdSense can automatically display relevant targeted ads on your blog so that you can earn income by posting about your passion.', NULL, NULL, './upload/post/169187017500012.png', 1, '2023-08-13 01:26:15'),
-(31, 11, 'Know your audience', 'Find out which posts are a hit with Blogger’s built-in analytics. You’ll see where your audience is coming from and what they’re interested in. You can even connect your blog directly to Google Analytics for a more detailed look.\r\n\r\n', NULL, NULL, './upload/post/169187019700041.jpg', 1, '2023-08-13 01:26:37'),
-(32, 11, 'How to Start a Blog That Makes You Money', 'Are you looking for an easy guide on how to start a blog?\r\n\r\nThe step-by-step guide on this page will show you how to create a blog in 20 minutes with just the most basic computer skills.\r\n\r\nAfter completing this guide you will have a beautiful blog that is ready to share with the world.\r\n\r\n', NULL, NULL, './upload/post/169187028300044.jpg', 9, '2023-08-13 01:28:03'),
-(33, 11, 'Protecting the public’s right to free expression', 'On X, people are free to be their true selves. We believe people of all backgrounds and beliefs should have the right to freely express themselves, so long as they do so within the bounds of the law.\r\n\r\n', NULL, NULL, './upload/post/169187075000039.jpg', 1, '2023-08-13 01:35:50'),
+(1, 2, 'Reprehenderit aut sed doloribus blanditiis, aspernatur magni? ', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio placeat exercitationem magni voluptates dolore. Tenetur fugiat voluptates quas, nobis error deserunt aliquam temporibus sapiente, laudantium dolorum itaque libero eos deleniti?\r\n\r\nDolorum, incidunt! Adipisci harum itaque maxime dolores doloremque porro eligendi quis, doloribus vel sit rerum sunt obcaecati nam suscipit nulla vitae alias blanditiis aliquam debitis atque illo modi et placeat. Ratione iure eveniet provident. Culpa laboriosam sed ad quia. Corrupti, earum, perferendis dolore cupiditate sint nihil maiores iusto tempora nobis porro itaque est. Ut laborum culpa assumenda pariatur et perferendis?', 2, NULL, './upload/post/16918241649.jpeg', 1, '2023-08-02 19:08:03'),
+(2, 3, 'Demo Post', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque molestiae hic necessitatibus illo odit porro ipsa praesentium atque accusamus incidunt excepturi minima, modi voluptatibus neque exercitationem assumenda iure consectetur. Itaque!', 2, NULL, './upload/post/1691853271.jpg', 9, '2023-08-04 21:56:00'),
+(28, 11, 'Clipping (morphology)', 'According to Hans Marchand, clippings are not coined as words belonging to the core lexicon of a language.[2] They originate as jargon or slang of an in-group, such as schools, army, police, and the medical profession. For example, exam(ination), math(ematics), and lab(oratory) originated in school slang; spec(ulation) and tick(et = credit) in stock-exchange slang; and vet(eran) and cap(tain) in army slang. Clipped forms can pass into common usage when they are widely useful, becoming part of standard English, which most speakers would agree has happened with math/maths, lab, exam, phone (from telephone), fridge (from refrigerator), and various others. When their usefulness is limited to narrower contexts, they remain outside the standard register. Many, such as mani and pedi for manicure and pedicure or mic/mike for microphone, occupy a middle ground in which their appropriate register is a subjective judgment, but succeeding decades tend to see them become more widely used.', 0, NULL, './upload/post/169186245800036.jpg', 1, '2023-08-12 23:17:38'),
+(29, 11, 'Choose the perfect design', 'Create a beautiful blog that fits your style. Choose from a selection of easy-to-use templates – all with flexible layouts and hundreds of background images – or design something new.', 1, NULL, './upload/post/169187011300043.jpg', 1, '2023-08-13 01:25:13'),
+(30, 11, 'Earn money', 'Get paid for your hard work. Google AdSense can automatically display relevant targeted ads on your blog so that you can earn income by posting about your passion.', 1, NULL, './upload/post/169187017500012.png', 1, '2023-08-13 01:26:15'),
+(31, 11, 'Know your audience', 'Find out which posts are a hit with Blogger’s built-in analytics. You’ll see where your audience is coming from and what they’re interested in. You can even connect your blog directly to Google Analytics for a more detailed look.\r\n\r\n', 1, NULL, './upload/post/169187019700041.jpg', 1, '2023-08-13 01:26:37'),
+(32, 11, 'How to Start a Blog That Makes You Money', 'Are you looking for an easy guide on how to start a blog?\r\n\r\nThe step-by-step guide on this page will show you how to create a blog in 20 minutes with just the most basic computer skills.\r\n\r\nAfter completing this guide you will have a beautiful blog that is ready to share with the world.\r\n\r\n', 1, NULL, './upload/post/169187028300044.jpg', 9, '2023-08-13 01:28:03'),
+(33, 11, 'Protecting the public’s right to free expression', 'On X, people are free to be their true selves. We believe people of all backgrounds and beliefs should have the right to freely express themselves, so long as they do so within the bounds of the law.\r\n\r\n', 1, NULL, './upload/post/169187075000039.jpg', 1, '2023-08-13 01:35:50'),
 (34, 11, 'An update on Twitter Transparency Reporting', 'As we review our approach to transparency reporting in light of innovations in content moderation and changes in the regulatory landscape, we believe it’s important to share data from H1 2022 on our health & safety efforts. We won’t be publishing a formal transparency report for this period (January 1 - June 30, 2022) in our previous format.', NULL, NULL, './upload/post/169187077600040.jpg', 9, '2023-08-13 01:36:16');
 
 -- --------------------------------------------------------
@@ -79,7 +78,8 @@ CREATE TABLE `categories` (
 
 INSERT INTO `categories` (`category_id`, `name`) VALUES
 (9, 'Dish'),
-(1, 'Food');
+(1, 'Food'),
+(10000, 'other');
 
 -- --------------------------------------------------------
 
@@ -114,17 +114,13 @@ CREATE TABLE `likes` (
 INSERT INTO `likes` (`like_id`, `post_id`, `user_id`) VALUES
 (12, 1, 2),
 (13, 2, 2),
-(14, 2, 11),
-(15, 2, 11),
-(16, 2, 11),
-(23, 1, 11),
-(24, 1, 11),
-(25, 1, 11),
-(26, 2, 11),
-(27, 1, 11),
-(28, 1, 11),
-(29, 28, 11),
-(30, 2, 11);
+(96, 29, 11),
+(116, 30, 11),
+(118, 32, 11),
+(119, 33, 11),
+(120, 31, 11),
+(142, 2, 11),
+(146, 1, 11);
 
 -- --------------------------------------------------------
 
@@ -267,7 +263,7 @@ ALTER TABLE `comments`
 -- AUTO_INCREMENT for table `likes`
 --
 ALTER TABLE `likes`
-  MODIFY `like_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `like_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=147;
 
 --
 -- AUTO_INCREMENT for table `promotion_package`
