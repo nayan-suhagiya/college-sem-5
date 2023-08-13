@@ -187,10 +187,14 @@
                     </h3>
                   </div>
                   <div class="ms-auto lc_icons">
-                    <a href="like.php?post_id=<?= $post_id ?>" class="me-3" target="_self">
+                    <!-- <a href="like.php?post_id=<?= $post_id ?>" class="me-3" target="_self"> -->
+                    <div onclick="likePost(<?= $post_id ?>)">
                       <i class="las la-thumbs-up fs-3"></i>&nbsp;
+                    </div>
+                    <div id="likeCount_<?= $post_id ?>">
                       <?= $like_count ?>
-                    </a>
+                    </div>
+                    <!-- </a> -->
                     <a href="">
                       <i class="lar la-comments fs-3"></i>&nbsp;
                       <?= $comment_count ?>
@@ -234,6 +238,21 @@
 
 
 </body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  function likePost(postId) {
+    $.ajax({
+      type: "POST",
+      url: "like.php",
+      data: {
+        post_id: postId
+      },
+      success: function(response) {
+        $("#likeCount_" + postId).text(response);
+      }
+    });
+  }
+</script>
 
 </html>
 
@@ -279,5 +298,5 @@
 
 
 <div class="bg"></div>
-  <div class="bg bg2"></div>
-  <div class="bg bg3"></div>
+<div class="bg bg2"></div>
+<div class="bg bg3"></div>
