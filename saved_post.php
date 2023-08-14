@@ -20,18 +20,22 @@
   $rq = mysqli_query($conn, $q);
 
   if (mysqli_num_rows($rq) > 0) {
-    while ($row = mysqli_fetch_assoc($rq)) {
-      # code...
-      // print_r($row["post_id"]);
-      $post_id = $row["post_id"];
-      $q = "SELECT * FROM blog_posts WHERE post_id IN ($post_id)";
-      $rq = mysqli_query($conn, $q);
+    // while ($row = mysqli_fetch_assoc($rq)) {
+    //   # code...
+    //   // print_r($row["post_id"]);
+    //   $post_id = $row["post_id"];
+    //   $q = "SELECT * FROM blog_posts WHERE post_id IN ($post_id)";
+    //   $rq = mysqli_query($conn, $q);
+  
+    //   if ($rq) {
+    //     $row = mysqli_fetch_assoc($rq);
+    //     print_r($row);
+    //   }
+    // }
+    $q = "SELECT * FROM blog_posts bp,saved_posts sp WHERE bp.user_id=$user_id AND bp.post_id=sp.post_id";
+    $rq = mysqli_query($conn, $q);
 
-      if ($rq) {
-        $row = mysqli_fetch_assoc($rq);
-        print_r($row);
-      }
-    }
+    $row = mysqli_fetch_assoc($rq);
   }
   include "./alert_message.php";
 
