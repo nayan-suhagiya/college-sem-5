@@ -20,36 +20,40 @@
   $rq = mysqli_query($conn, $q);
 
   if (mysqli_num_rows($rq) > 0) {
-    // while ($row = mysqli_fetch_assoc($rq)) {
-    //   # code...
-    //   // print_r($row["post_id"]);
-    //   $post_id = $row["post_id"];
-    //   $q = "SELECT * FROM blog_posts WHERE post_id IN ($post_id)";
-    //   $rq = mysqli_query($conn, $q);
+    while ($row = mysqli_fetch_assoc($rq)) {
+      # code...
+      // print_r($row["post_id"]);
+      // $post_id = $row["post_id"];
+      // $q = "SELECT * FROM blog_posts WHERE post_id IN ($post_id)";
+      // $rq = mysqli_query($conn, $q);
   
-    //   if ($rq) {
-    //     $row = mysqli_fetch_assoc($rq);
-    //     print_r($row);
-    //   }
-    // }
-    $q = "SELECT * FROM blog_posts bp,saved_posts sp WHERE bp.user_id=$user_id AND bp.post_id=sp.post_id";
-    $rq = mysqli_query($conn, $q);
+      // if ($rq) {
+      //   $row = mysqli_fetch_assoc($rq);
+      //   print_r($row);
+      // }
+    }
+    $q = "SELECT *
+    FROM blog_posts 
+    JOIN saved_posts ON blog_posts.post_id = saved_posts.post_id
+    WHERE saved_posts.user_id=$user_id";
+    $fetchBlogRunQuery = mysqli_query($conn, $q);
 
-    $row = mysqli_fetch_assoc($rq);
+    // $result = mysqli_fetch_assoc($rq);
+    // print_r($result);
   }
   include "./alert_message.php";
 
   ?>
 
 
-  <!-- <div class="container my-4">
+  <div class="container my-4">
     <div class="row">
       <h2 class="col-sm-12 mb-4">Your saved blogs...</h2>
       <?php
 
       while ($result = mysqli_fetch_assoc($fetchBlogRunQuery)) {
-        print_r($result);
-
+        // print_r($result);
+      
         if ($result["comment_count"] == null) {
           $result["comment_count"] = 0;
         }
@@ -78,6 +82,11 @@
                       <?= $result["created_at"] ?>
                     </small>
                   </p>
+                  <button class="btn btn-custom">
+                    <a href="single_post.php?post_id=<?= $result["post_id"] ?>">
+                      View More
+                    </a>
+                  </button>
                 </div>
               </div>
             </div>
@@ -89,8 +98,12 @@
       }
       ?>
     </div>
-  </div> -->
+  </div>
 
 </body>
 
 </html>
+
+<div class="bg"></div>
+<div class="bg bg2"></div>
+<div class="bg bg3"></div>
