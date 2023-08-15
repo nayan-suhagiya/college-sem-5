@@ -109,7 +109,7 @@
       <div class="col-sm-12">
         <div class="card-2">
           <div class="thumbnail">
-            <img class="left" src="<?= $image ?>" />
+            <img class="left" src="<?= $image ?>" onerror="this.src='assets/site_logo.png'" />
           </div>
         </div>
         <div class="right">
@@ -123,7 +123,7 @@
           </p>
           <div class="author mb-4">
             <div>
-              <img src="<?= $user["image"] ?>" />
+              <img src="<?= $user["image"] ?>" onerror="this.src='assets/profile.png'" />
               <h5 class="ms-2 mb-0 mt-3">
                 <?= $user["name"] ?>
               </h5>
