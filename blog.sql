@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 13, 2023 at 10:28 AM
+-- Generation Time: Aug 15, 2023 at 02:27 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -17,16 +17,20 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
+--
+-- Database: `blog`
+--
+DROP EVENT IF EXISTS daily_status_check;
+DROP TRIGGER IF EXISTS  update_campaign_status_before_insert ;
+DROP TRIGGER IF EXISTS  update_campaign_status_before_update ;
 DROP TABLE IF EXISTS saved_posts;
+DROP TABLE IF EXISTS campaigns;
 DROP TABLE IF EXISTS Comments;
 DROP TABLE IF EXISTS likes;
 DROP TABLE IF EXISTS blog_Posts;
 DROP TABLE IF EXISTS Categories;
 DROP TABLE IF EXISTS Users;
 DROP TABLE IF EXISTS promotion_package;
---
--- Database: `blog`
---
 
 -- --------------------------------------------------------
 
@@ -60,6 +64,59 @@ INSERT INTO `blog_posts` (`post_id`, `user_id`, `title`, `content`, `like_count`
 (32, 11, 'How to Start a Blog That Makes You Money', 'Are you looking for an easy guide on how to start a blog?\r\n\r\nThe step-by-step guide on this page will show you how to create a blog in 20 minutes with just the most basic computer skills.\r\n\r\nAfter completing this guide you will have a beautiful blog that is ready to share with the world.\r\n\r\n', 1, NULL, './upload/post/169187028300044.jpg', 9, '2023-08-13 01:28:03'),
 (33, 11, 'Protecting the public’s right to free expression', 'On X, people are free to be their true selves. We believe people of all backgrounds and beliefs should have the right to freely express themselves, so long as they do so within the bounds of the law.\r\n\r\n', 1, NULL, './upload/post/169187075000039.jpg', 1, '2023-08-13 01:35:50'),
 (34, 11, 'An update on Twitter Transparency Reporting', 'As we review our approach to transparency reporting in light of innovations in content moderation and changes in the regulatory landscape, we believe it’s important to share data from H1 2022 on our health & safety efforts. We won’t be publishing a formal transparency report for this period (January 1 - June 30, 2022) in our previous format.', NULL, NULL, './upload/post/169187077600040.jpg', 9, '2023-08-13 01:36:16');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `campaigns`
+--
+
+CREATE TABLE `campaigns` (
+  `campaign_id` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `status` enum('pending','running','close') NOT NULL DEFAULT 'pending',
+  `post_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `package_id` int(11) NOT NULL,
+  `start_date` date NOT NULL,
+  `end_date` date NOT NULL,
+  `total_amount` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='as';
+
+--
+-- Dumping data for table `campaigns`
+--
+
+INSERT INTO `campaigns` (`campaign_id`, `name`, `status`, `post_id`, `user_id`, `package_id`, `start_date`, `end_date`, `total_amount`) VALUES
+(16, 'Utsav paramr', 'running', 28, 11, 13, '2023-08-15', '2023-08-16', 200);
+
+--
+-- Triggers `campaigns`
+--
+DELIMITER $$
+CREATE TRIGGER `update_campaign_status_before_insert` BEFORE INSERT ON `campaigns` FOR EACH ROW BEGIN
+    IF NEW.start_date <= CURDATE() AND NEW.end_date >= CURDATE() THEN
+        SET NEW.status = 'running';
+    ELSEIF NEW.start_date > CURDATE() THEN
+        SET NEW.status = 'pending';
+    ELSE
+        SET NEW.status = 'close';
+    END IF;
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `update_campaign_status_before_update` BEFORE UPDATE ON `campaigns` FOR EACH ROW BEGIN
+    IF NEW.start_date <= CURDATE() AND NEW.end_date >= CURDATE() THEN
+        SET NEW.status = 'running';
+    ELSEIF NEW.start_date > CURDATE() THEN
+        SET NEW.status = 'pending';
+    ELSE
+        SET NEW.status = 'close';
+    END IF;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -117,10 +174,10 @@ INSERT INTO `likes` (`like_id`, `post_id`, `user_id`) VALUES
 (96, 29, 11),
 (116, 30, 11),
 (118, 32, 11),
-(119, 33, 11),
 (120, 31, 11),
 (142, 2, 11),
-(146, 1, 11);
+(147, 33, 11),
+(149, 1, 11);
 
 -- --------------------------------------------------------
 
@@ -131,18 +188,19 @@ INSERT INTO `likes` (`like_id`, `post_id`, `user_id`) VALUES
 CREATE TABLE `promotion_package` (
   `package_id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
-  `price` varchar(10) NOT NULL,
-  `description` varchar(200) NOT NULL
+  `price` int(11) NOT NULL,
+  `description` varchar(200) NOT NULL,
+  `total_days` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `promotion_package`
 --
 
-INSERT INTO `promotion_package` (`package_id`, `name`, `price`, `description`) VALUES
-(13, 'BASIC', '200$', 'Eleifend cursus volutpat risus convallis nam sed quam sollicitudin eget leo at erat cursus justo'),
-(14, 'SUPER', '300$', 'Eleifend cursus volutpat risus convallis nam sed quam sollicitudin eget leo at erat cursus justo'),
-(15, 'ENTERPRISE', '400$', 'Eleifend cursus volutpat risus convallis nam sed quam sollicitudin eget leo at erat cursus justo');
+INSERT INTO `promotion_package` (`package_id`, `name`, `price`, `description`, `total_days`) VALUES
+(13, 'BASIC', 200, 'Eleifend cursus volutpat risus convallis nam sed quam sollicitudin eget leo at erat cursus justo', 1),
+(14, 'SUPER', 300, 'Eleifend cursus volutpat risus convallis nam sed quam sollicitudin eget leo at erat cursus justo', 30),
+(15, 'ENTERPRISE', 400, 'Eleifend cursus volutpat risus convallis nam sed quam sollicitudin eget leo at erat cursus justo', 365);
 
 -- --------------------------------------------------------
 
@@ -155,6 +213,14 @@ CREATE TABLE `saved_posts` (
   `post_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `saved_posts`
+--
+
+INSERT INTO `saved_posts` (`save_id`, `post_id`, `user_id`) VALUES
+(1, 1, 11),
+(2, 31, 11);
 
 -- --------------------------------------------------------
 
@@ -192,6 +258,16 @@ ALTER TABLE `blog_posts`
   ADD PRIMARY KEY (`post_id`),
   ADD KEY `category_id` (`category_id`),
   ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `campaigns`
+--
+ALTER TABLE `campaigns`
+  ADD PRIMARY KEY (`campaign_id`),
+  ADD UNIQUE KEY `name` (`name`),
+  ADD KEY `post_id` (`post_id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `package_id` (`package_id`);
 
 --
 -- Indexes for table `categories`
@@ -248,10 +324,16 @@ ALTER TABLE `blog_posts`
   MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
+-- AUTO_INCREMENT for table `campaigns`
+--
+ALTER TABLE `campaigns`
+  MODIFY `campaign_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10001;
 
 --
 -- AUTO_INCREMENT for table `comments`
@@ -263,7 +345,7 @@ ALTER TABLE `comments`
 -- AUTO_INCREMENT for table `likes`
 --
 ALTER TABLE `likes`
-  MODIFY `like_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=147;
+  MODIFY `like_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=150;
 
 --
 -- AUTO_INCREMENT for table `promotion_package`
@@ -275,7 +357,7 @@ ALTER TABLE `promotion_package`
 -- AUTO_INCREMENT for table `saved_posts`
 --
 ALTER TABLE `saved_posts`
-  MODIFY `save_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `save_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -293,6 +375,14 @@ ALTER TABLE `users`
 ALTER TABLE `blog_posts`
   ADD CONSTRAINT `blog_posts_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`),
   ADD CONSTRAINT `blog_posts_ibfk_2` FOREIGN KEY (`category_id`) REFERENCES `categories` (`category_id`);
+
+--
+-- Constraints for table `campaigns`
+--
+ALTER TABLE `campaigns`
+  ADD CONSTRAINT `campaigns_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `blog_posts` (`post_id`),
+  ADD CONSTRAINT `campaigns_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`),
+  ADD CONSTRAINT `campaigns_ibfk_3` FOREIGN KEY (`package_id`) REFERENCES `promotion_package` (`package_id`);
 
 --
 -- Constraints for table `comments`
@@ -314,6 +404,21 @@ ALTER TABLE `likes`
 ALTER TABLE `saved_posts`
   ADD CONSTRAINT `saved_posts_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `blog_posts` (`post_id`),
   ADD CONSTRAINT `saved_posts_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
+
+DELIMITER $$
+--
+-- Events
+--
+CREATE DEFINER=`root`@`localhost` EVENT `daily_status_check` ON SCHEDULE EVERY 1 DAY STARTS '2023-08-15 17:52:14' ENDS '2023-09-30 17:52:14' ON COMPLETION NOT PRESERVE ENABLE DO UPDATE campaigns
+    SET status =
+        CASE
+            WHEN start_date > CURDATE() THEN 'pending'
+            WHEN start_date <= CURDATE() AND end_date >= CURDATE() THEN 'running'
+            WHEN end_date < CURDATE() THEN 'close'
+            ELSE status
+        END$$
+
+DELIMITER ;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
