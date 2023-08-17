@@ -111,7 +111,7 @@ include "./navbar_dash.php";
         </section>
     </div>
 </div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <script>
     function myFuncCall() {
         console.log($('input[name="radio-card"]:checked').val());
