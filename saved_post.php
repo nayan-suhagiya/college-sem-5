@@ -37,7 +37,6 @@
     JOIN saved_posts ON blog_posts.post_id = saved_posts.post_id
     WHERE saved_posts.user_id=$user_id";
     $fetchBlogRunQuery = mysqli_query($conn, $q);
-
     // $result = mysqli_fetch_assoc($rq);
     // print_r($result);
   }
