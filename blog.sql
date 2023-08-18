@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 17, 2023 at 03:45 PM
+-- Generation Time: Aug 18, 2023 at 03:22 PM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 5.6.40
 
@@ -47,7 +47,7 @@ CREATE TABLE `blog_posts` (
 INSERT INTO `blog_posts` (`post_id`, `user_id`, `title`, `content`, `like_count`, `comment_count`, `image`, `category_id`, `created_at`) VALUES
 (1, 2, 'Reprehenderit aut sed doloribus blanditiis, aspernatur magni? ', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio placeat exercitationem magni voluptates dolore. Tenetur fugiat voluptates quas, nobis error deserunt aliquam temporibus sapiente, laudantium dolorum itaque libero eos deleniti?\r\n\r\nDolorum, incidunt! Adipisci harum itaque maxime dolores doloremque porro eligendi quis, doloribus vel sit rerum sunt obcaecati nam suscipit nulla vitae alias blanditiis aliquam debitis atque illo modi et placeat. Ratione iure eveniet provident. Culpa laboriosam sed ad quia. Corrupti, earum, perferendis dolore cupiditate sint nihil maiores iusto tempora nobis porro itaque est. Ut laborum culpa assumenda pariatur et perferendis?', 2, NULL, './upload/post/16918241649.jpeg', 1, '2023-08-02 19:08:03'),
 (2, 3, 'Demo Post', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque molestiae hic necessitatibus illo odit porro ipsa praesentium atque accusamus incidunt excepturi minima, modi voluptatibus neque exercitationem assumenda iure consectetur. Itaque!', 2, NULL, './upload/post/1691853271.jpg', 9, '2023-08-04 21:56:00'),
-(28, 11, 'Clipping (morphology)', 'According to Hans Marchand, clippings are not coined as words belonging to the core lexicon of a language.[2] They originate as jargon or slang of an in-group, such as schools, army, police, and the medical profession. For example, exam(ination), math(ematics), and lab(oratory) originated in school slang; spec(ulation) and tick(et = credit) in stock-exchange slang; and vet(eran) and cap(tain) in army slang. Clipped forms can pass into common usage when they are widely useful, becoming part of standard English, which most speakers would agree has happened with math/maths, lab, exam, phone (from telephone), fridge (from refrigerator), and various others. When their usefulness is limited to narrower contexts, they remain outside the standard register. Many, such as mani and pedi for manicure and pedicure or mic/mike for microphone, occupy a middle ground in which their appropriate register is a subjective judgment, but succeeding decades tend to see them become more widely used.', 0, NULL, './upload/post/1692278615.png', 1, '2023-08-12 23:17:38'),
+(28, 11, 'Clipping (morphology)', 'According to Hans Marchand, clippings are not coined as words belonging to the core lexicon of a language.[2] They originate as jargon or slang of an in-group, such as schools, army, police, and the medical profession. For example, exam(ination), math(ematics), and lab(oratory) originated in school slang; spec(ulation) and tick(et = credit) in stock-exchange slang; and vet(eran) and cap(tain) in army slang. Clipped forms can pass into common usage when they are widely useful, becoming part of standard English, which most speakers would agree has happened with math/maths, lab, exam, phone (from telephone), fridge (from refrigerator), and various others. When their usefulness is limited to narrower contexts, they remain outside the standard register. Many, such as mani and pedi for manicure and pedicure or mic/mike for microphone, occupy a middle ground in which their appropriate register is a subjective judgment, but succeeding decades tend to see them become more widely used.', 1, NULL, './upload/post/1692278615.png', 1, '2023-08-12 23:17:38'),
 (29, 11, 'Choose the perfect design', 'Create a beautiful blog that fits your style. Choose from a selection of easy-to-use templates – all with flexible layouts and hundreds of background images – or design something new.', 1, NULL, './upload/post/169187011300043.jpg', 1, '2023-08-13 01:25:13'),
 (30, 11, 'Earn money', 'Get paid for your hard work. Google AdSense can automatically display relevant targeted ads on your blog so that you can earn income by posting about your passion.', 1, NULL, './upload/post/169187017500012.png', 1, '2023-08-13 01:26:15'),
 (31, 11, 'Know your audience', 'Find out which posts are a hit with Blogger’s built-in analytics. You’ll see where your audience is coming from and what they’re interested in. You can even connect your blog directly to Google Analytics for a more detailed look.\r\n\r\n', 1, NULL, './upload/post/169187019700041.jpg', 1, '2023-08-13 01:26:37'),
@@ -116,7 +116,8 @@ INSERT INTO `likes` (`like_id`, `post_id`, `user_id`) VALUES
 (149, 1, 11),
 (150, 33, 11),
 (151, 2, 11),
-(152, 35, 2);
+(152, 35, 2),
+(153, 28, 11);
 
 -- --------------------------------------------------------
 
@@ -269,7 +270,7 @@ ALTER TABLE `comments`
 -- AUTO_INCREMENT for table `likes`
 --
 ALTER TABLE `likes`
-  MODIFY `like_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=153;
+  MODIFY `like_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=154;
 
 --
 -- AUTO_INCREMENT for table `promotion_package`
@@ -281,7 +282,7 @@ ALTER TABLE `promotion_package`
 -- AUTO_INCREMENT for table `saved_posts`
 --
 ALTER TABLE `saved_posts`
-  MODIFY `save_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `save_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `users`
