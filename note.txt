@@ -1,6 +1,0 @@
-Pending:
-
-1) Add blog post to category and tages show id wise
-2) add new table blog_like  
-3) add new field in total_like blog wise increment in blog_post table
-4) add iamge in blog_post

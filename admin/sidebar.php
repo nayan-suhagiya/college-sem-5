@@ -152,13 +152,16 @@ if ($row['user_type'] == "client") {
       </li>
       <li class="nav-item">
         <a class="nav-link " href="promotion_package.php">
-          <i class="bi bi-collection"></i>
+          <i class="bi bi-boxes"></i>
           <span>Promotion Package</span>
         </a>
       </li>
-
-
-
+      <li class="nav-item">
+        <a class="nav-link " href="campaign.php">
+          <i class="bi bi-tags"></i>
+          <span>Campaign Posts</span>
+        </a>
+      </li>
     </ul>
 
   </aside>

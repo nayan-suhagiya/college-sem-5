@@ -12,6 +12,33 @@
   <?php
   require "./navbar_dash.php";
   ?>
+
+  <?php
+  if (isset($_POST["delete"]) && isset($_POST["save_id"])) {
+    // echo "submitted!!";
+    $save_id = $_POST["save_id"];
+
+    $q = "DELETE FROM saved_posts WHERE save_id=$save_id";
+    $rq = mysqli_query($conn, $q);
+
+    if ($rq) {
+      $message[] = array(
+        'icon' => 'success',
+        'type' => 'Saved Post Removed',
+        'message' => 'Saved post removed successfully!'
+      );
+      $isSuccess = true;
+    } else {
+      $message[] = array(
+        'icon' => 'error',
+        'type' => 'Saved Post Removed',
+        'message' => 'Error while deleting post!'
+      );
+      $isSuccess = false;
+    }
+  }
+  ?>
+
   <?php
 
   $user_id = $_SESSION["user_id"];
@@ -38,8 +65,14 @@
     WHERE saved_posts.user_id=$user_id";
     $fetchBlogRunQuery = mysqli_query($conn, $q);
 
-    // $result = mysqli_fetch_assoc($rq);
-    // print_r($result);
+  } else {
+    $q = "SELECT *
+    FROM blog_posts 
+    JOIN saved_posts ON blog_posts.post_id = saved_posts.post_id
+    WHERE saved_posts.user_id=$user_id";
+    $fetchBlogRunQuery = mysqli_query($conn, $q);
+
+    // echo $count;
   }
   include "./alert_message.php";
 
@@ -51,51 +84,70 @@
       <h2 class="col-sm-12 mb-4">Your saved blogs...</h2>
       <?php
 
-      while ($result = mysqli_fetch_assoc($fetchBlogRunQuery)) {
-        // print_r($result);
+      $count = mysqli_num_rows($fetchBlogRunQuery);
+      // echo $count;
+      if ($count == 0) {
+        $msg = "Not found any saved Post!!";
+
+        echo "
+          <p class='text-danger fs-4'>$msg</p>
+        ";
+      } else {
+        while ($result = mysqli_fetch_assoc($fetchBlogRunQuery)) {
+          // print_r($result);
       
-        if ($result["comment_count"] == null) {
-          $result["comment_count"] = 0;
-        }
-        ?>
-        <div class="col-sm-6">
-          <div class="card mb-3">
-            <div class="row g-0">
-              <div class="col-md-4">
-                <img src="<?= $result["image"] ?>" onerror="this.src='assets/site_logo.png'"
-                  class="img-fluid rounded-start" alt="...">
-              </div>
-              <div class="col-md-8">
-                <div class="card-body">
-                  <h5 class="card-title">
-                    <?= $result["title"] ?>
-                  </h5>
-                  <p class="card-text">
-                    <i class="bi bi-heart-fill"></i> <span>
-                      <?= $result["like_count"] ?>
-                    </span>
-                    <i class="bi bi-chat-dots"></i> <span>
-                      <?= $result["comment_count"] ?>
-                    </span>
-                  </p>
-                  <p class="card-text"><small class="text-body-secondary">
-                      <?= $result["created_at"] ?>
-                    </small>
-                  </p>
-                  <button class="btn btn-custom">
+          if ($result["comment_count"] == null) {
+            $result["comment_count"] = 0;
+          }
+          ?>
+          <div class="col-sm-6">
+            <div class="card mb-3">
+              <div class="row g-0">
+                <div class="col-md-4">
+                  <img src="<?= $result["image"] ?>" onerror="this.src='assets/site_logo.png'"
+                    class="img-fluid rounded-start" alt="...">
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <h5 class="card-title">
+                      <?= $result["title"] ?>
+                    </h5>
+                    <p class="card-text">
+                      <i class="bi bi-heart-fill"></i> <span>
+                        <?= $result["like_count"] ?>
+                      </span>
+                      <i class="bi bi-chat-dots"></i> <span>
+                        <?= $result["comment_count"] ?>
+                      </span>
+                    </p>
+                    <p class="card-text"><small class="text-body-secondary">
+                        <?= $result["created_at"] ?>
+                      </small>
+                    </p>
                     <a href="single_post.php?post_id=<?= $result["post_id"] ?>">
-                      View More
+                      <button class="btn btn-custom">
+                        <i class="las la-eye fs-4"></i>
+                      </button>
                     </a>
-                  </button>
+                    <form method="post" style="float:right;">
+                      <input type="hidden" name="save_id" value="<?= $result["save_id"] ?>">
+                      <button class="btn btn-danger" type="submit" name="delete">
+                        <a href="single_post.php?post_id=<?= $result["post_id"] ?>">
+                          <i class="las la-trash-alt fs-4"></i>
+                        </a>
+                      </button>
+                    </form>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
 
 
-        <?php
+          <?php
+        }
       }
+
       ?>
     </div>
   </div>

@@ -1,7 +1,7 @@
 <?php
 
 require "./navbar_dash.php";
-if (isset($_POST['submit']) &&  isset($_POST["package_id"])  && isset($_POST["post_id"]) && isset($_POST["user_id"])  && isset($_POST["start_date"]) && isset($_POST["end_date"]) && isset($_POST["name"]) && isset($_POST["total_amount"])) {
+if (isset($_POST['submit']) && isset($_POST["package_id"]) && isset($_POST["post_id"]) && isset($_POST["user_id"]) && isset($_POST["start_date"]) && isset($_POST["end_date"]) && isset($_POST["name"]) && isset($_POST["total_amount"])) {
   $package_id = $_POST["package_id"];
   $post_id = $_POST["post_id"];
   $user_id = $_POST["user_id"];
@@ -13,10 +13,13 @@ if (isset($_POST['submit']) &&  isset($_POST["package_id"])  && isset($_POST["po
     $query = "SELECT COUNT(*) FROM campaigns WHERE post_id = $post_id AND user_id = $user_id AND status IN ('pending', 'running')";
     $result = mysqli_query($conn, $query);
 
-    if ($result) {
-      [$campaignCount] = mysqli_fetch_row($result);
+    // print_r(mysqli_fetch_row($result));
 
-      if ($campaignCount > 0) {
+    if ($result) {
+      $campaignCount = mysqli_fetch_row($result);
+      // print_r($campaignCount[0]);
+
+      if ($campaignCount[0] > 0) {
         $message[] = [
           'icon' => 'warning',
           'type' => 'Campaigns',
@@ -110,16 +113,19 @@ include "./alert_message.php";
               $query = "Select * from promotion_package where package_id = $package_id ";
               $runquery = mysqli_query($conn, $query);
               $row = mysqli_fetch_assoc($runquery);
-              $total_days =  $row['total_days'];
-              $total_amount =  $row['price'];
+              $total_days = $row['total_days'];
+              $total_amount = $row['price'];
               ?>
               <h2>
-                <?= $row['name'] ?> </h2>
+                <?= $row['name'] ?>
+              </h2>
               <h4>
-                <?= $row['price'] ?> </h2>
+                <?= $row['price'] ?>
+                </h2>
               </h4>
               <h5>
-                <?= $row['description'] ?> </h2>
+                <?= $row['description'] ?>
+                </h2>
                 </h4>
               </h5>
             </div>
@@ -144,8 +150,12 @@ include "./alert_message.php";
                     height: 150px;
                     border-radius: 16px;
                 ">
-                <h4> <?= $row['title'] ?></h4>
-                <h5><i class="bi bi-heart-fill"></i> <?= $row['like_count'] ?> <i class="bi bi-chat-dots"></i> 0 </h5>
+                <h4>
+                  <?= $row['title'] ?>
+                </h4>
+                <h5><i class="bi bi-heart-fill"></i>
+                  <?= $row['like_count'] ?> <i class="bi bi-chat-dots"></i> 0
+                </h5>
               </div>
             </div>
           </div>
@@ -161,7 +171,8 @@ include "./alert_message.php";
           <input class='form-control' type='hidden' value="<?= $post_id ?>" name='post_id'>
           <input class='form-control' type='hidden' value="<?= $user_id ?>" name='user_id'>
           <label for="start_date" class="form-label">Start</label>
-          <input type="datetime-local" class="form-control" onchange="endDateChange(<?= $total_days ?>)" id="start_date" name="start_date" required>
+          <input type="datetime-local" class="form-control" onchange="endDateChange(<?= $total_days ?>)" id="start_date"
+            name="start_date" required>
         </div>
         <div class="col-md-6">
           <label for="end_date" class="form-label">End</label>
@@ -173,7 +184,8 @@ include "./alert_message.php";
         </div>
         <div class="col-md-6">
           <label for="total_amount" class="form-label">Total Amount</label>
-          <input type="text" class="form-control" value="<?= $total_amount * $total_days ?>" readonly id="total_amount" name="total_amount" required>
+          <input type="text" class="form-control" value="<?= $total_amount * $total_days ?>" readonly id="total_amount"
+            name="total_amount" required>
         </div>
         <div class="col-12">
           <div class="row justify-content-center">
@@ -192,11 +204,13 @@ include "./alert_message.php";
   function endDateChange(days) {
     if ($("#start_date").val()) {
       const date = new Date($("#start_date").val());
+      // console.log(date);
       const result = addDays(date, days);
       result.setMinutes(result.getMinutes() - result.getTimezoneOffset());
 
       const formattedDate = result.toISOString().slice(0, 16);
       $("#end_date").val(formattedDate);
+      // console.log(formattedDate);
     }
   }
 
