@@ -2,3 +2,13 @@ user side:
 like behaviour change
 
 admin side:
+
+
+
+
+
+========== Id Password =============
+nayan@example.com       : nayan@123
+utsav@gmail.com         : utsav@123
+Utsavparmar72@gmail.com : 123
+demo@gmail.com          : demo

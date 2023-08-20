@@ -40,9 +40,9 @@
                   $title = $row["title"];
                   $content = $row["content"];
 
-                  ?>
+              ?>
                   <div class="swiper-slide">
-                    <a class="img-bg d-flex align-items-end" style="background-image: url('<?= $image ?>');">
+                    <a class="img-bg d-flex align-items-end" style="background-image: url(`<?= file_exists($image) ? $image:'assets/site_logo.jpg' ?>`);">
                       <div class="img-bg-inner text-white">
                         <h2>
                           <?= $title ?>
@@ -53,7 +53,7 @@
                       </div>
                     </a>
                   </div>
-                  <?php
+              <?php
                 }
               }
               ?>
@@ -109,7 +109,7 @@
 
           $user = mysqli_fetch_assoc($runquery1);
 
-          ?>
+        ?>
           <div class="parent col-lg-6">
             <div class="card card-1 ">
               <div class="logo">
@@ -122,8 +122,7 @@
                 </span>
 
               </div>
-              <div class="glass"><img src=" <?= $image ?>" alt="" onerror="this.src='assets/site_logo.jpg'"
-                  class=" img-fluid glass-image"></div>
+              <div class="glass"><img src=" <?= $image ?>" alt="" onerror="this.src='assets/site_logo.jpg'" class=" img-fluid glass-image"></div>
               <div class="content">
                 <span class="title">
                   <?= $title ?>
@@ -132,8 +131,7 @@
               </div>
               <div class="bottom">
                 <div class="d-flex align-items-center author w-100">
-                  <div class="photo"><img src="<?= $user["image"] ?>" onerror="this.src='assets/profile.png'" alt=""
-                      class="img-fluid"></div>
+                  <div class="photo"><img src="<?= $user["image"] ?>" onerror="this.src='assets/profile.png'" alt="" class="img-fluid"></div>
                   <div class="name">
                     <h3 class="m-0 p-0">
                       <?= $user["name"] ?>
@@ -141,27 +139,22 @@
                   </div>
                   <div class="d-flex  align-items-center lc_icons ms-auto">
                     <?php
-                    // $q = "select * from likes where user_id=$loggedin_user";
-                    // $rq = mysqli_query($conn, $q);
-                  
-                    // $count = mysqli_num_rows($rq);
-                  
-                    // if ($count > 0) {
-                    //   $row = mysqli_fetch_assoc($rq);
-                    //   print_r($row);
-                    // }
+                    $q = "select * from likes where post_id = $post_id and user_id =$loggedin_user ";
+                    $rq = mysqli_query($conn, $q);
                     ?>
-                    <div onclick="likePost(<?= $post_id ?>)">
-                      <i class="las la-thumbs-up fs-3"></i>&nbsp;
+                    <div id="icon_<?= $post_id ?>" onclick="likePost(<?= $post_id ?>)">
+                      <i class="bi <?= mysqli_num_rows($rq) == 0  ? 'bi-hand-thumbs-up' : 'bi-hand-thumbs-up-fill' ?> fs-3"></i>&nbsp;
                     </div>
                     <div id="likeCount_<?= $post_id ?>" class="me-2">
                       <?= $like_count ?>
                     </div>
                     <!-- </a> -->
-                    <a href="">
-                      <i class="lar la-comments fs-3"></i>&nbsp;
-                      <?= $comment_count ?>
+                    <a href="" class="me-2">
+                      <i class="bi bi-chat-quote fs-3"></i>&nbsp;
                     </a>
+                    <div class="me-2">
+                      <?= $comment_count ?>
+                    </div>
                   </div>
                 </div>
                 <div class="view-more">
@@ -182,7 +175,7 @@
 
 
 
-          <?php
+        <?php
         }
         ?>
 
@@ -223,11 +216,11 @@
       </div>
       <div class="ms-auto lc_icons">
         <a href="like.php?post_id=<?= $post_id ?>" class="me-3" target="_self">
-          <i class="las la-thumbs-up fs-3"></i>&nbsp;
+          <i class="bi bi-hand-thumbs-up fs-3"></i>&nbsp;
           <?= $like_count ?>
         </a>
         <a href="">
-          <i class="lar la-comments fs-3"></i>&nbsp;
+          <i class="bi bi-chat-quote fs-3"></i>&nbsp;
           <?= $comment_count ?>
         </a>
       </div>

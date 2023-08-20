@@ -8,7 +8,7 @@ include "./navbar_dash.php";
     <div class="container">
         <h1>Choose your Promotion Plans</h1>
 
-        <section class="boxes row ">
+        <section class="boxes m-1 row ">
 
             <?php $query = "SELECT * FROM promotion_package";
             $result = mysqli_query($conn, $query);

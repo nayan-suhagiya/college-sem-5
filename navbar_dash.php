@@ -51,7 +51,7 @@ $name = $row["name"];
         <ul class="nav col-12 col-lg-auto me-2 mb-2 justify-content-center mb-md-0 ms-auto ">
           <li><a href="./dashboard.php" class="nav-link px-2 mt-1 ">Home</a></li>
           <li><a href="./add_blog.php" class="nav-link px-2 mt-1">Add Blog</a></li>
-          <li><a href="./promotion_plans.php" class="nav-link px-2 mt-1">Promotion </a></li>
+          <li><a href="./campaign.php" class="nav-link px-2 mt-1">Promotion </a></li>
           <!-- <li><a href="#" class="nav-link px-2 ">Wishlist</a></li> -->
           <!-- <li><a href="./profile.php" class="nav-link px-2 ">Profile</a></li> -->
           <li class="nav-item dropdown pe-3">
