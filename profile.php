@@ -29,7 +29,7 @@
 
         // }
 
-        if ($password !== $user_data["password"]) {
+        if (!password_verify($password, $user_data["password"])) {
             $message[] = array(
                 'icon' => 'error',
                 'type' => 'Update Profile',
@@ -44,6 +44,7 @@
             );
             $isSuccess = false;
         } else {
+            
             if ($_FILES["profile"]["name"]) {
                 $img_name = $_FILES['profile']['name'];
                 $path = "./upload/profile/" . time() . $img_name;
@@ -73,7 +74,8 @@
                     );
                     $isSuccess = false;
                 } else if (move_uploaded_file($_FILES['profile']['tmp_name'], $path)) {
-                    $query = "update users set name='$username',email='$email',image='$path',password='$new_password' where user_id=$user_id";
+                    $hash_new_password = password_hash($new_password, PASSWORD_DEFAULT);
+                    $query = "update users set name='$username',email='$email',image='$path',password='$hash_new_password' where user_id=$user_id";
                     $runquery = mysqli_query($conn, $query);
 
                     $query = "select * from users where user_id='$user_id'";
@@ -84,7 +86,8 @@
                         $message[] = array(
                             'icon' => 'success',
                             'type' => 'Update Profile',
-                            'message' => 'Profile updated successfully!'
+                            'message' => 'Profile updated successfully!',
+                            'redirection' => 'logout.php'
                         );
                         $isSuccess = true;
                     } else {
@@ -97,7 +100,8 @@
                     }
                 }
             } else {
-                $query = "update users set name='$username',email='$email',password='$new_password' where user_id=$user_id";
+                $hash_new_password = password_hash($new_password, PASSWORD_DEFAULT);
+                $query = "update users set name='$username',email='$email',password='$hash_new_password' where user_id=$user_id";
                 $runquery = mysqli_query($conn, $query);
 
                 $query = "select * from users where user_id='$user_id'";
@@ -108,7 +112,8 @@
                     $message[] = array(
                         'icon' => 'success',
                         'type' => 'Update Profile',
-                        'message' => 'Profile updated successfully!'
+                        'message' => 'Profile updated successfully!',
+                        'redirection' => 'logout.php'
                     );
                     $isSuccess = true;
                 } else {
@@ -139,7 +144,7 @@
                         <div class="col-sm-4 bg-c-lite-green user-profile">
                             <div class="card-block text-center ">
                                 <div class="m-b-25">
-                                    <img src="<?= $row["image"] ?>" height="100" class="img-radius" alt="User-Profile-Image">
+                                    <img src="<?= $row["image"] ?>" onerror="this.src='assets/site_logo.png'" height="100" class="img-radius" alt="User-Profile-Image">
                                 </div>
                                 <!-- <h6 class="f-w-600">Hembo Tingor</h6>
                                 <p>Web Designer</p> -->

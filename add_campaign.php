@@ -146,7 +146,7 @@ include "./alert_message.php";
             ?>
             <div class="box-content">
               <div class="card-content">
-                <img src="<?= $row['image'] ?>" onerror="this.src='assets/site_logo.jpg'" alt="" style="
+                <img src="<?= $row['image'] ?>" onerror="this.src='assets/site_logo.jpg'" class="m-2" alt="" style="
                     height: 150px;
                     border-radius: 16px;
                 ">
@@ -206,7 +206,8 @@ include "./alert_message.php";
       const date = new Date($("#start_date").val());
       // console.log(date);
       const result = addDays(date, days);
-      // console.log(result.toISOString());
+      result.setMinutes(result.getMinutes() - result.getTimezoneOffset());
+
       const formattedDate = result.toISOString().slice(0, 16);
       $("#end_date").val(formattedDate);
       // console.log(formattedDate);

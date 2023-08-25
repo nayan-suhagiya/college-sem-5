@@ -18,7 +18,7 @@
     header("location:./index.php");
   }
 
-  $user_id = $_SESSION["user_id"];
+  $loggedin_user = $_SESSION["user_id"];
 
   ?>
 
@@ -130,16 +130,20 @@
             </div>
             <div>
               <div class="d-flex align-items-center lc_icons ms-auto">
+              <?php
+                    $q = "select * from likes where post_id = $post_id and user_id =$loggedin_user ";
+                    $rq = mysqli_query($conn, $q);
+                    ?>
                 <!-- <a href="like.php?post_id=<?= $post_id ?>" class="me-3" target="_self"> -->
-                <div onclick="likePost(<?= $post_id ?>)">
-                  <i class="las la-thumbs-up fs-3"></i>&nbsp;
-                </div>
+                <div id="icon_<?= $post_id ?>" onclick="likePost(<?= $post_id ?>)">
+                      <i class="bi <?= mysqli_num_rows($rq) == 0  ? 'bi-hand-thumbs-up' : 'bi-hand-thumbs-up-fill' ?> fs-3"></i>&nbsp;
+                    </div>
                 <div id="likeCount_<?= $post_id ?>" class="me-2">
                   <?= $like_count ?>
                 </div>
                 <!-- </a> -->
                 <a href="">
-                  <i class="lar la-comments fs-3"></i>&nbsp;
+                  <i class="bi bi-chat-quote fs-3"></i>&nbsp;
                   <?= $comment_count ?>
                 </a>
 

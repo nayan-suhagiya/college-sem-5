@@ -220,7 +220,7 @@ html {
   -webkit-transform: scale(1.1);
   /*Safari 3-8*/
   transform: scale(1.1);
-  z-index: 999;
+  z-index: 9;
 }
 
 @media (max-width: 991.98px) {

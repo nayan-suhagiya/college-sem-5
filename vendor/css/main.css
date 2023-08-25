@@ -624,7 +624,7 @@ section {
 }
 
 .img-bg {
-  height: 500px;
+  min-height: 500px;
   background-size: cover;
   background-repeat: no-repeat;
   position: relative;
@@ -633,7 +633,7 @@ section {
 
 @media (max-width: 768px) {
   .img-bg {
-    height: 400px;
+    min-height: 400px;
   }
 }
 
@@ -664,6 +664,7 @@ section {
   .img-bg .img-bg-inner {
     padding-left: 30px;
     padding-right: 30px;
+    padding-top: 30px;
     margin-bottom: 50px;
   }
 }

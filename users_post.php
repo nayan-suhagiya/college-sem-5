@@ -189,7 +189,7 @@
         ?>
         <div class="col-sm-6">
           <div class="card mb-3">
-            <div class="row g-0">
+            <div class="row align-items-center g-0">
               <div class="col-md-4">
                 <img src="<?= $result["image"] ?>" onerror="this.src='assets/site_logo.png'"
                   class="img-fluid rounded-start" alt="...">
