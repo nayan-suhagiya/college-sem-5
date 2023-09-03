@@ -116,9 +116,6 @@
                       <i class="bi bi-heart-fill"></i> <span>
                         <?= $result["like_count"] ?>
                       </span>
-                      <i class="bi bi-chat-dots"></i> <span>
-                        <?= $result["comment_count"] ?>
-                      </span>
                     </p>
                     <p class="card-text"><small class="text-body-secondary">
                         <?= $result["created_at"] ?>

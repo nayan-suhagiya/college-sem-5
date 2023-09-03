@@ -39,10 +39,10 @@
                   $image = $row["image"];
                   $title = $row["title"];
                   $content = $row["content"];
-
-              ?>
+                  ?>
                   <div class="swiper-slide">
-                    <a class="img-bg d-flex align-items-end" style="background-image: url(`<?= file_exists($image) ? $image:'assets/site_logo.jpg' ?>`);">
+                    <a class="img-bg d-flex align-items-end"
+                      style="background-image: url('<?= file_exists($image) ? $image : 'assets/site_logo.jpg' ?>');">
                       <div class="img-bg-inner text-white">
                         <h2>
                           <?= $title ?>
@@ -53,8 +53,24 @@
                       </div>
                     </a>
                   </div>
-              <?php
+                  <?php
                 }
+              } else {
+                echo "
+                  <div class='swiper-slide'>
+                    <a class='img-bg d-flex align-items-end'
+                      style='background-image: url(./assets/site_logo.jpg);'>
+                      <div class='img-bg-inner text-white'>
+                        <h2>
+                          Promotion your post for display in main page!
+                        </h2>
+                        <p>
+                          Go to the promotion page and add your favourite post to visible first in all over user's dashboard!
+                        </p>
+                      </div>
+                    </a>
+                  </div>
+                ";
               }
               ?>
             </div>
@@ -109,7 +125,7 @@
 
           $user = mysqli_fetch_assoc($runquery1);
 
-        ?>
+          ?>
           <div class="parent col-lg-6">
             <div class="card card-1 ">
               <div class="logo">
@@ -122,7 +138,8 @@
                 </span>
 
               </div>
-              <div class="glass"><img src=" <?= $image ?>" alt="" onerror="this.src='assets/site_logo.jpg'" class=" img-fluid glass-image"></div>
+              <div class="glass"><img src=" <?= $image ?>" alt="" onerror="this.src='assets/site_logo.jpg'"
+                  class=" img-fluid glass-image"></div>
               <div class="content">
                 <span class="title">
                   <?= $title ?>
@@ -131,7 +148,8 @@
               </div>
               <div class="bottom">
                 <div class="d-flex align-items-center author w-100">
-                  <div class="photo"><img src="<?= $user["image"] ?>" onerror="this.src='assets/profile.png'" alt="" class="img-fluid"></div>
+                  <div class="photo"><img src="<?= $user["image"] ?>" onerror="this.src='assets/profile.png'" alt=""
+                      class="img-fluid"></div>
                   <div class="name">
                     <h3 class="m-0 p-0">
                       <?= $user["name"] ?>
@@ -143,27 +161,17 @@
                     $rq = mysqli_query($conn, $q);
                     ?>
                     <div id="icon_<?= $post_id ?>" onclick="likePost(<?= $post_id ?>)">
-                      <i class="bi <?= mysqli_num_rows($rq) == 0  ? 'bi-hand-thumbs-up' : 'bi-hand-thumbs-up-fill' ?> fs-3"></i>&nbsp;
+                      <i
+                        class="bi <?= mysqli_num_rows($rq) == 0 ? 'bi-hand-thumbs-up' : 'bi-hand-thumbs-up-fill' ?> fs-3"></i>&nbsp;
                     </div>
                     <div id="likeCount_<?= $post_id ?>" class="me-2">
                       <?= $like_count ?>
-                    </div>
-                    <!-- </a> -->
-                    <a href="" class="me-2">
-                      <i class="bi bi-chat-quote fs-3"></i>&nbsp;
-                    </a>
-                    <div class="me-2">
-                      <?= $comment_count ?>
                     </div>
                   </div>
                 </div>
                 <div class="view-more">
                   <a href="single_post.php?post_id=<?= $post_id ?>">
                     <button class="view-more-button">View more <i class="las la-angle-down fw-bold"></i></button>
-                    <!-- <svg class="svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linecap="round"
-                      stroke-linejoin="round">
-                      <path d="m6 9 6 6 6-6"></path>
-                    </svg> -->
                   </a>
                 </div>
               </div>
@@ -171,11 +179,7 @@
             </div>
 
           </div>
-
-
-
-
-        <?php
+          <?php
         }
         ?>
 
@@ -188,45 +192,6 @@
 
 </html>
 
-
-
-<!-- <div class="col-lg-6">
-  <div class="post-entry-1 lg">
-    <div class="post-meta"><span class="date">
-        <?= $category ?>
-      </span> <span class="mx-1">&bullet;</span> <span>
-        <?= $created_at ?>
-      </span>
-    </div>
-    <h2><a href="single-post.html">
-        <?= $title ?>
-      </a>
-    </h2>
-    <a href="single-post.html"><img src=" <?= $image ?>" alt="" class="img-fluid"></a>
-    <p class="mb-4 d-block">
-      <?= $content ?>
-    </p>
-
-    <div class="d-flex align-items-center author">
-      <div class="photo"><img src="<?= $user["image"] ?>" alt="" class="img-fluid"></div>
-      <div class="name">
-        <h3 class="m-0 p-0">
-          <?= $user["name"] ?>
-        </h3>
-      </div>
-      <div class="ms-auto lc_icons">
-        <a href="like.php?post_id=<?= $post_id ?>" class="me-3" target="_self">
-          <i class="bi bi-hand-thumbs-up fs-3"></i>&nbsp;
-          <?= $like_count ?>
-        </a>
-        <a href="">
-          <i class="bi bi-chat-quote fs-3"></i>&nbsp;
-          <?= $comment_count ?>
-        </a>
-      </div>
-    </div>
-  </div>
-</div> -->
 
 
 <div class="bg"></div>

@@ -26,9 +26,9 @@
         $user_data = mysqli_fetch_assoc($rq);
 
         // if ($password == "" && $new_password == "" && $renew_password == "") {
-
+    
         // }
-
+    
         if (!password_verify($password, $user_data["password"])) {
             $message[] = array(
                 'icon' => 'error',
@@ -44,7 +44,7 @@
             );
             $isSuccess = false;
         } else {
-            
+
             if ($_FILES["profile"]["name"]) {
                 $img_name = $_FILES['profile']['name'];
                 $path = "./upload/profile/" . time() . $img_name;
@@ -57,11 +57,11 @@
                 $file_extension = pathinfo($_FILES["profile"]["name"], PATHINFO_EXTENSION);
 
                 // echo $user_data["image"];
-
+    
                 if ($user_data["image"]) {
                     $removeFileName = $user_data["image"];
                     // echo $removeFileName;
-
+    
                     $status = unlink($removeFileName) ? "The file " . $removeFileName . " deleted " : "Error while deleteting file " . $removeFileName;
                     // echo $status;
                 }
@@ -144,7 +144,8 @@
                         <div class="col-sm-4 bg-c-lite-green user-profile">
                             <div class="card-block text-center ">
                                 <div class="m-b-25">
-                                    <img src="<?= $row["image"] ?>" onerror="this.src='assets/site_logo.png'" height="100" class="img-radius" alt="User-Profile-Image">
+                                    <img src="<?= $row["image"] ?>" onerror="this.src='assets/site_logo.png'"
+                                        height="100" class="img-radius" alt="User-Profile-Image">
                                 </div>
                                 <!-- <h6 class="f-w-600">Hembo Tingor</h6>
                                 <p>Web Designer</p> -->
@@ -197,13 +198,15 @@
                             <label class="col-4 my-2" for='full_name'>Name</label>
                             <div class="col-8">
 
-                                <input class=' form-control' value="<?= $row["name"] ?>" type='text' required name='username'>
+                                <input class=' form-control' value="<?= $row["name"] ?>" type='text' required
+                                    name='username'>
                             </div>
                         </div>
                         <div class='form-group row m-0'>
                             <label class="col-4 my-2" for='email'>Email</label>
                             <div class="col-8">
-                                <input class=' form-control' value="<?= $row["email"] ?>" type='text' required name='email'>
+                                <input class=' form-control' value="<?= $row["email"] ?>" type='text' required
+                                    name='email'>
                             </div>
                         </div>
                         <div class='form-group row m-0'>
@@ -227,7 +230,9 @@
                         <div class='form-group row m-0 mt-2'>
                             <label class="col-4 my-2" for='image'>Profile image</label>
                             <div class="col-8">
-                                <input type="file" id="image" class="form-control" value="<?= $row['image'] ?>" name="profile" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])">
+                                <input type="file" id="image" class="form-control" value="<?= $row['image'] ?>"
+                                    name="profile"
+                                    onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])">
                             </div>
                         </div>
                         <div class="text-center mt-3 ">
@@ -247,26 +252,6 @@
         </div>
 
     </div>
-
-    <!-- Modal -->
-    <!-- <div class="modal fade" id="editFromUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Update Profile</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                
-            </div>
-        </div>
-    </div> -->
-    <!-- </div>
-    </div> -->
-    <!-- <script>
-        function setName() {
-            document.getElementById("submitBtn").setAttribute("name", "update")
-        }
-    </script> -->
 </body>
 
 </html>

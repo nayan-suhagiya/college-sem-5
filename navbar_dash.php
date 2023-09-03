@@ -5,9 +5,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Blog System</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
   <link rel="stylesheet" href="./vendor/css/style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/line-awesome/1.3.0/line-awesome/css/line-awesome.min.css" integrity="sha512-vebUliqxrVkBy3gucMhClmyQP9On/HAWQdKDXRaAlb/FKuTbxkjPKUyqVOxAcGwFDka79eTF+YXwfke1h3/wfg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/line-awesome/1.3.0/line-awesome/css/line-awesome.min.css"
+    integrity="sha512-vebUliqxrVkBy3gucMhClmyQP9On/HAWQdKDXRaAlb/FKuTbxkjPKUyqVOxAcGwFDka79eTF+YXwfke1h3/wfg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="./vendor/css/main.css">
   <!-- <link rel="stylesheet" href="./vendor/css/variables.css"> -->
   <link rel="stylesheet" href="./vendor/swiper/swiper-bundle.min.css">
@@ -51,13 +55,12 @@ $name = $row["name"];
         <ul class="nav col-12 col-lg-auto me-2 mb-2 justify-content-center mb-md-0 ms-auto ">
           <li><a href="./dashboard.php" class="nav-link px-2 mt-1 ">Home</a></li>
           <li><a href="./add_blog.php" class="nav-link px-2 mt-1">Add Blog</a></li>
-          <li><a href="./campaign.php" class="nav-link px-2 mt-1">Promotion </a></li>
-          <!-- <li><a href="#" class="nav-link px-2 ">Wishlist</a></li> -->
-          <!-- <li><a href="./profile.php" class="nav-link px-2 ">Profile</a></li> -->
+          <li><a href="./compaign_view_user.php" class="nav-link px-2 mt-1">Promotion </a></li>
           <li class="nav-item dropdown pe-3">
 
             <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-              <img src="<?= $row["image"] ?>" onerror="this.src='assets/profile.png'" alt="Profile" class="rounded-circle" height="30">
+              <img src="<?= $row["image"] ?>" onerror="this.src='assets/profile.png'" alt="Profile"
+                class="rounded-circle" height="30">
               <span class="d-none d-md-block dropdown-toggle ps-2">
                 <?= $name ?>
               </span>

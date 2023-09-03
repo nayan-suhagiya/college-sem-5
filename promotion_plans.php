@@ -14,7 +14,7 @@ include "./navbar_dash.php";
             $result = mysqli_query($conn, $query);
             $i = 1;
             while ($row = mysqli_fetch_assoc($result)) {
-            ?>
+                ?>
                 <div class="col-4 my-2 ">
                     <div class="box blue">
                         <div class="number-bg">6</div>
@@ -28,7 +28,8 @@ include "./navbar_dash.php";
                             <h5>
                                 <?= $row["description"] ?>
                             </h5>
-                            <button class="button" data-bs-toggle="modal" data-bs-target="#exampleModal<?= $row["package_id"] ?>">
+                            <button class="button" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal<?= $row["package_id"] ?>">
                                 <span>Continue</span><i class="material-icons"></i>
                             </button>
                         </div>
@@ -45,7 +46,8 @@ include "./navbar_dash.php";
                 }
                 ?>
 
-                <div class="modal fade text-dark" id="exampleModal<?= $row["package_id"] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade text-dark" id="exampleModal<?= $row["package_id"] ?>" tabindex="-1"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -61,7 +63,7 @@ include "./navbar_dash.php";
                                         if ($data["comment_count"] == null) {
                                             $data["comment_count"] = 0;
                                         }
-                                    ?>
+                                        ?>
                                         <?php
                                         $queryArr = array(
                                             "post_id" => $data["post_id"],
@@ -74,23 +76,30 @@ include "./navbar_dash.php";
                                         $passed_string = base64_encode($queryObj);
                                         ?>
                                         <div class="col-4">
-                                            <label for="radio-card-<?= $data['post_id'] ?><?= $row["package_id"] ?>" class="radio-card">
-                                                <input type="radio" value="<?= $passed_string ?>" name="radio-card" id="radio-card-<?= $data['post_id'] ?><?= $row["package_id"] ?>">
+                                            <label for="radio-card-<?= $data['post_id'] ?><?= $row["package_id"] ?>"
+                                                class="radio-card">
+                                                <input type="radio" value="<?= $passed_string ?>" name="radio-card"
+                                                    id="radio-card-<?= $data['post_id'] ?><?= $row["package_id"] ?>">
                                                 <div class="card-content-wrapper">
                                                     <span class="check-icon">
                                                         <i class="bi bi-check-lg"></i>
                                                     </span>
                                                     <div class="card-content">
-                                                        <img src="<?= $data["image"] ?>" onerror="this.src='assets/site_logo.jpg'" alt="">
-                                                        <h4> <?= $data["title"] ?></h4>
-                                                        <h5><i class="bi bi-heart-fill"></i> <?= $data["like_count"] ?>
-                                                            <i class="bi bi-chat-dots"></i> <?= $data["comment_count"] ?>
+                                                        <img src="<?= $data["image"] ?>"
+                                                            onerror="this.src='assets/site_logo.jpg'" alt="">
+                                                        <h4>
+                                                            <?= $data["title"] ?>
+                                                        </h4>
+                                                        <h5><i class="bi bi-heart-fill"></i>
+                                                            <?= $data["like_count"] ?>
+                                                            <i class="bi bi-chat-dots"></i>
+                                                            <?= $data["comment_count"] ?>
                                                         </h5>
                                                     </div>
                                                 </div>
                                             </label>
                                         </div>
-                                    <?php
+                                        <?php
                                     }
                                     ?>
 
@@ -104,7 +113,7 @@ include "./navbar_dash.php";
                     </div>
                 </div>
 
-            <?php
+                <?php
 
             }
             ?>
