@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 20, 2023 at 10:23 AM
+-- Generation Time: Sep 19, 2023 at 10:18 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -140,6 +140,15 @@ CREATE TABLE `comments` (
   `created_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `comments`
+--
+
+INSERT INTO `comments` (`comment_id`, `post_id`, `user_id`, `content`, `created_at`) VALUES
+(7, 1, 11, 'Nice', '2023-09-20 01:30:17'),
+(8, 1, 11, 'Awsome', '2023-09-20 01:32:25'),
+(9, 1, 11, 'Super', '2023-09-20 01:33:40');
+
 -- --------------------------------------------------------
 
 --
@@ -230,7 +239,7 @@ INSERT INTO `users` (`user_id`, `name`, `email`, `password`, `user_type`, `image
 (1, 'Nayan Suhagiya', 'nayan@example.com', '$2y$10$MkDzkb.70GdsPJdr1FB4K.F2HVnNgxTpBlv7bXdFmAv91OMIwtmIK', 'admin', './upload/profile/169251962700032-5001.png'),
 (2, 'Utsav Parmar', 'utsav@gmail.com', '$2y$10$8/C9ZLYPHC3QcB.UpqlDZ.Q1LAXLbLtLskS9QN8CVUROgfPuMfclO', 'client', './upload/profile/169251963600002-6000.png'),
 (3, 'Tom', 'Utsavparmar72@gmail.com', '$2y$10$TBtuJieNQNIMFM.9fSc7Qejy6vzBOIhv996yDLyDNa7dXFvXn2Ay.', 'admin', './upload/profile/169251964600034-5002.png'),
-(11, 'demo', 'demo@gmail.com', '$2y$10$CaVsaQ/zwP3HoR8yXveQduxazvtRW84OnGgbJ3vBiE/hEecRKyC.u', 'client', './upload/profile/169251965600030-1231453.png');
+(11, 'demo', 'demo@gmail.com', '$2y$10$zH/n8SyqV.SurBy2MSXeJ./YmNor3FX2HD9G0mlGXJCL2dkcdCShS', 'client', './upload/profile/169515289900000-322487942.png');
 
 --
 -- Indexes for dumped tables
@@ -325,13 +334,13 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `likes`
 --
 ALTER TABLE `likes`
-  MODIFY `like_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=159;
+  MODIFY `like_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=161;
 
 --
 -- AUTO_INCREMENT for table `promotion_package`

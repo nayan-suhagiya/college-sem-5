@@ -218,7 +218,7 @@
                                     <img src="<?= $row["image"] ?>">
                                     <span class="stat grey"></span>
                                   </div>
-                                  <h5><?= $row["name"] ?></h5>
+                                  <h5 class="mx-2"><?= $row["name"] ?></h5>
                                 </div>
                                 <button class="btn dropdown"><i class="ri-more-line"></i></button>
                                 <?php if ($row["user_id"] == $_SESSION["user_id"]) : ?>
