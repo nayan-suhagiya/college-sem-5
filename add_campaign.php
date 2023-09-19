@@ -25,7 +25,6 @@ if (isset($_POST['submit']) && isset($_POST["package_id"]) && isset($_POST["post
           'type' => 'Campaigns',
           'message' => 'Campaigns is already added',
           'redirection' => 'promotion_plans.php',
-
         ];
       } else {
         $insertQuery = "INSERT INTO campaigns (package_id, post_id, user_id, start_date, end_date, name, total_amount) VALUES (
