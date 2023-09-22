@@ -76,9 +76,18 @@
     $sql = "INSERT INTO comments (	post_id	, 	user_id	, content, created_at	) VALUES ($post_id, $loggedin_user, '$comment', NOW())";
 
     if ($conn->query($sql) === TRUE) {
-      echo "Comment submitted successfully";
+      $message[] = array(
+        'icon' => 'success',
+        'type' => 'Success',
+        'message' => 'Comment submitted successfully!'
+      );
     } else {
-      echo "Error: " . $sql . "<br>" . $conn->error;
+      $message[] = array(
+        'icon' => 'success',
+        'type' => 'Success',
+        'message' =>  "Error: " . $sql . "<br>" . $conn->error
+      );
+
     }
   }
   if (isset($_POST["save"]) && isset($_POST["post_id"])) {
@@ -179,8 +188,8 @@
                         }
                         ?>
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                  <i class="bi bi-chat-dots-fill"></i> Comment <span class="badge bg-secondary"><?= $comment_count ?></span>
+                <button type="button" class="btn btn-primary mx-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  <i class="bi bi-chat-dots-fill"></i> <span class="badge bg-secondary"><?= $comment_count ?></span>
                 </button>
                 <!-- Modal -->
                 <div class="modal modal-lg fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -222,7 +231,7 @@
                                 </div>
                                 <button class="btn dropdown"><i class="ri-more-line"></i></button>
                                 <?php if ($row["user_id"] == $_SESSION["user_id"]) : ?>
-                                  <button class="btn btn-danger delete-comment" data-comment-id="<?= $row['comment_id'] ?>">Delete</button>
+                                  <!-- <button class="btn btn-danger delete-comment" data-comment-id="<?= $row['comment_id'] ?>">Delete</button> -->
                                 <?php endif; ?>
                               </div>
                               <div class="content p-0">

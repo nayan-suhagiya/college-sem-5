@@ -628,7 +628,7 @@ section {
   background-size: cover;
   background-repeat: no-repeat;
   position: relative;
-  background-position: center center;
+  background-position: center top;
 }
 
 @media (max-width: 768px) {

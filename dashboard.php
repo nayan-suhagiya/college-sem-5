@@ -26,7 +26,9 @@
     <div class="container-md" data-aos="fade-in">
       <div class="row">
         <div class="col-12 parent">
-          <div class="swiper sliderFeaturedPosts card card-1 ">
+          <div class="swiper sliderFeaturedPosts card card-1  " style="
+    background: transparent;
+">
             <div class="swiper-wrapper">
               <?php
               $q1 = "SELECT b.* FROM blog_posts b,campaigns c WHERE b.post_id=c.post_id AND c.status='running'";
@@ -39,10 +41,9 @@
                   $image = $row["image"];
                   $title = $row["title"];
                   $content = $row["content"];
-                  ?>
+              ?>
                   <div class="swiper-slide">
-                    <a class="img-bg d-flex align-items-end"
-                      style="background-image: url('<?= file_exists($image) ? $image : 'assets/site_logo.jpg' ?>');">
+                    <a class="img-bg d-flex align-items-end" style="background-image: url('<?= file_exists($image) ? $image : 'assets/site_logo.jpg' ?>');">
                       <div class="img-bg-inner text-white">
                         <h2>
                           <?= $title ?>
@@ -53,7 +54,7 @@
                       </div>
                     </a>
                   </div>
-                  <?php
+              <?php
                 }
               } else {
                 echo "
@@ -125,7 +126,7 @@
 
           $user = mysqli_fetch_assoc($runquery1);
 
-          ?>
+        ?>
           <div class="parent col-lg-6">
             <div class="card card-1 ">
               <div class="logo">
@@ -138,8 +139,7 @@
                 </span>
 
               </div>
-              <div class="glass"><img src=" <?= $image ?>" alt="" onerror="this.src='assets/site_logo.jpg'"
-                  class=" img-fluid glass-image"></div>
+              <div class="glass"><img src=" <?= $image ?>" alt="" onerror="this.src='assets/site_logo.jpg'" class=" img-fluid glass-image"></div>
               <div class="content">
                 <span class="title">
                   <?= $title ?>
@@ -148,8 +148,7 @@
               </div>
               <div class="bottom">
                 <div class="d-flex align-items-center author w-100">
-                  <div class="photo"><img src="<?= $user["image"] ?>" onerror="this.src='assets/profile.png'" alt=""
-                      class="img-fluid"></div>
+                  <div class="photo"><img src="<?= $user["image"] ?>" onerror="this.src='assets/profile.png'" alt="" class="img-fluid"></div>
                   <div class="name">
                     <h3 class="m-0 p-0">
                       <?= $user["name"] ?>
@@ -161,8 +160,7 @@
                     $rq = mysqli_query($conn, $q);
                     ?>
                     <div id="icon_<?= $post_id ?>" onclick="likePost(<?= $post_id ?>)">
-                      <i
-                        class="bi <?= mysqli_num_rows($rq) == 0 ? 'bi-hand-thumbs-up' : 'bi-hand-thumbs-up-fill' ?> fs-3"></i>&nbsp;
+                      <i class="bi <?= mysqli_num_rows($rq) == 0 ? 'bi-hand-thumbs-up' : 'bi-hand-thumbs-up-fill' ?> fs-3"></i>&nbsp;
                     </div>
                     <div id="likeCount_<?= $post_id ?>" class="me-2">
                       <?= $like_count ?>
@@ -179,7 +177,7 @@
             </div>
 
           </div>
-          <?php
+        <?php
         }
         ?>
 

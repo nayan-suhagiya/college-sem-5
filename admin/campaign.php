@@ -102,16 +102,16 @@ include "../alert_message.php";
                     <td>
 
                       <button class='btn btn-primary' type="button" data-bs-toggle='modal'
-                        data-bs-target='#edit-compaign-modal<?= $i ?>'><i class='bi bi-pencil'></i></button>
+                        data-bs-target='#edit-campaign-modal<?= $i ?>'><i class='bi bi-pencil'></i></button>
 
                     </td>
                   </tr>
-                  <div class='modal fade' id='edit-compaign-modal<?= $i ?>' tabindex='-1' style='display: none;'
+                  <div class='modal fade' id='edit-campaign-modal<?= $i ?>' tabindex='-1' style='display: none;'
                     aria-hidden='true'>
                     <div class='modal-dialog modal-dialog-centered'>
                       <div class='modal-content'>
                         <div class='modal-header'>
-                          <h5 class='modal-title'>Update Package(
+                          <h5 class='modal-title'>Update Campaign Status(
                             <?= $row["name"] ?>)
                           </h5>
                           <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
@@ -122,7 +122,7 @@ include "../alert_message.php";
                               name='campaign_id'>
                             <div class='form-group row '>
                               <div class="col-4">
-                                <label for='status'>Compaign Status</label>
+                                <label for='status'>campaign Status</label>
                               </div>
                               <div class="col-8">
                                 <select name="status" class="form-control" id="status" value="<?= $row["status"] ?>">

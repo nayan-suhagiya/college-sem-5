@@ -6,7 +6,7 @@ include "./navbar_dash.php";
 
 <div id="main-container">
     <div class="container">
-        <h1>Choose your Promotion Plans</h1>
+        <h1>Choose your Campaign Plans</h1>
 
         <section class="boxes m-1 row ">
 

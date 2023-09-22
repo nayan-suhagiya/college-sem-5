@@ -3,6 +3,7 @@ include "./sidebar.php";
 ?>
 <main id="main" class="main">
   <section class="section dashboard">
+    <h1 class="text-center my-4 ">Welcome Admin Portal</h1>
     <div class="row">
       <!-- Left side columns -->
       <div class="col-lg-12">

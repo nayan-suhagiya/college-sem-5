@@ -20,63 +20,96 @@
         $new_password = $_POST["new_password"];
         $renew_password = $_POST["renew_password"];
         $user_id = $_POST["user_id"];
-
-        $q = "select * from users where user_id=$user_id";
-        $rq = mysqli_query($conn, $q);
-
-        $user_data = mysqli_fetch_assoc($rq);
-
-        // if ($password == "" && $new_password == "" && $renew_password == "") {
-
-        // }
-
-        if (!password_verify($password, $user_data["password"])) {
+        if (strlen($new_password) < 6) {
             $message[] = array(
                 'icon' => 'error',
-                'type' => 'Update Profile',
-                'message' => 'Current password is wrong!'
-            );
-            $isSuccess = false;
-        } elseif ($new_password !== $renew_password) {
-            $message[] = array(
-                'icon' => 'error',
-                'type' => 'Update Profile',
-                'message' => 'Password does not match!'
+                'type' => 'Password Length',
+                'message' => 'Password must be at least 6 characters long.'
             );
             $isSuccess = false;
         } else {
+            $q = "select * from users where user_id=$user_id";
+            $rq = mysqli_query($conn, $q);
 
-            if ($_FILES["profile"]["name"]) {
-                $img_name = $_FILES['profile']['name'];
-                $path = "./upload/profile/" . time() . $img_name;
+            $user_data = mysqli_fetch_assoc($rq);
 
-                $allowed_image_extension = array(
-                    "png",
-                    "jpg",
-                    "jpeg"
+            // if ($password == "" && $new_password == "" && $renew_password == "") {
+
+            // }
+
+            if (!password_verify($password, $user_data["password"])) {
+                $message[] = array(
+                    'icon' => 'error',
+                    'type' => 'Update Profile',
+                    'message' => 'Current password is wrong!'
                 );
-                $file_extension = pathinfo($_FILES["profile"]["name"], PATHINFO_EXTENSION);
+                $isSuccess = false;
+            } elseif ($new_password !== $renew_password) {
+                $message[] = array(
+                    'icon' => 'error',
+                    'type' => 'Update Profile',
+                    'message' => 'Password does not match!'
+                );
+                $isSuccess = false;
+            } else {
 
-                // echo $user_data["image"];
+                if ($_FILES["profile"]["name"]) {
+                    $img_name = $_FILES['profile']['name'];
+                    $path = "./upload/profile/" . time() . $img_name;
 
-                if ($user_data["image"]) {
-                    $removeFileName = $user_data["image"];
-                    // echo $removeFileName;
-
-                    $status = unlink('.' . $removeFileName) ? "The file " . $removeFileName . " deleted " : "Error while deleteting file " . $removeFileName;
-                    // echo $status;
-                }
-
-                if (!in_array($file_extension, $allowed_image_extension)) {
-                    $message[] = array(
-                        'icon' => 'error',
-                        'type' => 'Error',
-                        'message' => 'Upload valid images. Only PNG and JPEG are allowed.'
+                    $allowed_image_extension = array(
+                        "png",
+                        "jpg",
+                        "jpeg"
                     );
-                    $isSuccess = false;
-                } else if (move_uploaded_file($_FILES['profile']['tmp_name'], '.' . $path)) {
+                    $file_extension = pathinfo($_FILES["profile"]["name"], PATHINFO_EXTENSION);
+
+                    // echo $user_data["image"];
+
+                    if ($user_data["image"]) {
+                        $removeFileName = $user_data["image"];
+                        // echo $removeFileName;
+
+                        $status = unlink('.' . $removeFileName) ? "The file " . $removeFileName . " deleted " : "Error while deleteting file " . $removeFileName;
+                        // echo $status;
+                    }
+
+                    if (!in_array($file_extension, $allowed_image_extension)) {
+                        $message[] = array(
+                            'icon' => 'error',
+                            'type' => 'Error',
+                            'message' => 'Upload valid images. Only PNG and JPEG are allowed.'
+                        );
+                        $isSuccess = false;
+                    } else if (move_uploaded_file($_FILES['profile']['tmp_name'], '.' . $path)) {
+                        $hash_new_password = password_hash($new_password, PASSWORD_DEFAULT);
+                        $query = "update users set name='$username',email='$email',image='$path',password='$hash_new_password' where user_id=$user_id";
+                        $runquery = mysqli_query($conn, $query);
+
+                        $query = "select * from users where user_id='$user_id'";
+                        $runquery = mysqli_query($conn, $query);
+                        $row = mysqli_fetch_assoc($runquery);
+
+                        if ($runquery) {
+                            $message[] = array(
+                                'icon' => 'success',
+                                'type' => 'Update Profile',
+                                'message' => 'Profile updated successfully!',
+                                'redirection' => '../logout.php'
+                            );
+                            $isSuccess = true;
+                        } else {
+                            $message[] = array(
+                                'icon' => 'error',
+                                'type' => 'Update Profile',
+                                'message' => 'Unable to update!'
+                            );
+                            $isSuccess = false;
+                        }
+                    }
+                } else {
                     $hash_new_password = password_hash($new_password, PASSWORD_DEFAULT);
-                    $query = "update users set name='$username',email='$email',image='$path',password='$hash_new_password' where user_id=$user_id";
+                    $query = "update users set name='$username',email='$email',password='$hash_new_password' where user_id=$user_id";
                     $runquery = mysqli_query($conn, $query);
 
                     $query = "select * from users where user_id='$user_id'";
@@ -99,31 +132,6 @@
                         );
                         $isSuccess = false;
                     }
-                }
-            } else {
-                $hash_new_password = password_hash($new_password, PASSWORD_DEFAULT);
-                $query = "update users set name='$username',email='$email',password='$hash_new_password' where user_id=$user_id";
-                $runquery = mysqli_query($conn, $query);
-
-                $query = "select * from users where user_id='$user_id'";
-                $runquery = mysqli_query($conn, $query);
-                $row = mysqli_fetch_assoc($runquery);
-
-                if ($runquery) {
-                    $message[] = array(
-                        'icon' => 'success',
-                        'type' => 'Update Profile',
-                        'message' => 'Profile updated successfully!',
-                        'redirection' => '../logout.php'
-                    );
-                    $isSuccess = true;
-                } else {
-                    $message[] = array(
-                        'icon' => 'error',
-                        'type' => 'Update Profile',
-                        'message' => 'Unable to update!'
-                    );
-                    $isSuccess = false;
                 }
             }
         }
@@ -225,7 +233,7 @@
                             <div class='form-group row m-0 mt-2'>
                                 <label class="col-4 my-2" for='image'>Profile image</label>
                                 <div class="col-8">
-                                    <input type="file" id="image" class="form-control" value="<?= $row['image'] ?>" name="profile" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])">
+                                    <input type="file" id="image" class="form-control" accept="image/*" value="<?= $row['image'] ?>" name="profile" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])">
                                 </div>
                             </div>
                             <div class="text-center mt-3 ">
@@ -236,7 +244,7 @@
                         <div style="float:right;">
 
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" name="submit" class="btn btn-custom ms-2">Save
+                            <button type="submit" name="submit" class="btn  btn-success ms-2">Save
                                 changes</button>
                         </div>
 
