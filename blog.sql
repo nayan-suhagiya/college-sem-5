@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 19, 2023 at 10:18 PM
+-- Generation Time: Sep 22, 2023 at 04:49 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -54,15 +54,13 @@ CREATE TABLE `blog_posts` (
 --
 
 INSERT INTO `blog_posts` (`post_id`, `user_id`, `title`, `content`, `like_count`, `comment_count`, `image`, `category_id`, `created_at`) VALUES
-(1, 2, 'Reprehenderit aut sed doloribus blanditiis, aspernatur magni? ', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio placeat exercitationem magni voluptates dolore. Tenetur fugiat voluptates quas, nobis error deserunt aliquam temporibus sapiente, laudantium dolorum itaque libero eos deleniti?\r\n\r\nDolorum, incidunt! Adipisci harum itaque maxime dolores doloremque porro eligendi quis, doloribus vel sit rerum sunt obcaecati nam suscipit nulla vitae alias blanditiis aliquam debitis atque illo modi et placeat. Ratione iure eveniet provident. Culpa laboriosam sed ad quia. Corrupti, earum, perferendis dolore cupiditate sint nihil maiores iusto tempora nobis porro itaque est. Ut laborum culpa assumenda pariatur et perferendis?', 1, NULL, './upload/post/1692519526.png', 1, '2023-08-02 19:08:03'),
+(1, 2, 'Reprehenderit aut sed doloribus blanditiis, aspernatur magni? ', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio placeat exercitationem magni voluptates dolore. Tenetur fugiat voluptates quas, nobis error deserunt aliquam temporibus sapiente, laudantium dolorum itaque libero eos deleniti?\r\n\r\nDolorum, incidunt! Adipisci harum itaque maxime dolores doloremque porro eligendi quis, doloribus vel sit rerum sunt obcaecati nam suscipit nulla vitae alias blanditiis aliquam debitis atque illo modi et placeat. Ratione iure eveniet provident. Culpa laboriosam sed ad quia. Corrupti, earum, perferendis dolore cupiditate sint nihil maiores iusto tempora nobis porro itaque est. Ut laborum culpa assumenda pariatur et perferendis?', 2, NULL, './upload/post/1692519526.png', 1, '2023-08-02 19:08:03'),
 (2, 3, 'Demo Post', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque molestiae hic necessitatibus illo odit porro ipsa praesentium atque accusamus incidunt excepturi minima, modi voluptatibus neque exercitationem assumenda iure consectetur. Itaque!', 2, NULL, './upload/post/1692519534.png', 9, '2023-08-04 21:56:00'),
-(28, 11, 'Clipping (morphology)', 'According to Hans Marchand, clippings are not coined as words belonging to the core lexicon of a language.[2] They originate as jargon or slang of an in-group, such as schools, army, police, and the medical profession. For example, exam(ination), math(ematics), and lab(oratory) originated in school slang; spec(ulation) and tick(et = credit) in stock-exchange slang; and vet(eran) and cap(tain) in army slang. Clipped forms can pass into common usage when they are widely useful, becoming part of standard English, which most speakers would agree has happened with math/maths, lab, exam, phone (from telephone), fridge (from refrigerator), and various others. When their usefulness is limited to narrower contexts, they remain outside the standard register. Many, such as mani and pedi for manicure and pedicure or mic/mike for microphone, occupy a middle ground in which their appropriate register is a subjective judgment, but succeeding decades tend to see them become more widely used.', 1, NULL, './upload/post/1692519543.png', 1, '2023-08-12 23:17:38'),
+(28, 11, 'Clipping (morphology)', 'According to Hans Marchand, clippings are not coined as words belonging to the core lexicon of a language.[2] They originate as jargon or slang of an in-group, such as schools, army, police, and the medical profession. For example, exam(ination), math(ematics), and lab(oratory) originated in school slang; spec(ulation) and tick(et = credit) in stock-exchange slang; and vet(eran) and cap(tain) in army slang. Clipped forms can pass into common usage when they are widely useful, becoming part of standard English, which most speakers would agree has happened with math/maths, lab, exam, phone (from telephone), fridge (from refrigerator), and various others. When their usefulness is limited to narrower contexts, they remain outside the standard register. Many, such as mani and pedi for manicure and pedicure or mic/mike for microphone, occupy a middle ground in which their appropriate register is a subjective judgment, but succeeding decades tend to see them become more widely used.', 1, NULL, './upload/post/169531280400100-1059586531.png', 1, '2023-08-12 23:17:38'),
 (29, 11, 'Choose the perfect design', 'Create a beautiful blog that fits your style. Choose from a selection of easy-to-use templates – all with flexible layouts and hundreds of background images – or design something new.', 1, NULL, './upload/post/1692519550.png', 1, '2023-08-13 01:25:13'),
 (30, 11, 'Earn money', 'Get paid for your hard work. Google AdSense can automatically display relevant targeted ads on your blog so that you can earn income by posting about your passion.', 1, NULL, './upload/post/1692519557.png', 1, '2023-08-13 01:26:15'),
 (31, 11, 'Know your audience', 'Find out which posts are a hit with Blogger’s built-in analytics. You’ll see where your audience is coming from and what they’re interested in. You can even connect your blog directly to Google Analytics for a more detailed look.\r\n\r\n', 0, NULL, './upload/post/1692519568.png', 1, '2023-08-13 01:26:37'),
-(32, 11, 'How to Start a Blog That Makes You Money', 'Are you looking for an easy guide on how to start a blog?\r\n\r\nThe step-by-step guide on this page will show you how to create a blog in 20 minutes with just the most basic computer skills.\r\n\r\nAfter completing this guide you will have a beautiful blog that is ready to share with the world.\r\n\r\n', 0, NULL, './upload/post/1692519585.png', 9, '2023-08-13 01:28:03'),
-(33, 11, 'Protecting the public’s right to free expression', 'On X, people are free to be their true selves. We believe people of all backgrounds and beliefs should have the right to freely express themselves, so long as they do so within the bounds of the law.\r\n\r\n', 0, NULL, './upload/post/1692519593.png', 1, '2023-08-13 01:35:50'),
-(34, 11, 'An update on Twitter Transparency Reporting', 'As we review our approach to transparency reporting in light of innovations in content moderation and changes in the regulatory landscape, we believe it’s important to share data from H1 2022 on our health & safety efforts. We won’t be publishing a formal transparency report for this period (January 1 - June 30, 2022) in our previous format.', 0, NULL, './upload/post/1692519602.png', 9, '2023-08-13 01:36:16');
+(33, 11, 'Protecting the public’s right to free expression', 'On X, people are free to be their true selves. We believe people of all backgrounds and beliefs should have the right to freely express themselves, so long as they do so within the bounds of the law.\r\n\r\n', 0, NULL, './upload/post/1692519593.png', 1, '2023-08-13 01:35:50');
 
 -- --------------------------------------------------------
 
@@ -88,7 +86,8 @@ CREATE TABLE `campaigns` (
 
 INSERT INTO `campaigns` (`campaign_id`, `name`, `status`, `post_id`, `user_id`, `package_id`, `start_date`, `end_date`, `total_amount`) VALUES
 (16, 'Utsav paramr', 'running', 28, 11, 13, '2023-08-15', '2023-08-16', 200),
-(17, 'demo', 'running', 29, 11, 14, '2023-08-18', '2023-09-17', 9000);
+(17, 'demo', 'running', 29, 11, 14, '2023-08-18', '2023-09-17', 9000),
+(18, 'first env', 'running', 1, 2, 14, '2023-09-22', '2023-10-22', 9000);
 
 --
 -- Triggers `campaigns`
@@ -147,7 +146,10 @@ CREATE TABLE `comments` (
 INSERT INTO `comments` (`comment_id`, `post_id`, `user_id`, `content`, `created_at`) VALUES
 (7, 1, 11, 'Nice', '2023-09-20 01:30:17'),
 (8, 1, 11, 'Awsome', '2023-09-20 01:32:25'),
-(9, 1, 11, 'Super', '2023-09-20 01:33:40');
+(9, 1, 11, 'Super', '2023-09-20 01:33:40'),
+(10, 1, 2, 'Awwwwwww', '2023-09-20 01:52:33'),
+(11, 28, 11, 'Nice', '2023-09-22 03:13:32'),
+(12, 28, 11, 'Nice', '2023-09-22 03:14:55');
 
 -- --------------------------------------------------------
 
@@ -171,7 +173,8 @@ INSERT INTO `likes` (`like_id`, `post_id`, `user_id`) VALUES
 (96, 29, 11),
 (116, 30, 11),
 (142, 2, 11),
-(155, 28, 11);
+(155, 28, 11),
+(161, 1, 11);
 
 -- --------------------------------------------------------
 
@@ -208,14 +211,6 @@ CREATE TABLE `saved_posts` (
   `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `saved_posts`
---
-
-INSERT INTO `saved_posts` (`save_id`, `post_id`, `user_id`) VALUES
-(1, 1, 11),
-(2, 31, 11);
-
 -- --------------------------------------------------------
 
 --
@@ -236,9 +231,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `name`, `email`, `password`, `user_type`, `image`) VALUES
-(1, 'Nayan Suhagiya', 'nayan@example.com', '$2y$10$MkDzkb.70GdsPJdr1FB4K.F2HVnNgxTpBlv7bXdFmAv91OMIwtmIK', 'admin', './upload/profile/169251962700032-5001.png'),
+(1, 'Nayan Suhagiya', 'nayan@example.com', '$2y$10$MkDzkb.70GdsPJdr1FB4K.F2HVnNgxTpBlv7bXdFmAv91OMIwtmIK', 'admin', './upload/profile/1695329786WhatsApp Image 2023-09-07 at 1.24.41 PM.jpeg'),
 (2, 'Utsav Parmar', 'utsav@gmail.com', '$2y$10$8/C9ZLYPHC3QcB.UpqlDZ.Q1LAXLbLtLskS9QN8CVUROgfPuMfclO', 'client', './upload/profile/169251963600002-6000.png'),
-(3, 'Tom', 'Utsavparmar72@gmail.com', '$2y$10$TBtuJieNQNIMFM.9fSc7Qejy6vzBOIhv996yDLyDNa7dXFvXn2Ay.', 'admin', './upload/profile/169251964600034-5002.png'),
+(3, 'Tom', 'Utsavparmar72@gmail.com', '$2y$10$TyNXeoa7mYfFgwWI8ddi6OVJdv8SvJGbX8Cpq669brJVN.4gS8G1S', 'admin', './upload/profile/169251964600034-5002.png'),
 (11, 'demo', 'demo@gmail.com', '$2y$10$zH/n8SyqV.SurBy2MSXeJ./YmNor3FX2HD9G0mlGXJCL2dkcdCShS', 'client', './upload/profile/169515289900000-322487942.png');
 
 --
@@ -322,7 +317,7 @@ ALTER TABLE `blog_posts`
 -- AUTO_INCREMENT for table `campaigns`
 --
 ALTER TABLE `campaigns`
-  MODIFY `campaign_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `campaign_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -334,13 +329,13 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `likes`
 --
 ALTER TABLE `likes`
-  MODIFY `like_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=161;
+  MODIFY `like_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=162;
 
 --
 -- AUTO_INCREMENT for table `promotion_package`
@@ -358,7 +353,7 @@ ALTER TABLE `saved_posts`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- Constraints for dumped tables
