@@ -55,7 +55,7 @@ $name = $row["name"];
         <ul class="nav col-12 col-lg-auto me-2 mb-2 justify-content-center mb-md-0 ms-auto ">
           <li><a href="./dashboard.php" class="nav-link px-2 mt-1 ">Home</a></li>
           <li><a href="./add_blog.php" class="nav-link px-2 mt-1">Add Blog</a></li>
-          <li><a href="./compaign_view_user.php" class="nav-link px-2 mt-1">Promotion </a></li>
+          <li><a href="./campaign_view_user.php" class="nav-link px-2 mt-1">Promotion </a></li>
           <li class="nav-item dropdown pe-3">
 
             <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
@@ -68,10 +68,10 @@ $name = $row["name"];
 
             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
               <li class="dropdown-header">
-                <h6 class="fw-bolder">
+                <h6 class="fw-bolder text-capitalize  text-center">
                   <?= $name ?>
                 </h6>
-                <span>Web Designer</span>
+                <!-- <span>Web Designer</span> -->
               </li>
               <li>
                 <hr class="dropdown-divider">

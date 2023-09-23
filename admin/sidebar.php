@@ -69,10 +69,10 @@ if ($row['user_type'] == "client") {
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6>
+              <h6 class="text-uppercase text-center">
                 <?= $name ?>
               </h6>
-              <span>Web Designer</span>
+              <!-- <span>Web Designer</span> -->
             </li>
             <li>
               <hr class="dropdown-divider">

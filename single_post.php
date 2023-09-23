@@ -23,6 +23,9 @@
   ?>
 
   <?php
+
+
+
   if (isset($_GET["post_id"])) {
     $post_id = $_GET["post_id"];
 
@@ -61,8 +64,32 @@
 
       $user = mysqli_fetch_assoc($runquery1);
     }
+  } else {
+    include "page-not-found.php";
+    return;
   }
+  if (isset($_POST['comment'])) {
+    $comment = $_POST['comment'];
+    $loggedin_user = $_SESSION["user_id"];
+    $post_id = $_GET["post_id"];
+    // Insert data into the comments table
+    $sql = "INSERT INTO comments (	post_id	, 	user_id	, content, created_at	) VALUES ($post_id, $loggedin_user, '$comment', NOW())";
 
+    if ($conn->query($sql) === TRUE) {
+      $message[] = array(
+        'icon' => 'success',
+        'type' => 'Success',
+        'message' => 'Comment submitted successfully!'
+      );
+    } else {
+      $message[] = array(
+        'icon' => 'success',
+        'type' => 'Success',
+        'message' =>  "Error: " . $sql . "<br>" . $conn->error
+      );
+
+    }
+  }
   if (isset($_POST["save"]) && isset($_POST["post_id"])) {
     // echo "save submitted";
     $post_id = $_POST["post_id"];
@@ -102,8 +129,9 @@
   include "./alert_message.php";
 
 
-  ?>
 
+  ?>
+  <link rel="stylesheet" href="vendor\css\comment.css">
   <div class="container">
     <div class="row">
       <div class="col-sm-12">
@@ -136,8 +164,7 @@
                 ?>
                 <!-- <a href="like.php?post_id=<?= $post_id ?>" class="me-3" target="_self"> -->
                 <div id="icon_<?= $post_id ?>" onclick="likePost(<?= $post_id ?>)">
-                  <i
-                    class="bi <?= mysqli_num_rows($rq) == 0 ? 'bi-hand-thumbs-up' : 'bi-hand-thumbs-up-fill' ?> fs-3"></i>&nbsp;
+                  <i class="bi <?= mysqli_num_rows($rq) == 0 ? 'bi-hand-thumbs-up' : 'bi-hand-thumbs-up-fill' ?> fs-3"></i>&nbsp;
                 </div>
                 <div id="likeCount_<?= $post_id ?>" class="me-2">
                   <?= $like_count ?>
@@ -147,7 +174,84 @@
                   <button class="btn btn-sm btn-custom ms-2" type="submit" name="save">
                     <i class="lar la-bookmark fs-3 "></i>&nbsp;
                   </button>
-                </form>
+                </form><?php
+
+                        $comment_count = get_comment_count($post_id, $conn);
+
+
+                        function get_comment_count($post_id, $conn)
+                        {
+
+                          $result = $conn->query("SELECT COUNT(*) FROM comments WHERE post_id = $post_id");
+                          $count = $result->fetch_row()[0];
+                          return $count;
+                        }
+                        ?>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary mx-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  <i class="bi bi-chat-dots-fill"></i> <span class="badge bg-secondary"><?= $comment_count ?></span>
+                </button>
+                <!-- Modal -->
+                <div class="modal modal-lg fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel"><?= $title ?></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <form action="single_post.php?post_id=<?= $post_id ?>" class="comment-from" method="post">
+
+                          Comment: <textarea name="comment" class="comment-enter-details"></textarea><br>
+                          <input type="submit" value="Submit" class="btn btn-custom">
+                        </form>
+                        <?php
+                        $sql = "SELECT *
+                        FROM comments
+                        JOIN users ON comments.user_id = users.user_id
+                        WHERE comments.post_id = $post_id";
+
+                        $result = $conn->query($sql);
+
+                        if ($result === false) {
+                          die('Error executing query: ' . $conn->error);
+                        }
+
+                        if ($result->num_rows > 0) {
+                          while ($row = $result->fetch_assoc()) {
+                        ?> 
+                            <div class="comment my-2">
+                              <div class="user-banner">
+                                <div class="user">
+                                  <div class="avatar">
+                                    <img src="<?= $row["image"] ?>">
+                                    <span class="stat grey"></span>
+                                  </div>
+                                  <h5 class="mx-2"><?= $row["name"] ?></h5>
+                                </div>
+                                <button class="btn dropdown"><i class="ri-more-line"></i></button>
+                                <?php if ($row["user_id"] == $_SESSION["user_id"]) : ?>
+                                  <!-- <button class="btn btn-danger delete-comment" data-comment-id="<?= $row['comment_id'] ?>">Delete</button> -->
+                                <?php endif; ?>
+                              </div>
+                              <div class="content p-0">
+                                <p><?= $row["content"] ?></p>
+                                <span class="comment-time"><?= date('F j, Y, g:i a', strtotime($row["created_at"])) ?></span>
+                              </div>
+                            </div>
+                        <?php
+                            // echo "Comment ID: " . $row["comment_id"] . " - Post ID: " . $row["post_id"] . " - User ID: " . $row["user_id"] . " - Username: " . $row["name"] . " - Content: " . $row["content"] . " - Created At: " . $row["created_at"] . "<br>";
+                          }
+                        } else {
+                          echo "No comments yet";
+                        }
+
+                        ?>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
               </div>
 
             </div>
@@ -163,6 +267,16 @@
 </body>
 
 <script src="vendor/js/ajex-call.js"></script>
+<script>
+  function comment() {
+    $.ajax({
+      url: "comment-add.php",
+      success: function(result) {
+        $("#div1").html(result);
+      }
+    });
+  }
+</script>
 
 </html>
 

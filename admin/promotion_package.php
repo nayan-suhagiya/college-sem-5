@@ -88,7 +88,7 @@ include "../alert_message.php";
             <div class="card">
                 <div class="card-body">
                     <div class="align-items-center d-flex justify-content-between">
-                        <h3 class="my-3 float-start">Blog Package Information</h3>
+                        <h3 class="my-3 float-start">Campaign Package Information</h3>
                         <div class="btn btn-primary float-end" data-bs-toggle='modal' data-bs-target='#edit-package-modal'>Add
                             Package</div>
                     </div>

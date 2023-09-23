@@ -25,7 +25,6 @@ if (isset($_POST['submit']) && isset($_POST["package_id"]) && isset($_POST["post
           'type' => 'Campaigns',
           'message' => 'Campaigns is already added',
           'redirection' => 'promotion_plans.php',
-
         ];
       } else {
         $insertQuery = "INSERT INTO campaigns (package_id, post_id, user_id, start_date, end_date, name, total_amount) VALUES (
@@ -78,7 +77,7 @@ if (isset($_GET['data'])) {
     $post_id = $jsonData->post_id;
     $user_id = $jsonData->user_id;
     $package_id = $jsonData->package_id;
-    $q = "INSERT INTO compaign(user_id,post_id,pakage_id,start_date,end_date) VALUE ($user_id,$post_id,$package_id,'val','val')";
+    $q = "INSERT INTO campaign(user_id,post_id,pakage_id,start_date,end_date) VALUE ($user_id,$post_id,$package_id,'val','val')";
   } else {
     header("location:dashboard.php");
   }

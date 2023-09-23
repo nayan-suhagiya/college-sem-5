@@ -9,53 +9,61 @@ if (isset($_POST["submit"])) {
   $image = $_FILES["profile"]["name"];
   $tempname = $_FILES['profile']['tmp_name'];
 
-
-  $hash_passwd = password_hash($passwd, PASSWORD_DEFAULT);
-
-  $path = "./upload/profile/" . time() . $image;
-  $query = "select * from Users where email = '$email'";
-  $runquery = mysqli_query($conn, $query);
-  if (mysqli_num_rows($runquery) == 0) {
-    
-    $allowed_image_extension = array(
-      "png",
-      "jpg",
-      "jpeg"
+  if (strlen($passwd) < 6) {
+    $message[] = array(
+      'icon' => 'error',
+      'type' => 'Password Length',
+      'message' => 'Password must be at least 6 characters long.'
     );
-    $file_extension = pathinfo($_FILES["profile"]["name"], PATHINFO_EXTENSION);
-    // copy($tempname, $path);
-  
-    if (!in_array($file_extension, $allowed_image_extension)) {
-      $message[] = array(
-        'icon' => 'error',
-        'type' => 'Error',
-        'message' => 'Upload valid images. Only PNG and JPEG are allowed.'
+  } else {
+    $hash_passwd = password_hash($passwd, PASSWORD_DEFAULT);
+
+    $path = "./upload/profile/" . time() . $image;
+    $query = "select * from Users where email = '$email'";
+    $runquery = mysqli_query($conn, $query);
+    if (mysqli_num_rows($runquery) == 0) {
+
+      $allowed_image_extension = array(
+        "png",
+        "jpg",
+        "jpeg"
       );
-    } else if (move_uploaded_file($tempname, $path)) {
-      $query = "INSERT INTO Users(name,email,password,image) VALUES('$name','$email','$hash_passwd','$path')";
-      $runquery = mysqli_query($conn, $query);
-      if ($runquery) {
+      $file_extension = pathinfo($_FILES["profile"]["name"], PATHINFO_EXTENSION);
+      // copy($tempname, $path);
+
+      if (!in_array($file_extension, $allowed_image_extension)) {
         $message[] = array(
-          'icon' => 'success',
-          'type' => 'Register',
-          'message' => 'Registred successfully!',
+          'icon' => 'error',
+          'type' => 'Error',
+          'message' => 'Upload valid images. Only PNG and JPEG are allowed.'
         );
-        include "./alert_message.php";
-        header("location:./index.php");
+      } else if (move_uploaded_file($tempname, $path)) {
+        $query = "INSERT INTO Users(name,email,password,image) VALUES('$name','$email','$hash_passwd','$path')";
+        $runquery = mysqli_query($conn, $query);
+        if ($runquery) {
+          $message[] = array(
+            'icon' => 'success',
+            'type' => 'Register',
+            'message' => 'Registred successfully!',
+            'redirection' => 'index.php'
+          );
+          include "./alert_message.php";
+          // header("location:./index.php");
+        }
+      } else {
+        $message[] = array(
+          'icon' => 'error',
+          'type' => 'Upload Image',
+          'message' => 'Failed to upload image!'
+        );
       }
     } else {
       $message[] = array(
         'icon' => 'error',
-        'type' => 'Upload Image',
-        'message' => 'Failed to upload image!'
+        'type' => 'Already Exist',
+        'message' => 'User already exist'
       );
     }
-  }else{
-    $message[] = array(
-      'icon' => 'error',
-      'type' => 'Already Exist',
-      'message' => 'User already exist'
-    );
   }
 
   // echo $userid.$name.$email.$passwd;
@@ -98,7 +106,7 @@ if (isset($_POST["submit"])) {
               <label for="floatingPassword">Enter Password</label>
             </div>
             <div class="form-floating my-2">
-              <input type="file" name="profile" class="form-control" id="floatingFile" required>
+              <input type="file" name="profile" class="form-control" id="floatingFile" accept="image/*" required>
               <label for="floatingFile">Upload Profile Picture</label>
             </div>
             <button class="btn btn-custom w-100 py-2 my-3" name="submit" type="submit">Sign up</button>

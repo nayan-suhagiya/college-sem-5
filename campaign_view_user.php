@@ -34,7 +34,7 @@ include "./alert_message.php";
 ?>
 
 <div id="main-container">
-  <h2 class="text-dark text-center">Your compaign details</h2>
+  <h2 class="text-dark text-center">Your campaign details</h2>
   <section class="section dashboard container">
     <div class="row">
       <div class="card">
