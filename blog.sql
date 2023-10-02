@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 22, 2023 at 04:49 PM
+-- Generation Time: Oct 02, 2023 at 05:19 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -223,18 +223,21 @@ CREATE TABLE `users` (
   `email` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL,
   `user_type` enum('client','admin') NOT NULL DEFAULT 'client',
-  `image` varchar(100) DEFAULT NULL
+  `image` varchar(100) DEFAULT NULL,
+  `token` varchar(200) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`user_id`, `name`, `email`, `password`, `user_type`, `image`) VALUES
-(1, 'Nayan Suhagiya', 'nayan@example.com', '$2y$10$MkDzkb.70GdsPJdr1FB4K.F2HVnNgxTpBlv7bXdFmAv91OMIwtmIK', 'admin', './upload/profile/1695329786WhatsApp Image 2023-09-07 at 1.24.41 PM.jpeg'),
-(2, 'Utsav Parmar', 'utsav@gmail.com', '$2y$10$8/C9ZLYPHC3QcB.UpqlDZ.Q1LAXLbLtLskS9QN8CVUROgfPuMfclO', 'client', './upload/profile/169251963600002-6000.png'),
-(3, 'Tom', 'Utsavparmar72@gmail.com', '$2y$10$TyNXeoa7mYfFgwWI8ddi6OVJdv8SvJGbX8Cpq669brJVN.4gS8G1S', 'admin', './upload/profile/169251964600034-5002.png'),
-(11, 'demo', 'demo@gmail.com', '$2y$10$zH/n8SyqV.SurBy2MSXeJ./YmNor3FX2HD9G0mlGXJCL2dkcdCShS', 'client', './upload/profile/169515289900000-322487942.png');
+INSERT INTO `users` (`user_id`, `name`, `email`, `password`, `user_type`, `image`, `token`) VALUES
+(1, 'Nayan Suhagiya', 'nayan@example.com', '$2y$10$MkDzkb.70GdsPJdr1FB4K.F2HVnNgxTpBlv7bXdFmAv91OMIwtmIK', 'admin', './upload/profile/1695329786WhatsApp Image 2023-09-07 at 1.24.41 PM.jpeg', NULL),
+(2, 'Utsav Parmar', 'utsav@gmail.com', '$2y$10$8/C9ZLYPHC3QcB.UpqlDZ.Q1LAXLbLtLskS9QN8CVUROgfPuMfclO', 'client', './upload/profile/169251963600002-6000.png', NULL),
+(3, 'Tom', 'Utsavparmar72@gmail.com', '$2y$10$iAshvjK9kGjVTnF6vFDcC.VhfDLT1iOlv/CuivtB4u1U6vVxO9oei', 'admin', './upload/profile/169251964600034-5002.png', '6520ba51ddbd45058b2d40d52ec621272318364e4f23e75b446cc8c86f6296ec'),
+(11, 'demo', 'demo@gmail.com', '$2y$10$zH/n8SyqV.SurBy2MSXeJ./YmNor3FX2HD9G0mlGXJCL2dkcdCShS', 'client', './upload/profile/169515289900000-322487942.png', NULL),
+(21, 'satyam', 'satyamgangani@gmail.com', '$2y$10$N0QMJ9YLirULSZtE508GDuVi.iggIqP6bz9rr5BrTMhaR1WVUYVLC', 'client', './upload/profile/169614943027426-1256817394-Naruto,1boy, black_background, fire, 9 fox tails,.jpeg', '59f086f704f39285bb39fbacbb7569f070d2c07b5f02529532281da50795a2c4'),
+(22, 'kreract', 'Kreract@gmail.com', '$2y$10$/HIqDMH.O8rrGph/xZZArOj6wThQ3VKFIGn/ibPvPnrWedDVPyDPi', 'client', './upload/profile/169614972427426-1256817394-Naruto,1boy, black_background, fire, 9 fox tails,.jpeg', '81eea5afe856c7573208999c0c610553a2fb6b1a5bf9d1a76d8d1f08e42298df');
 
 --
 -- Indexes for dumped tables
@@ -353,7 +356,7 @@ ALTER TABLE `saved_posts`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- Constraints for dumped tables
@@ -394,21 +397,6 @@ ALTER TABLE `likes`
 ALTER TABLE `saved_posts`
   ADD CONSTRAINT `saved_posts_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `blog_posts` (`post_id`),
   ADD CONSTRAINT `saved_posts_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
-
-DELIMITER $$
---
--- Events
---
-CREATE DEFINER=`root`@`localhost` EVENT `daily_status_check` ON SCHEDULE EVERY 1 DAY STARTS '2023-08-15 17:52:14' ENDS '2023-09-30 17:52:14' ON COMPLETION NOT PRESERVE ENABLE DO UPDATE campaigns
-    SET status =
-        CASE
-            WHEN start_date > CURDATE() THEN 'pending'
-            WHEN start_date <= CURDATE() AND end_date >= CURDATE() THEN 'running'
-            WHEN end_date < CURDATE() THEN 'close'
-            ELSE status
-        END$$
-
-DELIMITER ;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

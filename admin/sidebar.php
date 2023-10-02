@@ -5,9 +5,10 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Dashboard - NiceAdmin Bootstrap Template</title>
+  <title>Blog System | Admin</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
+  <link rel="shortcut icon" href="../assets/favicon.ico" type="image/x-icon">
   <link href="../lib/css/style.css" rel="stylesheet">
   <link href="../lib/css/bootstrap.min.css" rel="stylesheet">
   <link href="../lib/css/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
@@ -45,7 +46,7 @@ if ($row['user_type'] == "client") {
   <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-      <a href="index.html" class="logo d-flex align-items-center">
+      <a href="dashboard.php" class="logo d-flex align-items-center">
         <img src="../assets/site_logo.png" alt="">
         <!-- <span class="d-none d-lg-block">Admin</span> -->
       </a>
@@ -59,7 +60,6 @@ if ($row['user_type'] == "client") {
           </a>
         </li>
         <li class="nav-item dropdown pe-3">
-
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <img src="<?= "." . $image ?>" alt="Profile" class="rounded-circle">
             <span class="d-none d-md-block dropdown-toggle ps-2">
@@ -85,9 +85,6 @@ if ($row['user_type'] == "client") {
               </a>
             </li>
             <li>
-  
-
-
             <li>
               <hr class="dropdown-divider">
             </li>
