@@ -179,131 +179,141 @@
     <div class="row">
       <h2 class="col-sm-12 mb-4">Your created blogs...</h2>
       <?php
+      if (mysqli_num_rows($fetchBlogRunQuery) <= 0) {
+        $msg = "You are not created any post!!Go to add blog and add post!!";
 
-      while ($result = mysqli_fetch_assoc($fetchBlogRunQuery)) {
-        // print_r($result);
+        echo "
+          <p class='text-danger fs-4'>$msg</p>
+        ";
+      } else {
+
+        while ($result = mysqli_fetch_assoc($fetchBlogRunQuery)) {
+          // print_r($result);
       
-        if ($result["comment_count"] == null) {
-          $result["comment_count"] = 0;
-        }
-        ?>
-        <div class="col-sm-6">
-          <div class="card mb-3">
-            <div class="row align-items-center g-0">
-              <div class="col-md-4">
-                <img src="<?= $result["image"] ?>" onerror="this.src='assets/site_logo.png'"
-                  class="img-fluid rounded-start" alt="...">
-              </div>
-              <div class="col-md-8">
-                <div class="card-body">
-                  <h5 class="card-title">
-                    <?= $result["title"] ?>
-                  </h5>
-                  <p class="card-text">
-                    <i class="bi bi-heart-fill"></i> <span>
-                      <?= $result["like_count"] ?>
-                    </span>
-                    <i class="bi bi-chat-dots"></i> <span>
-                      <?= $result["comment_count"] ?>
-                    </span>
-                  </p>
-                  <p class="card-text"><small class="text-body-secondary">
-                      <?= $result["created_at"] ?>
-                    </small>
-                  </p>
-                  <div style="display:flex;justify-content:center;">
-                    <button class="btn btn-sm btn-warning" type="button" data-bs-toggle='modal'
-                      data-bs-target='#edit-category-modal<?= $result["post_id"] ?>'>Edit</button>
-                    <form method="POST" class="ms-3">
-                      <input type="hidden" name="post_id" value="<?= $result["post_id"] ?>">
-                      <!-- <button class="btn btn-sm btn-danger" type="button" name="delete">
+          if ($result["comment_count"] == null) {
+            $result["comment_count"] = 0;
+          }
+
+
+          ?>
+          <div class="col-sm-6">
+            <div class="card mb-3">
+              <div class="row align-items-center g-0">
+                <div class="col-md-4">
+                  <img src="<?= $result["image"] ?>" onerror="this.src='assets/site_logo.png'"
+                    class="img-fluid rounded-start" alt="...">
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <h5 class="card-title">
+                      <?= $result["title"] ?>
+                    </h5>
+                    <p class="card-text">
+                      <i class="bi bi-heart-fill"></i> <span>
+                        <?= $result["like_count"] ?>
+                      </span>
+                      <i class="bi bi-chat-dots"></i> <span>
+                        <?= $result["comment_count"] ?>
+                      </span>
+                    </p>
+                    <p class="card-text"><small class="text-body-secondary">
+                        <?= $result["created_at"] ?>
+                      </small>
+                    </p>
+                    <div style="display:flex;justify-content:center;">
+                      <button class="btn btn-sm btn-warning" type="button" data-bs-toggle='modal'
+                        data-bs-target='#edit-category-modal<?= $result["post_id"] ?>'>Edit</button>
+                      <form method="POST" class="ms-3">
+                        <input type="hidden" name="post_id" value="<?= $result["post_id"] ?>">
+                        <!-- <button class="btn btn-sm btn-danger" type="button" name="delete">
                         <a href="delete_users_post.php?delete_id=<?= $result["post_id"] ?>">Delete</a>
                       </button> -->
-                      <button class="btn btn-sm btn-danger" type="submit" value="delete" name="delete">Delete</button>
-                    </form>
+                        <button class="btn btn-sm btn-danger" type="submit" value="delete" name="delete">Delete</button>
+                      </form>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div class='modal  fade' id='edit-category-modal<?= $result["post_id"] ?>' tabindex='-1' style='display: none;'
-          aria-hidden='true'>
-          <div class='modal-dialog  modal-lg modal-dialog-centered'>
-            <div class='modal-content'>
-              <div class='modal-header'>
-                <h5 class='modal-title'>Update Post
-                </h5>
-                <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
-              </div>
-              <form method="post" id='edit-form' enctype="multipart/form-data">
-                <div class='modal-body'>
-                  <input class='form-control' value="<?= $result["post_id"] ?>" type='hidden' name='post_id'>
-                  <div class='form-group row '>
-                    <div class="col-4">
-                      <label for='full_name'>Post Title</label>
+          <div class='modal  fade' id='edit-category-modal<?= $result["post_id"] ?>' tabindex='-1' style='display: none;'
+            aria-hidden='true'>
+            <div class='modal-dialog  modal-lg modal-dialog-centered'>
+              <div class='modal-content'>
+                <div class='modal-header'>
+                  <h5 class='modal-title'>Update Post
+                  </h5>
+                  <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
+                </div>
+                <form method="post" id='edit-form' enctype="multipart/form-data">
+                  <div class='modal-body'>
+                    <input class='form-control' value="<?= $result["post_id"] ?>" type='hidden' name='post_id'>
+                    <div class='form-group row '>
+                      <div class="col-4">
+                        <label for='full_name'>Post Title</label>
+                      </div>
+                      <div class="col-8">
+                        <input class='form-control' value="<?= $result["title"] ?>" type='text' name='title'>
+                      </div>
                     </div>
-                    <div class="col-8">
-                      <input class='form-control' value="<?= $result["title"] ?>" type='text' name='title'>
+                    <div class='form-group row '>
+                      <div class="col-4">
+                        <label for='full_name'>Post Content</label>
+                      </div>
+                      <div class="col-8">
+                        <textarea class='form-control' name="content" id="" cols="30"
+                          rows="5"><?= $result["content"] ?></textarea>
+                      </div>
                     </div>
-                  </div>
-                  <div class='form-group row '>
-                    <div class="col-4">
-                      <label for='full_name'>Post Content</label>
-                    </div>
-                    <div class="col-8">
-                      <textarea class='form-control' name="content" id="" cols="30"
-                        rows="5"><?= $result["content"] ?></textarea>
-                    </div>
-                  </div>
-                  <div class='form-group row '>
-                    <div class="col-4">
-                      <label for="floatingCategory">Select Category</label>
-                    </div>
-                    <div class="col-8">
-                      <select name="category" id="floatingCategory" class="form-select">
-                        <?php
-                        $query = "SELECT * FROM Categories";
-                        $runquery = mysqli_query($conn, $query);
+                    <div class='form-group row '>
+                      <div class="col-4">
+                        <label for="floatingCategory">Select Category</label>
+                      </div>
+                      <div class="col-8">
+                        <select name="category" id="floatingCategory" class="form-select">
+                          <?php
+                          $query = "SELECT * FROM Categories";
+                          $runquery = mysqli_query($conn, $query);
 
-                        while ($row1 = mysqli_fetch_assoc($runquery)) {
-                          $category = $row1["name"];
-                          $category_id = $row1["category_id"];
-                          $selected = $result["category_id"] == $category_id ? 'selected' : '';
-                          echo "
+                          while ($row1 = mysqli_fetch_assoc($runquery)) {
+                            $category = $row1["name"];
+                            $category_id = $row1["category_id"];
+                            $selected = $result["category_id"] == $category_id ? 'selected' : '';
+                            echo "
                                      <option value='$category_id'  $selected >$category</option>
                                   ";
-                        }
-                        ?>
-                      </select>
+                          }
+                          ?>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class='form-group row m-0 mt-2'>
+                      <label class="col-4 my-2" for='image'>Profile image</label>
+                      <div class="col-8">
+                        <input type="file" accept="image/*"
+                          onchange="document.getElementById('output<?= $result['post_id'] ?>').src = window.URL.createObjectURL(this.files[0])"
+                          id="image" class="form-control" name="image">
+                      </div>
+                    </div>
+
+                    <div class="text-center mt-3 ">
+                      <img class="rounded-5" id="output<?= $result['post_id'] ?>" height="120px" width="120px"
+                        src="<?= $result["image"] ?>" alt="">
+
                     </div>
                   </div>
-
-                  <div class='form-group row m-0 mt-2'>
-                    <label class="col-4 my-2" for='image'>Profile image</label>
-                    <div class="col-8">
-                      <input type="file" accept="image/*"
-                        onchange="document.getElementById('output<?= $result['post_id'] ?>').src = window.URL.createObjectURL(this.files[0])"
-                        id="image" class="form-control" name="image">
-                    </div>
+                  <div class='modal-footer'>
+                    <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Close</button>
+                    <button type='submit' name="submit" class='btn btn-primary'>Save changes</button>
                   </div>
-
-                  <div class="text-center mt-3 ">
-                    <img class="rounded-5" id="output<?= $result['post_id'] ?>" height="120px" width="120px"
-                      src="<?= $result["image"] ?>" alt="">
-
-                  </div>
-                </div>
-                <div class='modal-footer'>
-                  <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Close</button>
-                  <button type='submit' name="submit" class='btn btn-primary'>Save changes</button>
-                </div>
-              </form>
+                </form>
+              </div>
             </div>
           </div>
-        </div>
-        <?php
+          <?php
+        }
       }
       ?>
     </div>

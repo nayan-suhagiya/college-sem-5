@@ -57,49 +57,57 @@ include "./alert_message.php";
               </thead>
 
               <tbody>
-                <?php $query = "SELECT * FROM campaigns where user_id =$user_id ";
+                <?php $query = "SELECT * FROM campaigns c,blog_posts bp where c.user_id =$user_id AND bp.post_id=c.post_id";
                 $result = mysqli_query($conn, $query);
-                $i = 1;
-                while ($row = mysqli_fetch_assoc($result)) {
-                  ?>
-                  <tr>
-                    <th scope='row'>
-                      <?= $i ?>
-                    </th>
-                    <td>
-                      <?= $row["name"] ?>
-                    </td>
-                    <td>
-                      <?php
-                      $status = $row["status"];
-                      if ($status == 'pending') {
-                        echo "
+                // print_r($result);
+                
+                if (mysqli_num_rows($result) > 0) {
+                  $i = 1;
+                  while ($row = mysqli_fetch_assoc($result)) {
+                    ?>
+                    <tr>
+                      <th scope='row'>
+                        <?= $i ?>
+                      </th>
+                      <td>
+                        <?= $row["name"] ?>
+                      </td>
+                      <td>
+                        <?php
+                        $status = $row["status"];
+                        if ($status == 'pending') {
+                          echo "
                           <span class='badge bg-warning'>$status</span>
                         ";
-                      } elseif ($status == 'running') {
-                        echo "
+                        } elseif ($status == 'running') {
+                          echo "
                           <span class='badge bg-success'>$status</span>
                         ";
-                      } else {
-                        echo "
+                        } else {
+                          echo "
                           <span class='badge bg-danger'>$status</span>
                         ";
-                      }
-                      ?>
-                    </td>
-                    <td>
-                      <?= $row["start_date"] ?>
-                    </td>
-                    <td>
-                      <?= $row["end_date"] ?>
-                    </td>
-                    <td>
-                      &#8377;
-                      <?= $row["total_amount"] ?>
-                    </td>
-                  </tr>
-                  <?php
-                  $i++;
+                        }
+                        ?>
+                      </td>
+                      <td>
+                        <?= $row["start_date"] ?>
+                      </td>
+                      <td>
+                        <?= $row["end_date"] ?>
+                      </td>
+                      <td>
+                        &#8377;
+                        <?= $row["total_amount"] ?>
+                      </td>
+                    </tr>
+                    <?php
+                    $i++;
+                  }
+                } else {
+                  $msg = "No post found in your compaign!!";
+
+                  echo "<p class='text-danger'>$msg</p>";
                 }
                 ?>
 
